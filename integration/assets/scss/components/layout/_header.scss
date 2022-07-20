@@ -12,7 +12,12 @@
 
 // le menu classique est visible en laptop à 1024px
 
-
+.fixed{
+    position: fixed;
+    top : 0%;
+    left: 0%;
+    width: 100vw;
+}
 
 .header {
 
@@ -21,11 +26,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    a {
-        text-decoration: none;
-        color: colors.$color-blue;
-    }
 
     &__logo {
         width: 10rem;
@@ -52,11 +52,14 @@
         
         &__don{
             padding: 2rem;
-            color: colors.$color-orange;
+            margin-bottom: 2rem;
+            color: white;
         }
 
         &__menu{
             padding : 2rem;
+            color: colors.$color-blue;
+
         }
 
         &__profile{
@@ -74,6 +77,11 @@
             font-size: 2rem;
             font-weight: 700;
             transform: rotate(90deg);
+            
+            a{
+                color: colors.$color-blue;
+            }
+
         }
     }
 }
@@ -84,6 +92,9 @@
     // A partir de 767px (format tablette) on va afficher 
     // le logo en plus grand...
     .header {
+
+        padding: 2rem 4rem;
+
         &__logo {
             width: 15rem;
         }
@@ -102,7 +113,6 @@
     .header {
 
         padding: 2rem 4rem;
-        font-size: 1.5rem;
 
         &__nav {
 
@@ -120,8 +130,10 @@
             }
 
             &__don{
+                color: white;
                 padding: 1rem;
                 margin-right: 6rem;
+                margin-bottom: 0rem;
             }
 
             &__menu {
@@ -137,7 +149,8 @@
 
                 &--icon {
                     display: inline;
-                    width: 2rem;
+                    width: 3rem;
+                    
                 }
             }
 
@@ -156,8 +169,6 @@
     // on veut décaler le bouton don de chat
     .header {
 
-        font-size: 2rem;
-
         &__nav{
 
             &__don{
@@ -167,13 +178,6 @@
             &__menu {
             padding: 2rem;
             }
-
-            &__profile--icon{
-                width: 3rem;
-            }
-
         }
-
     }
-
 }
