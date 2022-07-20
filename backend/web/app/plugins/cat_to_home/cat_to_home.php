@@ -8,8 +8,14 @@ Version: 1.0
 
 global $wpdb;
 
-d($wpdb->get_results("SELECT * FROM wp_cat_to_home_user_post"));
-die;
+// d($wpdb->get_results("SELECT * FROM wp_cat_to_home_user_post"));
+// d(get_posts([
+//     'include' => [7, 8],
+//     'suppress_filters' => true,
+//     'post_type' => 'cat'
+// ]));
+// d(wp_remote_get('http://cat_to_home.local/wp-json/wp/v2/cat/8'));
+// die;
 
 require __DIR__ . '/vendor/autoload.php';
 
