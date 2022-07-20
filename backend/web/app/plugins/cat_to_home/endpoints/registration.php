@@ -17,7 +17,7 @@ function cat_to_home_rest_user_register()
 function cat_to_home_rest_user_register_handler($request)
 
 {
-    // Prépa réponse
+    // répa réponse
     $response = [];
 
     $authorized_roles = [

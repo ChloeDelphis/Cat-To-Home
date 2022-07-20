@@ -6,6 +6,11 @@ Author: Team Cat to home
 Version: 1.0
 */
 
+global $wpdb;
+
+d($wpdb->get_results("SELECT * FROM wp_cat_to_home_user_post"));
+die;
+
 require __DIR__ . '/vendor/autoload.php';
 
 use Migration\User_PostMigration;
