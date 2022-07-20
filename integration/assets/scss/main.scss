@@ -14,7 +14,9 @@
 //components
 
 @use "components/buttons.scss";
+@use "components/input.scss";
 @use "components/pages/cat-list";
 @use "components/pages/cat-details.scss";
 @use "components/layout/header";
 @use "components/layout/footer";
+@use "components/pages/home";
