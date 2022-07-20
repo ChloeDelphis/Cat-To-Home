@@ -1,0 +1,14 @@
+{
+    "name": "student/cat_to_home",
+    "autoload": {
+        "psr-4": {
+            "Migration\\": "Migration/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Steph934",
+            "email": "quinionstephane@gmail.com"
+        }
+    ]
+}
