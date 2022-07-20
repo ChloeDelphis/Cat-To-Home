@@ -62,15 +62,19 @@
     // A partir de 768px (tablette)
     .contact {
 
-
-        &__img{
+        &__img {
             width: 50%;
         }
+
         &__form {
 
-            &__fieldset__field {
+            &__fieldset{
+                display: flexbox;
+                align-items: center;
+                &__field {
                 width: 70%;
             }
+        }
 
         }
 
@@ -80,6 +84,39 @@
 @media (min-width : 1024px) {
     // A partir de 1024 px (laptop)
 
-    .contact {}
+    .contact {
+        padding: 5rem;
+        margin-bottom: 5rem;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+
+        &__img {
+            width: 40%;
+        }
+
+        &__form {
+            width: 50%;
+            align-items: flex-end;
+
+ 
+            &__title {
+                margin-bottom: 5rem;
+
+            }
+
+            &__fieldset{
+                align-items: flex-end;
+                &__field {
+                width: 90%;
+                }
+            }
+
+            &__button {
+                margin-top: 2rem;
+                align-self: flex-end;
+            }
+        }
+
+    }
 
 }
