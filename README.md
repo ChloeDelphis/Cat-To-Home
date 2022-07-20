@@ -26,3 +26,9 @@ sudo chgrp -R www-data .
 sudo find . -type f -exec chmod 664 {} +
 sudo find . -type d -exec chmod 775 {} +
 ```
+
+## Initialisation de l'intégration
+Se placer dans le dossier integration
+`npm install`
+Pour ouvrir une page
+`npm nomdelapage.html`
