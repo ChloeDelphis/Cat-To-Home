@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../assets/scss/main.scss">
+
+
+    <title>Cat to Home</title>
+</head>
+
+<body>
+    <header class="header">
+
+        <h1>
+            <a href="#"><img class="header__logo" src="../assets/logo/Logo.png" alt="logoCatToHome">
+            </a>
+        </h1>
+        <nav class="header__nav">
+
+            <div class="header__nav--mobtab">
+                <a href="#">|||</a>
+            </div>
+
+            <!-- Ajouter la classe header__nav--small pour faire apparaître le menu en mode mobile et tablette -->
+
+            <div class="header__nav--desktop">
+                <a class="header__nav__don button__orange--patpate" href="#">
+                    Je donne un chat</a>
+                <a class="header__nav__menu" href="#">À propos</a>
+                <a class="header__nav__menu" href="#">Les chats</a>
+                <a class="header__nav__menu" href="#">Inscription</a>
+                <a class="header__nav__menu" href="#">Connexion</a>
+                <a class="header__nav__menu" href="#">Déconnexion</a>
+
+                <a class="header__nav__menu" href="#">Contact</a>
+                <a class="header__nav__profile" href="#"><img class="header__nav__profile--icon"
+                        src="../assets/icones/profil.png" alt="icône vers profil utilisateur"><span
+                        class="header__nav__profile--text">Profil</span></a>
+            </div>
+
+        </nav>
+
+    </header>
+
+    <main>
+
+        <section>
+            <div>
+                <h2>Tu cherches a donner ou adopter un chat ? Tu es au bon endroit ! </h2>
+                <p>Cat To Home est un site web dédié à la sensibilisation au problème de l’abandon d’animaux et se veut
+                    être une solution complémentaire aux refuges pour permettre l’adoption d’un animal et mettant en
+                    relation des particuliers propriétaires d’animaux et des personnes souhaitant en adopter.</p>
+                <a href=""> <img src="../assets/icones/papate.png" alt=""> Je donne un chat</a>
+            </div>
+
+            <div>
+                <img src="../assets/img/IMG_CAT1.png" alt="">
+            </div>
+        </section>
+
+        <!-- Formulaire de recherche -->
+        <section class="search__filter">
+            <div class="search__filter__left">
+                <img src="../assets/img/IMG_CAT2.png" alt="Chat tenu par des bras sortant d'un vortex">
+            </div>
+            <div class="search__filter__right">
+                <h2>Trouve ton futur compagnon félin</h2>
+                <form action="">
+                    <label for="department">Localisation</label>
+                    <select name="departement" id="department">
+                        <option value="" selected>Département</option>
+                        <option value="Finistère">29 - Finistère</option>
+                        <option value="Morbihan">56 - Morbihan</option>
+                        <option value="Côtes d'Armor">22 - Côtes d'Armor</option>
+                        <option value="Ille-et-Vilaine">35 - Ille-et-Vilaine</option>
+                    </select>
+                    <br>
+                    <label for="filter">Filtre de recherche</label>
+                    <select name="filter" id="filter">
+                        <option value="anciens" selected>Du plus anciens au plus récent</option>
+                        <option value="recents">Du plus récent au plus anciens</option>
+                        <option value="age">Âge</option>
+                    </select>
+                    <button type="submit">Je trouve mon chat</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Carroussel -->
+        <section>
+            <h2>Il attendent un foyer depuis longtemps...!</h2>
+            <img src="../assets/icones/fleche_gauche.png" alt="">
+            <div>
+                <img src="../assets/img/chat_4.jpeg" alt="">
+                <h3>Timothy</h3>
+                <p>8 months</p>
+                <p>pick up - Rennes, france (35)</p>
+            </div>
+            <div>
+                <img src="../assets/img/chien.jpeg" alt="">
+                <h3>Timothy</h3>
+                <p>8 months</p>
+                <p>pick up - Rennes, france (35)</p>
+            </div>
+            <div>
+                <img src="../assets/img/chat_3.jpg" alt="">
+                <h3>Timothy</h3>
+                <p>8 months</p>
+                <p>pick up - Rennes, france (35)</p>
+            </div>
+            <img src="../assets/icones/fleche_droite.png" alt="">
+        </section>
+
+        <section>
+            <div>
+                <img src="../assets/img/IMG_CAT3.png" alt="">
+            </div>
+            <div>
+                <h2>L’abandon en France</h2>
+                <p>Selon des estimations, ce serait chaque année plus de 100 000 animaux abandonnés en France, dont 60
+                    000 d’entre eux durant la période estivale.
+                    L’année 2021 a notamment connu un record d’abandon d’animaux, surtout les chats et les nouveaux
+                    animaux de compagnie (NACs).
+                    « Le recueil aurait augmenté de 25 % sur le mois de juin 2021 par rapport à 2019. En cause, les
+                    achats irresponsables et impulsifs d’animaux durant les différents confinements, afin de pouvoir
+                    sortir ou s’occuper. Une fois la vie normale reprise, les animaux sont abandonnés car ils ont besoin
+                    de trop de temps et de ressources » déplore la porte-parole de l’association de défense des droits
+                    des animaux.
+                </p>
+            </div>
+
+        </section>
+
+        <section>
+            <div>
+                <h2>Les limites des refuges</h2>
+                <p>Chaque année la fourrière confie à la SPA en moyenne 46 000 animaux. Cela représente 3600 par mois,
+                    pour 7000 places au total. Hors la règle pour les fourrières régies par les collectivités
+                    territoriales, c’est que les animaux qu’elles ne peuvent plus confier à des associations doivent
+                    être euthanasiés.</p>
+            </div>
+            <div>
+                <img src="../assets/img/IMG_CAT4.png" alt="">
+            </div>
+        </section>
+
+
+    </main>
+
+    <footer class="footer">
+        <div class="logo">
+            <img src="../assets/logo/Logo.png" alt="">
+            <div class="icones_reseaux">
+                <img src="../assets/icones/insta.png" alt="">
+                <img src="../assets/icones/facebook.png" alt="">
+                <img src="../assets/icones/twitter.png" alt="">
+                <img src="../assets/icones/tiktok.png" alt="">
+            </div>
+        </div>
+        <nav class="footer__nav">
+            <a href="">Homepage</a>
+            <a href="">A propos</a>
+            <a href="">Contact</a>
+            <a href="">Les chats</a>
+            <a href="">Inscription</a>
+            <a href="">Connexion</a>
+            <a href="">Mentions Légales</a>
+        </nav>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,179 @@
+@use "../../abstracts/variables/colors";
+@use "../../abstracts/variables/font";
+
+
+// Créé en mobile-first
+// On veut que le menu burger soit visible
+// En format mobile et tablette
+// Pour afficher le menu sur ce format
+// On ajoute la classe header__nav--small
+// A l'élément qui a la classe header__nav--desktop
+
+
+// le menu classique est visible en laptop à 1024px
+
+
+
+.header {
+
+    background-color: colors.$color-bg1;
+    padding: 2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    a {
+        text-decoration: none;
+        color: colors.$color-blue;
+    }
+
+    &__logo {
+        width: 10rem;
+    }
+
+    &__nav {
+
+        &--desktop {
+            display: none;
+        }
+
+        &--small{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            background-color: colors.$color-bg1;
+            width: 100vw;
+            height: 100vh;
+            top : 8rem;
+            left: 0rem;
+        }
+        
+        &__don{
+            padding: 2rem;
+            color: colors.$color-orange;
+        }
+
+        &__menu{
+            padding : 2rem;
+        }
+
+        &__profile{
+            padding : 2rem;
+            &--text{
+                color: colors.$color-orange;
+            }
+
+            &--icon{
+            display: none;
+        }
+    }
+
+        &--mobtab {
+            font-size: 2rem;
+            font-weight: 700;
+            transform: rotate(90deg);
+        }
+    }
+}
+
+
+@media (min-width : 767px) {
+
+    // A partir de 767px (format tablette) on va afficher 
+    // le logo en plus grand...
+    .header {
+        &__logo {
+            width: 15rem;
+        }
+    }
+
+}
+
+
+@media (min-width : 1024px) {
+    // A partir de 1024px (format laptop) on va afficher
+    // Le menu complet et retirer le burger
+    // L'icône profil et retirer le texte "profil"
+
+
+
+    .header {
+
+        padding: 2rem 4rem;
+        font-size: 1.5rem;
+
+        &__nav {
+
+            &__logo {
+                width: 20rem;
+            }
+
+            &--desktop {
+                display: flex;
+                align-items: center;
+            }
+
+            &__menu:hover{
+                color: colors.$color-orange;
+            }
+
+            &__don{
+                padding: 1rem;
+                margin-right: 6rem;
+            }
+
+            &__menu {
+                padding: 1rem;
+            }
+
+            &__profile {
+                padding: 1rem;
+
+                &--text {
+                    display: none;
+                }
+
+                &--icon {
+                    display: inline;
+                    width: 2rem;
+                }
+            }
+
+            &--mobtab {
+                display: none;
+            }
+        }
+    }
+
+}
+
+@media (min-width : 1440px) {
+
+    // A partir de 1440px (
+    // on va afficher la police en 20px...
+    // on veut décaler le bouton don de chat
+    .header {
+
+        font-size: 2rem;
+
+        &__nav{
+
+            &__don{
+                margin-right: 8rem;
+            }
+        
+            &__menu {
+            padding: 2rem;
+            }
+
+            &__profile--icon{
+                width: 3rem;
+            }
+
+        }
+
+    }
+
+}

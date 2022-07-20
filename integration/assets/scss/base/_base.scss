@@ -1,0 +1,13 @@
+@use "../abstracts/variables/colors";
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    background-color: colors.$color-bg1;
+}

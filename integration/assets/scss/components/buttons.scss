@@ -1,0 +1,50 @@
+@use "../abstracts/variables/colors";
+
+
+.button__orange--papate {
+
+    background-color: colors.$color-orange;
+    padding: 1rem 1rem;
+    border: none;
+    border-radius: 1rem;
+    color: white;
+
+    &:before {
+        content: url(../icones/papate.png);
+        margin-right: 1rem;
+    }
+}
+
+.button__blue--papate {
+
+    background-color: colors.$color-blue;
+    padding: 1rem 1rem;
+    border: none;
+    border-radius: 1rem;
+    color: white;
+
+    &:before {
+        content: url(../icones/papate.png);
+        margin-right: 1rem;
+    }
+}
+
+.button__orange{
+
+    background-color: colors.$color-orange;
+    padding: 1rem 1rem;
+    border: none;
+    border-radius: 1rem;
+    color: white;
+
+}
+
+.button__blue{
+
+    background-color: colors.$color-blue;
+    padding: 1rem 1rem;
+    border: none;
+    border-radius: 1rem;
+    color: white;
+
+}

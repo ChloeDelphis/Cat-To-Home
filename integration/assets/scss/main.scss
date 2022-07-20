@@ -1,0 +1,19 @@
+
+//abstracts 
+
+@use "abstracts/variable";
+
+
+// base 
+
+@use "base/reset";
+@use "base/base";
+@use "base/fonts";
+@use "base/typography";
+
+//components
+
+@use "components/buttons.scss";
+@use "components/pages/cat-list";
+@use "components/layout/header";
+@use "components/layout/footer";

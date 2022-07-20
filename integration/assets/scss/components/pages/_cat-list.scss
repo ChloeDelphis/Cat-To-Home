@@ -1,0 +1,48 @@
+@use "../../abstracts/variables/colors";
+
+.cat__list {
+
+    .title {
+
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            width: 37rem;
+            height: auto;
+        }
+
+        h2 {
+            color: colors.$color-orange;
+            font-weight: 750;
+            text-align: center;
+            margin-top: 4rem;
+            margin-bottom: 6rem;
+        }
+    }
+
+    .research {
+
+        .search__cat__form {
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            div {
+                margin-bottom: 2rem;
+                width: 28rem;
+                
+                label {
+                    color: colors.$color-orange;
+                }
+
+                select {
+                    width: 100%;
+                }
+            }  
+        }
+    }
+}
