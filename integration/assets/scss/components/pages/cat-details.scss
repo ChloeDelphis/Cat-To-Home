@@ -25,12 +25,63 @@
             img {
                 width: 100%;
                 height: auto;
+                border-radius: 2rem;
             }
         }
 
         .cat__details__infos1 {
 
+            h2 {
+                text-align: center;
+                margin: 2rem 0;
+            }
 
+            li {
+                margin-bottom: 2rem;
+                
+            }
+
+            // ICONES DES LI
+            
+
+            #localisation::before{
+                content: url("../icones/Vector\ \(5\).png");
+            }
+            #department::before{
+                content: url("../icones/Vector\ \(6\).png");   
+            }
+            #price::before{
+                content: url("../icones/Vector\ \(7\).png");   
+            }
+            #sex::before{
+                content: url("../icones/Vector\ \(8\).png");               
+            }
+            #age::before{
+                content: url("../icones/Vector\ \(9\).png");               
+            }
+            #vaccinate::before{
+                content: url("../icones/Vector\ \(10\).png");              
+            }
+            #disease::before{
+                content: url("../icones/Vector\ \(11\).png");               
+            }
+            #environmnent::before{
+                content: url("../icones/Vector\ \(12\).png");               
+            }
+
+            #localisation::before,
+            #department::before,
+            #price::before,
+            #sex::before,
+            #age::before,
+            #vaccinate::before,
+            #disease::before,
+            #environmnent::before{
+
+                margin-right: 1rem;
+                position: relative;
+                top: 0.5rem;
+            }
         }
 
         .cat__details__illustration {
@@ -38,6 +89,26 @@
             img {
                 width: 100%;
             }
+        }
+
+        .cat__details__infos2 {
+
+            margin-top: 2rem;
+
+            span {
+                display: inline-block;
+                margin-bottom: 2rem;
+            }
+
+            p {
+                margin-bottom: 2rem;
+                line-height: 1.5rem;
+            }
+
+            li {
+
+            }
+
         }
         
     }
