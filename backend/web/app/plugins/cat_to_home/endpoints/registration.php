@@ -1,5 +1,6 @@
 <?php
-add_action('rest-api-init', 'cat_to_home_rest_user_register');
+
+add_action('rest_api_init', 'cat_to_home_rest_user_register');
 
 function cat_to_home_rest_user_register()
 {
@@ -16,7 +17,7 @@ function cat_to_home_rest_user_register()
 function cat_to_home_rest_user_register_handler($request)
 
 {
-    // prépa réponse
+    // Prépa réponse
     $response = [];
 
     $authorized_roles = [
@@ -67,6 +68,7 @@ function cat_to_home_rest_user_register_handler($request)
     if (!email_exists($email)) {
         $user_id = wp_insert_user([
             'user_pass' => $password,
+            'user_login' => $email,
             'user_email' => $email,
             'first_name' => $firstname,
             'last_name' => $lastname
@@ -82,7 +84,7 @@ function cat_to_home_rest_user_register_handler($request)
             // Ger User Data (Non-Sensitive, Pass to front end.)
             $response['code'] = 200;
 
-            $response['message'] = __("L'utilisateur '" . $firstname . "est bien créé ! ", "wp-rest-user");
+            $response['message'] = __("L'utilisateur " . $firstname . " est bien créé ! ", "wp-rest-user");
         } else {
             return $user_id;
         }

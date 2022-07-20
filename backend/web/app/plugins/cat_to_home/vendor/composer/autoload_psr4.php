@@ -6,5 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Roles\\' => array($baseDir . '/Roles'),
     'Migration\\' => array($baseDir . '/Migration'),
 );

@@ -2,7 +2,8 @@
     "name": "student/cat_to_home",
     "autoload": {
         "psr-4": {
-            "Migration\\": "Migration/"
+            "Migration\\": "Migration/",
+            "Roles\\": "Roles/"
         }
     },
     "authors": [

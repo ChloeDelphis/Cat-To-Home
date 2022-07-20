@@ -9,6 +9,8 @@ Version: 1.0
 require __DIR__ . '/vendor/autoload.php';
 
 use Migration\User_PostMigration;
+use Roles\Adopter;
+use Roles\Owner;
 
 // Customs post-types
 require_once plugin_dir_path(__FILE__) . './post-types/cat.php';
@@ -21,18 +23,20 @@ require_once plugin_dir_path(__FILE__) . './taxonomies/sex.php';
 require_once plugin_dir_path(__FILE__) . './taxonomies/vaccinate.php';
 
 // Custom endpoint
-require_once plugin_dir_path(__FILE__) . './custom-endpoints/registration.php';
+require_once plugin_dir_path(__FILE__) . './endpoints/registration.php';
 
 register_activation_hook(__FILE__, 'cat_to_home_create_custom_roles');
 function cat_to_home_create_custom_roles()
 {
-    // cat_to_home_create_cook_role();
-    User_PostMigration::createTable();
+    Adopter::cat_to_home_create_adopter_role();
+    Owner::cat_to_home_create_owner_role();
+    User_PostMigration::cat_to_home_createTable();
 }
 
 register_deactivation_hook(__FILE__, 'cat_to_home_remove_custom_roles');
 function cat_to_home_remove_custom_roles()
 {
-    // cat_to_home_remove_cook_role();
-    User_PostMigration::deleteTable();
+    Adopter::cat_to_home_remove_adopter_role();
+    Owner::cat_to_home_remove_owner_role();
+    User_PostMigration::cat_to_home_deleteTable();
 }
