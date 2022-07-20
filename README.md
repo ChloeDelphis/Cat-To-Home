@@ -30,5 +30,6 @@ sudo find . -type d -exec chmod 775 {} +
 ## Initialisation de l'intégration
 Se placer dans le dossier integration
 `npm install`
-Pour ouvrir une page
-`npm nomdelapage.html`
+Pour ouvrir une page : 
+se placer dans le dossier html et taper
+`npx parcel nomdelapage.html`
