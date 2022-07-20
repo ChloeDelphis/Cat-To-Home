@@ -1,14 +1,15 @@
 @use '../../abstracts/variables/colors';
 
 
-@media screen and (max-width: 1100px) {
-    .home {
+// @media screen and (max-width: 1100px) {
+//     .home {
 
-        &__bloc__text {
-        
-        }
-    }
-}
+//         &__bloc__text {
+//             max-width: 30rem;
+//         }
+//     }
+// }
+
 @media screen and (max-width: 768px) {
     .home {
         flex-direction: column;
@@ -21,14 +22,17 @@
     }
 }
 .home {
+    color: colors.$color-blue;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     margin-top: 16rem;
+    
 
 
     &__bloc__text {
         max-width: 50rem;
+        margin: 0 5%;
     }
 
     &__title,
@@ -41,6 +45,10 @@
 
         img {
             width: 80%;
+        }
+
+        &__cat{
+            width: 15rem;
         }
 
     }
@@ -56,7 +64,17 @@
 
         .button__orange--papate {
             margin: 5rem 0;
+            width: 20rem;
         }
+    }
+
+    &__carroussel__title{
+        text-align: center;
+        margin-top: 16rem;
+        color: colors.$color-blue;
+    }
+
+    &__arrow{
 
     }
 
