@@ -1,12 +1,14 @@
 @use '../abstracts/variables/colors';
 @use "../abstracts/variables/font";
 
-@media screen and (min-width: 1100px) {
+@media screen and (max-width: 480px) {
+    .arrow{
+        width: 4rem;
+    }
     .post {
-        width: 40rem;
-
+        min-width: 18rem;
         &__img {
-            height: 25rem;
+            height: 20rem;
         }
     }
 }
@@ -19,13 +21,15 @@
     color: #ffffff;
     position: relative;
     margin: 2rem;
-    width: 20rem;
+    width: 30rem;
     border: 2px solid #FFFFFF;
     border-radius: 20px;
     box-shadow: 6px 6px 6px colors.$color-blue;
 
     &__img {
-        height: 25rem;
+        position: relative;
+        height: 30rem;
+        width: 100%;
         border-top-left-radius: 2rem;
         border-top-right-radius: 2rem;
         object-fit: cover;
