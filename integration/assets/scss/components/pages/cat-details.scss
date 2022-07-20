@@ -1,0 +1,44 @@
+@use "../../abstracts/variables/colors";
+
+.cat__details {
+
+    width: 80vw;
+    border: 2px solid red;
+    margin: auto;
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .cat__details__container {
+
+        display: flex;
+        flex-direction: column;
+
+        div {
+            width: 100%;
+            color: colors.$color-blue;
+        }
+
+        .cat__details__photo {
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .cat__details__infos1 {
+
+
+        }
+
+        .cat__details__illustration {
+            
+            img {
+                width: 100%;
+            }
+        }
+        
+    }
+}
