@@ -49,80 +49,108 @@
     </header>
 
     <main>
-
-        <h2>Créé la fiche adoption de ton chat</h2>
+        <h2 class="home__title">Créé la fiche adoption de ton chat</h2>
         <form action="">
-            <section>
+            <section class="adoption">
+                <div class="adoption__left__part">
+                    <fieldset class="adoption__form">
+                        <div class="adoption__form__pair">
+                            <label class="input__name" for="lastname">Nom</label>
+                            <input class="input" type="text" id="lastname" name="lastname" placeholder="Doe">
+                        </div>
+                        <div class="adoption__form__pair">
+                            <label class="input__name" for="sexe">Sexe</label>
+                            <select class="input" name="sexe" id="sexe">
+                                <option value="" selected>Sexe</option>
+                                <option value="male">Mâle</option>
+                                <option value="female">Femelle</option>
+                                <option value="unknown">Inconnu</option>
+                            </select>
+                        </div>
+                        <div class="adoption__form__pair">
+                            <label class="input__name" for="localisation">Localisation</label>
+                            <input class="input" type="text" id="localisation" name="localisation" placeholder="Paris">
+                        </div>
+                        <div class="adoption__form__pair">
+                            <label class="input__name" for="department">Département</label>
+                            <select class="input" name="departement" id="department">
+                                <option value="" selected>Département</option>
+                                <option value="Finistère">29 - Finistère</option>
+                                <option value="Morbihan">56 - Morbihan</option>
+                                <option value="Côtes d'Armor">22 - Côtes d'Armor</option>
+                                <option value="Ille-et-Vilaine">35 - Ille-et-Vilaine</option>
+                            </select>
+                        </div>
 
-                <fieldset>
-                    <label for="lastname">Nom</label><br>
-                    <input class="input" type="text" id="lastname" name="lastname" placeholder="Doe"><br>
+                        <div class="adoption__form__pair">
+                            <label class="input__name" for="environment">Environnement</label>
+                            <select class="input" name="environment" id="environment">
+                                <option value="" selected>Environnement</option>
+                                <option value="">Interieur</option>
+                                <option value="">Exterieur</option>
+                            </select>
+                        </div>
 
-                    <label for="localisation">Localisation</label><br>
-                    <input class="input" type="text" id="localisation" name="localisation" placeholder="Paris"><br>
+                        <div class="adoption__form__pair">
+                            <label class="input__name" for="age">Date de naissance</label>
+                            <input class="input" type="date" id="age" name="age" min="2000-01-01" max="20-12-31">
+                        </div>
 
-                    <label for="department">Département</label>
-                    <select class="input" class="input" name="departement" id="department">
-                        <option value="" selected>Département</option>
-                        <option value="Finistère">29 - Finistère</option>
-                        <option value="Morbihan">56 - Morbihan</option>
-                        <option value="Côtes d'Armor">22 - Côtes d'Armor</option>
-                        <option value="Ille-et-Vilaine">35 - Ille-et-Vilaine</option>
-                    </select>
+                        <div class="adoption__form__pair">
+                            <label class="input__name" for="vaccine">Vacciné contre</label>
+                            <div>
+                                <input type="checkbox" id="vaccine1" name="vaccine1" value="vaccine1">
+                                <label for="vaccine1"> La rage</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="vaccine2" name="vaccine2" value="vaccine2">
+                                <label for="vaccine2"> Le coryza du chat</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="vaccine3" name="vaccine3" value="vaccine3">
+                                <label for="vaccine3"> Le typhus félin</label>
+                            </div>
+                        </div>
 
-                    <label for="sexe">sexe</label>
-                    <select class="input" name="sexe" id="sexe">
-                        <option value="" selected>Sexe</option>
-                        <option value="male">Mâle</option>
-                        <option value="female">Femelle</option>
-                        <option value="unknown">Inconnu</option>
-                    </select>
-
-                    <label for="age">Date de naissance</label>
-                    <input type="date" id="age" name="age" min="2000-01-01" max="20-12-31">
-
-                    <div>
-                        <label for="vaccine">Vacciné contre</label>
-                        <input type="checkbox" id="vaccine1" name="vaccine1" value="vaccine1">
-                        <label for="vaccine1"> La rage</label>
-                        <input type="checkbox" id="vaccine2" name="vaccine2" value="vaccine2">
-                        <label for="vaccine2"> Le coryza du chat</label>
-                        <input type="checkbox" id="vaccine3" name="vaccine3" value="vaccine3">
-                        <label for="vaccine3"> Le typhus félin</label>
-                    </div>
-
-                    <fieldset>
-                        <legend> Votre chat est-il malade? (si oui, préciser dans la déscription)</legend>
-                        <input type="radio" id="yes" name="sickness" value="yes">
-                        <label for="yes">Oui</label>
-                        <input type="radio" id="no" name="sickness" value="no">
-                        <label for="no">Non</label>
-                        <input type="radio" id="unknown" name="sickness" value="unknown">
-                        <label for="unknown">Ne sais pas</label>
+                        <fieldset class="adoption__form__pair">
+                            <div class="input__name">
+                                <legend> Votre chat est-il malade? <br> <span>(si oui, préciser dans la
+                                        déscription)</span>
+                                </legend>
+                            </div>
+                            <div>
+                                <input type="radio" id="yes" name="sickness" value="yes">
+                                <label for="yes">Oui</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="no" name="sickness" value="no">
+                                <label for="no">Non</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="unknown" name="sickness" value="unknown">
+                                <label for="unknown">Ne sais pas</label>
+                            </div>
+                        </fieldset>
                     </fieldset>
 
-                    <label for="environment">Environnement</label>
-                    <select class="input" name="environment" id="environment">
-                        <option value="" selected>Environnement</option>
-                        <option value="">Interieur</option>
-                        <option value="">Exterieur</option>
-                    </select>
+                    <div class="adoption__description">
+                        <label class="input__name" for="description">Description</label>
+                        <textarea class="input" id="description" name="description"> </textarea>
+                    </div>
+                </div>
 
-                    <label for="description">Déscription</label>
-                    <textarea class="input" id="description" name="description"> </textarea>
-                </fieldset>
-                <div>
+                <div class="adoption__add__picture">
                     <a href=""><img src="../assets/icones/Vector (13).png" alt=""></a>
                 </div>
 
             </section>
 
-            <section>
-                <div>
-                    <h2>
+            <section class="information">
+                <div class="information__content">
+                    <h2 class="information__content__title">
                         Informations réglementaires
                     </h2>
-                    <p>She shook her head, and shook it again, as if trying to clear it, which is what she was trying to
+                    <p class="information__content__paragraphe">She shook her head, and shook it again, as if trying to clear it, which is what she was trying to
                         do.
                         They did not realize that because of the quasi-reciprocal and circular nature of all
                         Improbability
@@ -134,7 +162,7 @@
                         random
                         adjectives and nouns together. He smiled the smile that Zaphod had wanted to hit and this time
                         Zaphod
-                        hit it.
+                        hit it. <br>
 
                         I don’t want to buy a ticket, I just want to buy the zoo. The shorter man noticed the new
                         arrivals;
@@ -149,19 +177,22 @@
                         about berries. “Zaphod! I am so happy to see you.”
                     </p>
                     <div>
-                        <label for="permission">Vacciné contre</label>
-                        <input type="checkbox" id="permission1" name="permission1" value="permission1">
-                        <label for="permission1"> She shook her head, and shook it again</label>
-                        <input type="checkbox" id="permission2" name="permission2" value="permission2">
-                        <label for="permission2"> She shook her head, and shook it again</label>
-                        <input type="checkbox" id="permission3" name="permission3" value="permission3">
-                        <label for="permission3"> She shook her head, and shook it again</label>
-                        <input type="checkbox" id="permission4" name="permission4" value="permission4">
-                        <label for="permission4"> She shook her head, and shook it again</label>
+                        <div class="information__content__regulatory">
+                            <label for="permission">Vacciné contre</label>
+                            <input type="checkbox" id="permission1" name="permission1" value="permission1">
+                            <label for="permission1"> She shook her head, and shook it again</label>
+                            <input type="checkbox" id="permission2" name="permission2" value="permission2">
+                            <label for="permission2"> She shook her head, and shook it again</label>
+                            <input type="checkbox" id="permission3" name="permission3" value="permission3">
+                            <label for="permission3"> She shook her head, and shook it again</label>
+                            <input type="checkbox" id="permission4" name="permission4" value="permission4">
+                            <label for="permission4"> She shook her head, and shook it again</label>
+                        </div>
+                        <button class="button__orange">Valider la création de la fiche</button>
                     </div>
-                    <button class="button__orange">Valider la création de la fiche</button>
+                  <img class="img__cat__information" src="../assets/img/purr-cat-21.png" alt="">
                 </div>
-                <img src="../assets/img/purr-cat-21.png" alt="">
+              
             </section>
         </form>
 
