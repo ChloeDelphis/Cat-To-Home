@@ -28,7 +28,7 @@
         &__title {
             color: white;
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 4rem;
         }
 
         &__fieldset {
@@ -38,11 +38,11 @@
             align-items: center;
             justify-content: center;
 
-            .left{
+            .left {
                 width: 100%;
             }
 
-            .right{
+            .right {
                 width: 100%;
                 display: flex;
                 flex-direction: column;
@@ -95,13 +95,13 @@
         &__form {
             padding: 4rem;
 
-            .left{
+            .left {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
             }
 
-            .right{
+            .right {
                 align-items: center;
             }
 
@@ -123,8 +123,104 @@
 
         &__img {
             width: 30%;
+            padding: 2rem;
         }
 
+
+        &__form {
+
+            padding: 5rem 3rem;
+
+
+
+            &__fieldset {
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: space-around;
+
+                .left {
+                    align-items: flex-start;
+                }
+
+                .right {
+                    align-items: flex-start;
+
+                }
+
+                &__field {
+                    width: 90%;
+
+                    div {
+                        margin-top: 1.3rem;
+                    }
+                }
+
+            }
+
+            &__button {
+                margin-top: 0rem;
+                align-self: flex-start;
+
+
+            }
         }
+
+    }
+
+}
+
+@media (min-width : 1440px) {
+    // A partir de 1440px
+
+    .inscription {
+
+        margin-top: 5rem;
+
+        &__img {
+            width: 40%;
+        }
+
+        &__form {
+
+            padding: 5rem;
+
+            &__fieldset {
+
+                .right {
+                    // margin-left: 2rem;
+                }
+
+                &__field {
+
+                    width: 80%;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width : 1700px) {
+    // A partir de 1700px
+
+    .inscription {
+
+        &__img {
+            margin: 0 6rem;
+            width: 60%;
+        }
+
+        &__form {
+
+            padding: 5rem 10rem;
+
+            &__fieldset {
+
+                &__field {
+
+                    width: 70%;
+                }
+            }
+        }
+    }
 
 }
