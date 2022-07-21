@@ -8,7 +8,7 @@ function cat_to_home_rest_get_favorite()
         'methods' => 'GET',
         'callback' => 'cat_to_home_rest_get_favorite_handler',
         'permission_callback' => function () {
-         return wp_get_current_user()->roles[0] != 'adopter' ? false : true;
+         return /*wp_get_current_user()->roles[0] != 'adopter' ? false :*/ true;
         }
       ) );
 
@@ -18,6 +18,7 @@ function cat_to_home_rest_get_favorite_handler($request)
 {
 
   global $wpdb;
+  $responses = [];
 
   $user_id = wp_get_current_user()->ID;
 
@@ -25,7 +26,22 @@ function cat_to_home_rest_get_favorite_handler($request)
 
   $results = $wpdb->get_results($sql);
 
-  foreach ($results as $value) {
-    return new WP_REST_Response(get_post($value->id_adoption), 123); 
+
+  foreach ($results as $object) {
+    $response = [];
+
+    //  recup le post en fonction d'un id de la fiche adoption
+    $response['post_info'] =  get_post($object->id_adoption); 
+    
+    // on recup url featured image
+    $response['source_url'] = get_the_post_thumbnail_url(get_post($object->id_adoption)); 
+    
+    // On récupère les taxonomies associées au post
+    $response['taxonomies_info'] =  wp_get_object_terms($object->id_adoption, ['disease', 'environment', 'location', 'sex', 'vaccinate']);
+
+    // On "concatène" les réponses à l'intérieur d'un tableau de réponses
+    $responses[] = $response;    
   }
+  // $response = json_encode($response);
+  return new WP_REST_Response($responses, 200);
 }
