@@ -1,0 +1,116 @@
+@use "../../abstracts/variables/colors";
+@use "../../abstracts/variables/font";
+
+
+.inscription {
+
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__img {
+        margin: 3rem 0;
+        width: 55%;
+    }
+
+    &__form {
+        background-color: colors.$color-bg2;
+        width: 100%;
+        padding: 3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &__title {
+            margin-bottom: 2rem;
+        }
+
+        &__fieldset {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            &__field {
+                margin-bottom: 2rem;
+                width: 100%;
+
+                .radio{
+                    padding: 0 2rem;
+                    color: blue; 
+                }
+
+                label{
+                    color: colors.$color-orange;
+                }
+                span{
+                    font-weight: 600;
+                }
+
+                &__input {
+                    width: 100%;
+                }
+            }
+
+        }
+
+        
+
+        &__button {
+            margin-top: 1rem;
+        }
+    }
+}
+
+
+
+
+@media (min-width : 768px) {
+    // A partir de 768px (tablette)
+
+    .connexion__form {
+
+
+        &__fieldset__field {
+            width: 70%;
+        }
+    }
+
+}
+
+@media (min-width : 1024px) {
+    // A partir de 1024 px (laptop)
+
+    .connexion{
+
+        padding: 5rem;
+        margin-bottom: 5rem;
+        flex-direction: row;
+        align-items: stretch;
+
+        &__img{
+            margin: 0;
+            padding-right: 5rem;
+            width: 50%;
+        }
+
+        &__form{
+            &__title{
+            margin-bottom: 5rem;
+
+        }
+        &__fieldset__field {
+            width: 90%;
+        }
+
+        &__button{
+            margin-top: 5rem;
+        }
+    }
+
+    }
+
+}
