@@ -17,6 +17,10 @@ global $wpdb;
 // d(wp_remote_get('http://cat_to_home.local/wp-json/wp/v2/cat/8'));
 // die;
 
+// d(WP_User::get_data_by('id', 1));die;
+// $user = wp_get_current_user();
+// d(get_users());die;
+
 require __DIR__ . '/vendor/autoload.php';
 
 use Migration\User_PostMigration;
@@ -35,6 +39,8 @@ require_once plugin_dir_path(__FILE__) . './taxonomies/vaccinate.php';
 
 // Custom endpoint
 require_once plugin_dir_path(__FILE__) . './endpoints/registration.php';
+require_once plugin_dir_path(__FILE__) . './endpoints/favorite.php';
+
 
 register_activation_hook(__FILE__, 'cat_to_home_create_custom_roles');
 function cat_to_home_create_custom_roles()

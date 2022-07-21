@@ -92,5 +92,5 @@ function cat_to_home_rest_user_register_handler($request)
         $error->add(406, __("L'Email existe déjà, veuillez vous connecter ou réinitialiser votre mot de passe.", 'wp-rest-user'), array('status' => 400));
         return $error;
     }
-    return new WP_REST_Response($response, 123);
+    return new WP_REST_Response($response, 200);
 }
