@@ -1,38 +1,39 @@
 @use '../../abstracts/variables/colors';
-
-
-// @media screen and (max-width: 1100px) {
-//     .home {
-
-//         &__bloc__text {
-//             max-width: 30rem;
-//         }
-//     }
-// }
+@use "../../abstracts/variables/font";
 
 @media screen and (max-width: 768px) {
     .home {
-        flex-direction: column;
-        margin-left: 2em;
-        margin-right: 2rem;
 
-        // .home:first-child {
-        //     flex-direction: column-reverse;
-        // }
+        &__response {
+            flex-direction: column;
+            padding: 2rem 0;
+
+            &__reverse {
+                flex-direction: column-reverse;
+                margin-left: 2em;
+                margin-right: 2rem;
+            }
+        }
+
+        .post__none {
+            display: none;
+        }
     }
 }
+
+
 .home {
     color: colors.$color-blue;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    margin-top: 16rem;
-    
+    padding: 6rem 0;
+
 
 
     &__bloc__text {
-        max-width: 50rem;
-        margin: 0 5%;
+        max-width: 40rem;
+        margin: 5% 5%;
     }
 
     &__title,
@@ -47,8 +48,8 @@
             width: 80%;
         }
 
-        &__cat{
-            width: 15rem;
+        &__cat {
+            width: 20rem;
         }
 
     }
@@ -63,19 +64,24 @@
         }
 
         .button__orange--papate {
-            margin: 5rem 0;
+            margin-top: 5rem;
             width: 20rem;
         }
     }
 
-    &__carroussel__title{
+    &__carrousel__title {
         text-align: center;
-        margin-top: 16rem;
+        margin-top: 10rem;
         color: colors.$color-blue;
     }
 
-    &__arrow{
+}
 
-    }
+.bg__blue {
+    background-color: colors.$color-blue;
+    color: white;
+}
 
+.bg__orange {
+    background-color: colors.$color-bg2;
 }
