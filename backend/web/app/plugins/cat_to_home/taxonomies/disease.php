@@ -10,7 +10,7 @@ function disease_init() {
 		'public'                => true,
 		'show_in_nav_menus'     => true,
 		'show_ui'               => true,
-		'show_admin_column'     => false,
+		'show_admin_column'     => true,
 		'query_var'             => true,
 		'rewrite'               => true,
 		'capabilities'          => [
@@ -44,6 +44,7 @@ function disease_init() {
 			'back_to_items'              => __( '&larr; Back to Diseases', 'cat_to_home' ),
 		],
 		'show_in_rest'          => true,
+		'post-types' 			=> ['cat'],
 		'rest_base'             => 'disease',
 		'rest_controller_class' => 'WP_REST_Terms_Controller',
 	] );
