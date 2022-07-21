@@ -26,16 +26,18 @@
                 <a href="#">|||</a>
             </div>
 
-            <!-- Ajouter la classe header__nav--small pour faire apparaître le menu en mode mobile et tablette -->
+            <!-- pour faire apparaître le menu en mode mobile et tablette :
+                Ajouter la classe header__nav--small à la div ci-dessous
+            Ajouter la classe fixed à l'élément header  -->
 
             <div class="header__nav--desktop">
                 <a class="header__nav__don button__orange--papate" href="#">
                     Je donne un chat</a>
                 <a class="header__nav__menu" href="#">À propos</a>
                 <a class="header__nav__menu" href="#">Les chats</a>
-                <a class="header__nav__menu" href="#">Inscription</a>
+                <!-- <a class="header__nav__menu" href="#">Inscription</a>
                 <a class="header__nav__menu" href="#">Connexion</a>
-                <a class="header__nav__menu" href="#">Déconnexion</a>
+                <a class="header__nav__menu" href="#">Déconnexion</a> -->
 
                 <a class="header__nav__menu" href="#">Contact</a>
                 <a class="header__nav__profile" href="#"><img class="header__nav__profile--icon"
@@ -48,6 +50,9 @@
     </header>
 
     <!-- MAIN -->
+
+    <!-- Modification profil utilisateur -->
+
     <main class="profil__proprietaire">
     
         <section class="profil__form">
@@ -84,22 +89,230 @@
                     </fieldset>
                 </form>
                 <img  id="ginger__cat" src="../assets/img/purr-cat-17.png" alt="illustration de chat sur ses pattes arrières">
-                <a id="give" class="button__orange--papate" href="#">Donner un chat</a>
             </div>
+        </section>
+
+        <div id="give">
+            <a class="button__orange--papate" href="#">Donner un chat</a>
+        </div>
+
+        <!-- List of adoption sheets of the "owner" user, with the possibility to modifiy or delete them  -->
+
+        <section class="profil__adoption">
+
+            <img src="../assets/img/melvil.jpg" alt="" class="profil__adoption__picture">
+
+            <div class="profil__adoption__left__part">
+                <fieldset class="profil__adoption__form">
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="name">Nom</label>
+                        <input class="input" type="text" id="name" name="name" placeholder="Doe">
+                    </div>
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="sexe">Sexe</label>
+                        <select class="input" name="sexe" id="sexe">
+                            <option value="" selected>Sexe</option>
+                            <option value="male">Mâle</option>
+                            <option value="female">Femelle</option>
+                            <option value="unknown">Inconnu</option>
+                        </select>
+                    </div>
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="localisation">Localisation</label>
+                        <input class="input" type="text" id="localisation" name="localisation" placeholder="Paris">
+                    </div>
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="department">Département</label>
+                        <select class="input" name="departement" id="department">
+                            <option value="" selected>Département</option>
+                            <option value="Finistère">29 - Finistère</option>
+                            <option value="Morbihan">56 - Morbihan</option>
+                            <option value="Côtes d'Armor">22 - Côtes d'Armor</option>
+                            <option value="Ille-et-Vilaine">35 - Ille-et-Vilaine</option>
+                        </select>
+                    </div>
+
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="environment">Environnement</label>
+                        <select class="input" name="environment" id="environment">
+                            <option value="" selected>Environnement</option>
+                            <option value="">Interieur</option>
+                            <option value="">Exterieur</option>
+                        </select>
+                    </div>
+
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="age">Date de naissance</label>
+                        <input class="input" type="date" id="age" name="age" min="2000-01-01" max="20-12-31">
+                    </div>
+
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="vaccine">Vacciné contre</label>
+                        <div>
+                            <input type="checkbox" id="vaccine1" name="vaccine1" value="vaccine1">
+                            <label for="vaccine1"> La rage</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="vaccine2" name="vaccine2" value="vaccine2">
+                            <label for="vaccine2"> Le coryza du chat</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="vaccine3" name="vaccine3" value="vaccine3">
+                            <label for="vaccine3"> Le typhus félin</label>
+                        </div>
+                    </div>
+
+                    <fieldset class="profil__adoption__form__pair">
+                        <div class="input__name">
+                            <legend> Votre chat est-il malade? <br> <span>(si oui, préciser dans la
+                                    déscription)</span>
+                            </legend>
+                        </div>
+                        <div>
+                            <input type="radio" id="yes" name="sickness" value="yes">
+                            <label for="yes">Oui</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="no" name="sickness" value="no">
+                            <label for="no">Non</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="unknown" name="sickness" value="unknown">
+                            <label for="unknown">Ne sais pas</label>
+                        </div>
+                    </fieldset>
+                </fieldset>
+
+                <div class="profil__adoption__description">
+                    <label class="input__name" for="description">Description</label>
+                    <textarea rows="10" class="input" id="description" name="description"> </textarea>
+                </div>
+
+                <div class="profil__adoption__buttons">
+                    <button class="button__orange" type="submit">Valider les modification</button>
+                    <button class="button__orange" type="submit">Supprimer la fiche</button>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="profil__adoption">
+
+            <img src="../assets/img/chat_1.jpg" alt="" class="profil__adoption__picture">
+
+            <div class="profil__adoption__left__part">
+                <fieldset class="profil__adoption__form">
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="name">Nom</label>
+                        <input class="input" type="text" id="name" name="name" placeholder="Doe">
+                    </div>
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="sexe">Sexe</label>
+                        <select class="input" name="sexe" id="sexe">
+                            <option value="" selected>Sexe</option>
+                            <option value="male">Mâle</option>
+                            <option value="female">Femelle</option>
+                            <option value="unknown">Inconnu</option>
+                        </select>
+                    </div>
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="localisation">Localisation</label>
+                        <input class="input" type="text" id="localisation" name="localisation" placeholder="Paris">
+                    </div>
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="department">Département</label>
+                        <select class="input" name="departement" id="department">
+                            <option value="" selected>Département</option>
+                            <option value="Finistère">29 - Finistère</option>
+                            <option value="Morbihan">56 - Morbihan</option>
+                            <option value="Côtes d'Armor">22 - Côtes d'Armor</option>
+                            <option value="Ille-et-Vilaine">35 - Ille-et-Vilaine</option>
+                        </select>
+                    </div>
+
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="environment">Environnement</label>
+                        <select class="input" name="environment" id="environment">
+                            <option value="" selected>Environnement</option>
+                            <option value="">Interieur</option>
+                            <option value="">Exterieur</option>
+                        </select>
+                    </div>
+
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="age">Date de naissance</label>
+                        <input class="input" type="date" id="age" name="age" min="2000-01-01" max="20-12-31">
+                    </div>
+
+                    <div class="profil__adoption__form__pair">
+                        <label class="input__name" for="vaccine">Vacciné contre</label>
+                        <div>
+                            <input type="checkbox" id="vaccine1" name="vaccine1" value="vaccine1">
+                            <label for="vaccine1"> La rage</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="vaccine2" name="vaccine2" value="vaccine2">
+                            <label for="vaccine2"> Le coryza du chat</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="vaccine3" name="vaccine3" value="vaccine3">
+                            <label for="vaccine3"> Le typhus félin</label>
+                        </div>
+                    </div>
+
+                    <fieldset class="profil__adoption__form__pair">
+                        <div class="input__name">
+                            <legend> Votre chat est-il malade? <br> <span>(si oui, préciser dans la
+                                    déscription)</span>
+                            </legend>
+                        </div>
+                        <div>
+                            <input type="radio" id="yes" name="sickness" value="yes">
+                            <label for="yes">Oui</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="no" name="sickness" value="no">
+                            <label for="no">Non</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="unknown" name="sickness" value="unknown">
+                            <label for="unknown">Ne sais pas</label>
+                        </div>
+                    </fieldset>
+                </fieldset>
+
+                <div class="profil__adoption__description">
+                    <label class="input__name" for="description">Description</label>
+                    <textarea rows="10" class="input" id="description" name="description"> </textarea>
+                </div>
+
+                <div class="profil__adoption__buttons">
+                    <button class="button__orange" type="submit">Valider les modification</button>
+                    <button class="button__orange" type="submit">Supprimer la fiche</button>
+                </div>
+            </div>
+
         </section>
 
     </main>
     <!-- FOOTER -->
     <footer class="footer">
         <div class="footer__visuals">
-            <div class="footer__visuals__logo">
-            <img class="footer__visuals__logo__img" src="../assets/logo/Logo-white.png" alt="Logo Cat To Home blanc">
-        </div>
+            <img class="footer__visuals__logo" src="../assets/logo/Logo-white.png" alt="Logo Cat To Home blanc">
+
             <div class="footer__visuals__social-media">
-                <img class="footer__visuals__social-media__item" src="../assets/icones/insta.png" alt="">
-                <img class="footer__visuals__social-media__item" src="../assets/icones/facebook.png" alt="">
-                <img class="footer__visuals__social-media__item" src="../assets/icones/twitter.png" alt="">
-                <img class="footer__visuals__social-media__item" src="../assets/icones/tiktok.png" alt="">
+                <a class="footer__visuals__social-media__item" href="#"> <img src="../assets/icones/insta.png"
+                        alt="logo insta">
+                </a>
+                <a class="footer__visuals__social-media__item" href="#"> <img src="../assets/icones/facebook.png"
+                        alt="loho facebook">
+                </a>
+                <a class="footer__visuals__social-media__item" href="#"> <img src="../assets/icones/twitter.png"
+                        alt="logo twitter">
+                </a>
+                <a class="footer__visuals__social-media__item" href="#"> <img src="../assets/icones/tiktok.png"
+                        alt="logo tiktok">
+                </a>
             </div>
         </div>
         <nav class="footer__nav">
@@ -112,10 +325,10 @@
                 <a class="footer__nav__item" href="#">Les chats</a>
                 <a class="footer__nav__item" href="#">Inscription</a>
                 <a class="footer__nav__item" href="#">Connexion</a>
+                <!-- <a class="footer__nav__item" href="#">Déconnexion</a> -->
                 <a class="footer__nav__item" href="#">Mentions Légales</a>
             </div>
         </nav>
     </footer>
-
 </body>
 </html>
