@@ -26,16 +26,18 @@
                 <a href="#">|||</a>
             </div>
 
-            <!-- Ajouter la classe header__nav--small pour faire apparaître le menu en mode mobile et tablette -->
+            <!-- pour faire apparaître le menu en mode mobile et tablette :
+                Ajouter la classe header__nav--small à la div ci-dessous
+            Ajouter la classe fixed à l'élément header  -->
 
             <div class="header__nav--desktop">
                 <a class="header__nav__don button__orange--papate" href="#">
                     Je donne un chat</a>
                 <a class="header__nav__menu" href="#">À propos</a>
                 <a class="header__nav__menu" href="#">Les chats</a>
-                <a class="header__nav__menu" href="#">Inscription</a>
+                <!-- <a class="header__nav__menu" href="#">Inscription</a>
                 <a class="header__nav__menu" href="#">Connexion</a>
-                <a class="header__nav__menu" href="#">Déconnexion</a>
+                <a class="header__nav__menu" href="#">Déconnexion</a> -->
 
                 <a class="header__nav__menu" href="#">Contact</a>
                 <a class="header__nav__profile" href="#"><img class="header__nav__profile--icon"
@@ -296,14 +298,21 @@
     <!-- FOOTER -->
     <footer class="footer">
         <div class="footer__visuals">
-            <div class="footer__visuals__logo">
-            <img class="footer__visuals__logo__img" src="../assets/logo/Logo-white.png" alt="Logo Cat To Home blanc">
-        </div>
+            <img class="footer__visuals__logo" src="../assets/logo/Logo-white.png" alt="Logo Cat To Home blanc">
+
             <div class="footer__visuals__social-media">
-                <img class="footer__visuals__social-media__item" src="../assets/icones/insta.png" alt="">
-                <img class="footer__visuals__social-media__item" src="../assets/icones/facebook.png" alt="">
-                <img class="footer__visuals__social-media__item" src="../assets/icones/twitter.png" alt="">
-                <img class="footer__visuals__social-media__item" src="../assets/icones/tiktok.png" alt="">
+                <a class="footer__visuals__social-media__item" href="#"> <img src="../assets/icones/insta.png"
+                        alt="logo insta">
+                </a>
+                <a class="footer__visuals__social-media__item" href="#"> <img src="../assets/icones/facebook.png"
+                        alt="loho facebook">
+                </a>
+                <a class="footer__visuals__social-media__item" href="#"> <img src="../assets/icones/twitter.png"
+                        alt="logo twitter">
+                </a>
+                <a class="footer__visuals__social-media__item" href="#"> <img src="../assets/icones/tiktok.png"
+                        alt="logo tiktok">
+                </a>
             </div>
         </div>
         <nav class="footer__nav">
@@ -316,10 +325,10 @@
                 <a class="footer__nav__item" href="#">Les chats</a>
                 <a class="footer__nav__item" href="#">Inscription</a>
                 <a class="footer__nav__item" href="#">Connexion</a>
+                <!-- <a class="footer__nav__item" href="#">Déconnexion</a> -->
                 <a class="footer__nav__item" href="#">Mentions Légales</a>
             </div>
         </nav>
     </footer>
-
 </body>
 </html>
