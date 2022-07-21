@@ -4,10 +4,11 @@
 
 .inscription {
 
-    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+
 
     &__img {
         margin: 3rem 0;
@@ -15,6 +16,7 @@
     }
 
     &__form {
+
         background-color: colors.$color-bg2;
         width: 100%;
         padding: 3rem;
@@ -24,7 +26,9 @@
         align-items: center;
 
         &__title {
-            margin-bottom: 2rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 4rem;
         }
 
         &__fieldset {
@@ -34,34 +38,48 @@
             align-items: center;
             justify-content: center;
 
+            .left {
+                width: 100%;
+            }
+
+            .right {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+
+            }
+
             &__field {
                 margin-bottom: 2rem;
                 width: 100%;
 
-                .radio{
+                .radio {
                     padding: 0 2rem;
-                    color: blue; 
                 }
 
-                label{
+                label {
                     color: colors.$color-orange;
                 }
-                span{
+
+                span {
                     font-weight: 600;
+                }
+
+                div {
+                    margin-top: 2rem;
                 }
 
                 &__input {
                     width: 100%;
                 }
             }
-
         }
-
-        
 
         &__button {
-            margin-top: 1rem;
+            margin-top: 2rem;
+            align-self: center;
         }
+
     }
 }
 
@@ -71,46 +89,138 @@
 @media (min-width : 768px) {
     // A partir de 768px (tablette)
 
-    .connexion__form {
+    .inscription {
 
 
-        &__fieldset__field {
-            width: 70%;
+        &__form {
+            padding: 4rem;
+
+            .left {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .right {
+                align-items: center;
+            }
+
+            &__fieldset__field {
+                width: 70%;
+            }
+
         }
-    }
 
+    }
 }
 
 @media (min-width : 1024px) {
     // A partir de 1024 px (laptop)
 
-    .connexion{
+    .inscription {
 
-        padding: 5rem;
-        margin-bottom: 5rem;
         flex-direction: row;
-        align-items: stretch;
 
-        &__img{
-            margin: 0;
-            padding-right: 5rem;
-            width: 50%;
+        &__img {
+            width: 30%;
+            padding: 2rem;
         }
 
-        &__form{
-            &__title{
-            margin-bottom: 5rem;
 
-        }
-        &__fieldset__field {
-            width: 90%;
+        &__form {
+
+            padding: 5rem 3rem;
+
+
+
+            &__fieldset {
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: space-around;
+
+                .left {
+                    align-items: flex-start;
+                }
+
+                .right {
+                    align-items: flex-start;
+
+                }
+
+                &__field {
+                    width: 90%;
+
+                    div {
+                        margin-top: 1.3rem;
+                    }
+                }
+
+            }
+
+            &__button {
+                margin-top: 0rem;
+                align-self: flex-start;
+
+
+            }
         }
 
-        &__button{
-            margin-top: 5rem;
-        }
     }
 
+}
+
+@media (min-width : 1440px) {
+    // A partir de 1440px
+
+    .inscription {
+
+        margin-top: 5rem;
+
+        &__img {
+            width: 40%;
+        }
+
+        &__form {
+
+            padding: 5rem;
+
+            &__fieldset {
+
+                .right {
+                    // margin-left: 2rem;
+                }
+
+                &__field {
+
+                    width: 80%;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width : 1700px) {
+    // A partir de 1700px
+
+    .inscription {
+
+        &__img {
+            margin: 0 6rem;
+            width: 60%;
+        }
+
+        &__form {
+
+            padding: 5rem 10rem;
+
+            &__fieldset {
+
+                &__field {
+
+                    width: 70%;
+                }
+            }
+        }
     }
 
 }
