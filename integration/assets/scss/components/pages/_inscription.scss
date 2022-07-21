@@ -50,6 +50,10 @@
                     font-weight: 600;
                 }
 
+                div{
+                   margin-top : 2rem; 
+                }
+
                 &__input {
                     width: 100%;
                 }
@@ -60,7 +64,7 @@
         
 
         &__button {
-            margin-top: 1rem;
+            margin-top: 2rem;
         }
     }
 }
@@ -71,14 +75,18 @@
 @media (min-width : 768px) {
     // A partir de 768px (tablette)
 
-    .connexion__form {
+    .inscription{
 
+        
+        &__form {
+            padding: 3rem;
 
         &__fieldset__field {
             width: 70%;
         }
     }
 
+}
 }
 
 @media (min-width : 1024px) {
