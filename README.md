@@ -26,3 +26,12 @@ sudo chgrp -R www-data .
 sudo find . -type f -exec chmod 664 {} +
 sudo find . -type d -exec chmod 775 {} +
 ```
+
+
+Ajout des Rôles à la main … à l’ancienne …
+
+Ajout des Taxonomies
+
+Création de la table custom
+
+Création du end-point /register

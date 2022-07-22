@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Configuration overrides for WP_ENV === 'development'
  */
@@ -13,7 +14,8 @@ Config::define('WP_DEBUG_LOG', env('WP_DEBUG_LOG') ?? true);
 Config::define('WP_DISABLE_FATAL_ERROR_HANDLER', true);
 Config::define('SCRIPT_DEBUG', true);
 Config::define('DISALLOW_INDEXING', true);
-define('FS_METHOD', 'direct');
+Config::define('FS_METHOD', 'direct');
+Config::define('JWT_AUTH_SECRET_KEY', 'o?Zk*:]t0+Du+ZnDPmoSc-w9,7F-e;I]]Y.}o/&q)G-l$C:1A}!nN8Y&z$w8crr+');
 
 ini_set('display_errors', '1');
 
