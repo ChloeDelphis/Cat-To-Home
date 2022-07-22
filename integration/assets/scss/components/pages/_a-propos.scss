@@ -67,3 +67,83 @@
 
     }
 }
+
+// MEDIA QUERIES
+
+// A partir de 767px (format tablette)
+@media (min-width : 767px) {
+  
+    .a__propos {
+
+        &__team {
+
+            .pair{
+
+                .dev__photo {
+                    order: 2;
+                }
+
+                .dev__presentation {
+                    order: 1;
+                }
+            }
+
+            .dev{
+                flex-direction: row;
+
+                &__photo {
+                    width: 40%;
+                    height: auto;
+                }
+    
+                &__presentation {
+                    width: 60%;
+                }
+            }
+        }
+    }
+}
+
+// A partir de 1024px (format desktop)
+@media (min-width : 1024px) {
+
+    .a__propos {
+
+        &__team {
+
+            .dev{
+
+                &__photo {
+                    width: 35%;
+                }
+    
+                &__presentation {
+                    width: 65%;
+                }
+            }
+        }
+    }
+}
+    
+
+
+// A partir de 1440px (format grand desktop)
+@media (min-width : 1440px) {
+
+    .a__propos {
+
+        &__team {
+
+            .dev{
+
+                &__photo {
+                    width: 30%;
+                }
+    
+                &__presentation {
+                    width: 70%;
+                }
+            }
+        }
+    }
+}
