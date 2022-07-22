@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../assets/scss/main.scss">
+
+
+    <title>Cat to Home</title>
+</head>
+<body>
+
+     <!-- HEADER -->
+
+     <header class="header">
+
+        <h1>
+            <a href="#"><img class="header__logo" src="../assets/logo/Logo.png" alt="logoCatToHome">
+            </a>
+        </h1>
+        <nav class="header__nav">
+
+            <div class="header__nav--mobtab">
+                <a href="#">|||</a>
+            </div>
+
+            <!-- pour faire apparaître le menu en mode mobile et tablette :
+                Ajouter la classe header__nav--small à la div ci-dessous
+            Ajouter la classe fixed à l'élément header  -->
+
+            <div class="header__nav--desktop">
+                <a class="header__nav__don button__orange--papate" href="#">
+                    Je donne un chat</a>
+                <a class="header__nav__menu" href="#">À propos</a>
+                <a class="header__nav__menu" href="#">Les chats</a>
+                <!-- <a class="header__nav__menu" href="#">Inscription</a>
+                <a class="header__nav__menu" href="#">Connexion</a>
+                <a class="header__nav__menu" href="#">Déconnexion</a> -->
+
+                <a class="header__nav__menu" href="#">Contact</a>
+                <a class="header__nav__profile" href="#"><img class="header__nav__profile--icon"
+                        src="../assets/icones/profil.png" alt="icône vers profil utilisateur"><span
+                        class="header__nav__profile--text">Profil</span></a>
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- MAIN -->
+
+    <main class="cat__list">
+
+        <section class="title">
+            <img src="../assets/img/purr-shopping.png" alt="Un chat dans un caddie">
+            <h2>Trouve ton futur compagnon félin !</h2>
+        </section>
+
+        <!-- FORMULAIRE DE FILTRE DE RECHERCHE -->
+
+        <section class="research">
+            <form action="" class="search__cat__form">
+                <div>
+                    <label for="department">Localisation</label><br>
+                    <select name="departement" id="department">
+                        <option value="" selected>Département</option>
+                        <option value="Finistère">29 - Finistère</option>
+                        <option value="Morbihan">56 - Morbihan</option>
+                        <option value="Côtes d'Armor">22 - Côtes d'Armor</option>
+                        <option value="Ille-et-Vilaine">35 - Ille-et-Vilaine</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="filter">Filtre de recherche</label><br>
+                    <select name="filter" id="filter">
+                        <option value="anciens" selected>Du plus anciens au plus récent</option>
+                        <option value="recents">Du plus récent au plus anciens</option>
+                        <option value="age">Âge</option>
+                    </select>
+                </div>
+
+                <button class="button__orange--papate">Je trouve mon chat</button>
+
+            </form>
+        </section>
+
+        <!-- LISTE DES CHATS -->
+
+        <section class="post__list">
+            <div class="post__list__container">
+
+                <article class="post">
+                    <div class="post__img"></div>
+                    <div class="post__content">
+                        <span class="post__cat__name">Timothy</span>
+                        <span class="post__cat__age">8 month</span>
+                        <p class="post__cat__localisation"><span class="bold">Localisation</span>- RENNES FRANCE</p>
+                    </div>  
+                </article> 
+
+                <article class="post">
+                    <div class="post__img"></div>
+                    <div class="post__content">
+                        <span class="post__cat__name">Timothy</span>
+                        <span class="post__cat__age">8 month</span>
+                        <p class="post__cat__localisation"><span class="bold">Localisation</span>- RENNES FRANCE</p>
+                    </div>  
+                </article>
+
+                <article class="post">
+                    <div class="post__img"></div>
+                    <div class="post__content">
+                        <span class="post__cat__name">Timothy</span>
+                        <span class="post__cat__age">8 month</span>
+                        <p class="post__cat__localisation"><span class="bold">Localisation</span>- RENNES FRANCE</p>
+                    </div>  
+                </article>
+
+                <article class="post">
+                    <div class="post__img"></div>
+                    <div class="post__content">
+                        <span class="post__cat__name">Timothy</span>
+                        <span class="post__cat__age">8 month</span>
+                        <p class="post__cat__localisation"><span class="bold">Localisation</span>- RENNES FRANCE</p>
+                    </div>  
+                </article>
+
+                <article class="post">
+                    <div class="post__img"></div>
+                    <div class="post__content">
+                        <span class="post__cat__name">Timothy</span>
+                        <span class="post__cat__age">8 month</span>
+                        <p class="post__cat__localisation"><span class="bold">Localisation</span>- RENNES FRANCE</p>
+                    </div>  
+                </article>
+
+                <article class="post">
+                    <div class="post__img"></div>
+                    <div class="post__content">
+                        <span class="post__cat__name">Timothy</span>
+                        <span class="post__cat__age">8 month</span>
+                        <p class="post__cat__localisation"><span class="bold">Localisation</span>- RENNES FRANCE</p>
+                    </div>  
+                </article>
+
+            </div>
+            
+            <div class="post__list__navigation">
+                <a class="button__blue" href="">Précédent</a>
+                <a class="button__blue" href="">Suivant</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+        <div class="footer__visuals">
+            <img class="footer__visuals__logo" src="../assets/logo/Logo-white.png" alt="Logo Cat To Home blanc">
+
+            <div class="footer__visuals__social-media">
+                <a class="footer__visuals__social-media__item" href="#"> <img src="../assets/icones/insta.png"
+                        alt="logo insta">
+                </a>
+                <a class="footer__visuals__social-media__item" href="#"> <img src="../assets/icones/facebook.png"
+                        alt="loho facebook">
+                </a>
+                <a class="footer__visuals__social-media__item" href="#"> <img src="../assets/icones/twitter.png"
+                        alt="logo twitter">
+                </a>
+                <a class="footer__visuals__social-media__item" href="#"> <img src="../assets/icones/tiktok.png"
+                        alt="logo tiktok">
+                </a>
+            </div>
+        </div>
+        <nav class="footer__nav">
+            <div class="footer__nav__left">
+                <a class="footer__nav__item" href="#">Homepage</a>
+                <a class="footer__nav__item" href="#">À propos</a>
+                <a class="footer__nav__item" href="#">Contact</a>
+            </div>
+            <div class="footer__nav__right">
+                <a class="footer__nav__item" href="#">Les chats</a>
+                <a class="footer__nav__item" href="#">Inscription</a>
+                <a class="footer__nav__item" href="#">Connexion</a>
+                <!-- <a class="footer__nav__item" href="#">Déconnexion</a> -->
+                <a class="footer__nav__item" href="#">Mentions Légales</a>
+            </div>
+        </nav>
+    </footer>
+
+</body>
+</html>

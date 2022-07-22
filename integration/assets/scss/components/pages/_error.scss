@@ -1,0 +1,64 @@
+@use "../../abstracts/variables/colors";
+@use "../../abstracts/variables/font";
+
+
+.error {
+
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10rem;
+
+    &__img {
+        margin: 3rem 0;
+        width: 55%;
+    }
+
+    &__bloc {
+        background-color: colors.$color-bg2;
+        width: 100%;
+        padding: 5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &__title {
+            margin-bottom: 2rem;
+        }
+
+    }
+}
+
+
+
+
+
+@media (min-width : 1024px) {
+    // A partir de 1024 px (laptop)
+
+    .error {
+
+        padding: 5rem;
+        margin-bottom: 5rem;
+        flex-direction: row;
+        align-items: stretch;
+
+        &__img {
+            margin: 0;
+            padding-right: 5rem;
+            width: 50%;
+        }
+
+        &__bloc {
+            &__title {
+                margin-bottom: 5rem;
+
+            }
+
+        }
+
+    }
+
+}

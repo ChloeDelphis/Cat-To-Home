@@ -1,0 +1,120 @@
+@use "../../abstracts/variables/colors";
+@use "../../abstracts/variables/font";
+
+
+.mentions {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+
+    &__img {
+        margin: 3rem 0;
+        width: 55%;
+    }
+
+    &__bloc{
+
+        background-color: colors.$color-bg2;
+        width: 100%;
+        padding: 3rem;
+        display: flex;
+        color: white;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &__title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        &__content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+}
+}
+
+
+
+
+@media (min-width : 768px) {
+    // A partir de 768px (tablette)
+
+    .mentions {
+
+
+        &__bloc {
+            padding: 4rem;
+
+        }
+
+    }
+}
+
+@media (min-width : 1024px) {
+    // A partir de 1024 px (laptop)
+
+    .mentions {
+
+        flex-direction: row;
+
+        &__img {
+            width: 30%;
+            padding: 2rem;
+        }
+
+
+        &__bloc {
+
+            padding: 5rem 3rem;
+
+        }
+
+    }
+
+}
+
+@media (min-width : 1440px) {
+    // A partir de 1440px
+
+    .mentions {
+
+        margin-top: 5rem;
+
+        &__img {
+            width: 40%;
+        }
+
+        &__bloc {
+
+            padding: 5rem;
+
+        }
+    }
+}
+
+@media (min-width : 1700px) {
+    // A partir de 1700px
+
+    .mentions {
+
+        &__img {
+            margin: 0 6rem;
+            width: 60%;
+        }
+
+        &__bloc {
+
+            padding: 5rem 10rem;
+
+        }
+    }
+
+}
