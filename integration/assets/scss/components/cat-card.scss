@@ -1,0 +1,59 @@
+@use '../abstracts/variables/colors';
+@use "../abstracts/variables/font";
+
+@media screen and (max-width: 480px) {
+    .arrow{
+        width: 4rem;
+    }
+    .post {
+        min-width: 18rem;
+        &__img {
+            height: 20rem;
+        }
+    }
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: colors.$color-blue;
+    color: #ffffff;
+    position: relative;
+    margin: 2rem;
+    width: 30rem;
+    border: 2px solid #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 6px 6px 6px colors.$color-blue;
+
+    &__img {
+        position: relative;
+        height: 30rem;
+        width: 100%;
+        border-top-left-radius: 2rem;
+        border-top-right-radius: 2rem;
+        object-fit: cover;
+    }
+
+    &__name {
+        position: absolute;
+        bottom: 4rem;
+        left: 1rem;
+        font-size: 2.5rem;
+    }
+
+    &__date {
+        position: absolute;
+        bottom: 4rem;
+        right: 1rem;
+        font-size: 1.2rem;
+        font-family: font.$font-title;
+    }
+
+    &__location {
+        font-size: 1.2rem;
+        margin: 1rem;
+        font-weight: 300;
+    }
+
+}
