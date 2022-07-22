@@ -90,7 +90,7 @@
                 </div>
 
                 <div class="adoption__add__picture">
-                    <a href=""><img src="../assets/icones/Vector (13).png" alt=""></a>
+                    <a href=""><img src="../../assets/icones/Vector (13).png" alt=""></a>
                 </div>
 
             </section>
@@ -159,7 +159,7 @@
                             <button class="button__orange">Valider la création de la fiche</button>
                         </div>
                     </div>
-                    <img class="img__cat__information" src="../assets/img/purr-cat-21.png" alt="">
+                    <img class="img__cat__information" src="../../assets/img/purr-cat-21.png" alt="">
                 </div>
 
             </section>
@@ -174,180 +174,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../../abstracts/variables/colors';
-
-@media screen and (max-width: 480px) {
-
-    .adoption {
-        &__form {
-            flex-direction: column;
-            align-items: center;
-
-            &__pair {
-                width: 100%;
-            }
-        }
-
-        &__add__picture {
-            width: 25rem;
-            height: 20rem;
-        }
-    }
-}
-
-@media screen and (min-width: 480px) {
-    .adoption {
-        &__form__pair {
-            width: 50%;
-
-        }
-
-        &__add__picture {
-            width: 40rem;
-            height: 35rem;
-        }
-    }
-}
-
-@media screen and (max-width: 769px) {
-    .adoption {
-        flex-direction: column-reverse;
-
-    }
-}
-
-@media screen and (min-width: 769px) {
-    .adoption {
-        &__left__part {
-            width: 50%;
-        }
-    }
-}
-
-
-@media screen and (min-width: 1023px) {
-    .img__cat__information {
-        transform: rotate(270deg);
-        width: 40rem;
-        top: 20%;
-        left: -35rem;
-    }
-
-    .information__content {
-        width: 65%;
-        top: 15%;
-        padding: 16rem 12rem;
-    }
-}
-
-@media screen and (max-width: 1023px) {
-    .img__cat__information {
-        width: 20rem;
-        left: 20%;
-        top: -16rem;
-    }
-    .information__content {
-        padding: 8rem 4rem;
-    }
-}
-
-.adoption,
-.information {
-    display: flex;
-    align-items: center;
-}
-
-.adoption {
-    justify-content: space-evenly;
-    margin-top: 10rem;
-    background-color: colors.$color-blue;
-    color: white;
-    padding: 8rem 0;
-
-    &__title {
-        margin-top: 10rem;
-        margin-bottom: 4rem;
-        color: colors.$color-blue;
-        text-align: center;
-        padding: 0 2rem;
-    }
-
-    &__form {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-
-        &__pair {
-            display: flex;
-            flex-direction: column;
-            padding: 0 2rem;
-
-            span {
-                font-size: small;
-            }
-        }
-    }
-    &__description {
-        display: flex;
-        flex-direction: column;
-        padding: 0 2rem;
-
-        &__textarea{
-            height: 10rem;
-        }
-    }
-    &__add__picture {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        background: #C4C4C4;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 20px;
-    }
-}
-
-.input__name {
-    margin: 1.5rem 0;
-
-    &__checkbox {
-        margin: 0.5rem 0;
-    }
-}
-
-.img__cat__information {
-    position: absolute;
-}
-
-.information {
-    justify-content: flex-end;
-    color: colors.$color-blue;
-
-    &__content {
-        margin: 20rem 0;
-        background-color: colors.$color-bg2;
-        position: relative;
-
-        &__title {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        &__paragraphe {
-            text-align: justify;
-        }
-
-        &__regulatory {
-            &__checkbox {
-                display: flex;
-                flex-direction: column;
-                margin: 2rem 0;
-            }
-        }
-    }
-
-    .button__adoption__add {
-        text-align: end;
-    }
-}
 </style>

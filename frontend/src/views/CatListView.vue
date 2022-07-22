@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import HeaderLayout from "../components/template/HeaderLayout.vue";
-import CatsLayout from "../components/cat/CatsLayout.vue";
-import FooterLayout from "../components/template/FooterLayout.vue";
+import HeaderLayout from "@/components/template/HeaderLayout";
+import CatsLayout from "@/components/cat/CatsLayout";
+import FooterLayout from "@/components/template/FooterLayout";
 
 export default {
   name: 'CatListView',

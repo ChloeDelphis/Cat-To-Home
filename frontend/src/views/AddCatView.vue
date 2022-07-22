@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import HeaderLayout from '@/components/HeaderLayout';
-import FooterLayout from '@/components/FooterLayout';
+import HeaderLayout from '@/components/template/HeaderLayout';
+import FooterLayout from '@/components/template/FooterLayout';
 
 export default {
     name: 'NewRecipeView',

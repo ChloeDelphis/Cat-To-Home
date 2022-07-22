@@ -1,20 +1,19 @@
 <template>
-<div>
-
-    <header-layout>
-        <RegistrationFormLayout>
-            <footer-layout>
-    </div>
+  <div>
+    <HeaderLayout />
+    <RegistrationFormLayout />
+    <FooterLayout />
+  </div>
 
 </template>
 
 <script>
-import FooterLayout from "../components/template/FooterLayout.vue";
-import HeaderLayout from "../components/template/HeaderLayout.vue";
-import RegistrationFormLayout from "@/components/user/RegistrationFormLayout.vue";
+import FooterLayout from "../components/template/FooterLayout";
+import HeaderLayout from "../components/template/HeaderLayout";
+import RegistrationFormLayout from "@/components/user/RegistrationFormLayout";
 
 export default {
-  name: "Homeview",
+  name: "HomeView",
   components: {
     HeaderLayout,
     RegistrationFormLayout,
@@ -23,6 +22,5 @@ export default {
 };
 </script>
 
-<style sco,
-    LoginFormLayoutped>
+<style scoped>
 </style>
