@@ -27,11 +27,9 @@ sudo find . -type f -exec chmod 664 {} +
 sudo find . -type d -exec chmod 775 {} +
 ```
 
-
-Ajout des Rôles à la main … à l’ancienne …
-
-Ajout des Taxonomies
-
-Création de la table custom
-
-Création du end-point /register
+## Initialisation de l'intégration
+Se placer dans le dossier integration
+`npm install`
+Pour ouvrir une page : 
+se placer dans le dossier html et taper
+`npx parcel nomdelapage.html`
