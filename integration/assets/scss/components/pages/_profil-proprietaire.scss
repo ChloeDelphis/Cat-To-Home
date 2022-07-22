@@ -74,6 +74,15 @@
     }
 
     // SECTION LISTE DES FICHES ADOPTION
+    .section__profil__adoption {
+
+        h2{
+            text-align: center;
+            margin: 5rem 0;
+            color: colors.$color-blue;
+        }
+    
+    }
 
     .profil__adoption {
         display: flex;

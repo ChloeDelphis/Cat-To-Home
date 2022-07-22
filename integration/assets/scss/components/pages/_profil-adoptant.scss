@@ -72,11 +72,17 @@
 
 .post__list {
 
+    h2{
+        text-align: center;
+        margin-bottom: 5rem;
+        color: colors.$color-blue;
+    }
+
     .post__list__container {
     
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: space-around;
         width: 80vw;
         margin: auto;
         
