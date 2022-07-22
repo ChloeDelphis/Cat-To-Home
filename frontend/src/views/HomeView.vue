@@ -1,17 +1,24 @@
 <template>
-<header-layout>
+<div>
+   <HeaderLayout />
 
 <HomeLayout>
 
-<footer-layout>
+<FooterLayout /> 
+</div>
+
 </template>
 
 <script>
 import HeaderLayout from "@/components/template/HeaderLayout"; 
+<<<<<<< HEAD
 import HomeLayout from '../components/supports/HomeLayout.vue';
 import FooterLayout from '../components/template/FooterLayout.vue';
 
 
+=======
+import FooterLayout from "@/components/template/HeaderLayout"; 
+>>>>>>> page-creation-sheet
 
 export default{
     name: "HomeView", 
