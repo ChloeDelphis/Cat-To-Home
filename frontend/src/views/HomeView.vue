@@ -1,20 +1,22 @@
 <template>
-<header-layout>
+<div>
+   <HeaderLayout />
 
 
 
 
 
-<footer-layout>
+<FooterLayout /> 
+</div>
+
 </template>
 
 <script>
 import HeaderLayout from "@/components/template/HeaderLayout"; 
-
-
+import FooterLayout from "@/components/template/HeaderLayout"; 
 
 export default{
-    name: "Homeview", 
+    name: "HomeView", 
     components: {
         HeaderLayout, 
         FooterLayout,
