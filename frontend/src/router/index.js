@@ -38,6 +38,25 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '../views/ConnexionView.vue'),
     meta : {title: 'Connexion'}
   },
+{
+    path: '/404',
+    name: '404',
+    component: () => import(/* webpackChunkName: "404" */ '../views/Error404View.vue'),
+    meta : {title: 'NotFound'}
+  },
+  {
+    path: '/legals-mention',
+    name: 'legals-mention',
+    component: () => import(/* webpackChunkName: "login" */ '../views/LegalMentionView.vue'),
+    meta : {title: 'MentionsLegales'}
+  },
+   {
+    path: '/contact',
+    name: 'contact',
+    component: () => import(/* webpackChunkName: "login" */ '../views/ContactView.vue'),
+    // meta : {title: 'Contact'}
+  },
+
   {
     path: '/about',
     name: 'about',
