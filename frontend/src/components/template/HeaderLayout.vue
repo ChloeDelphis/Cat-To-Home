@@ -26,10 +26,13 @@
           Je donne un chat</router-link
         >
         <a class="header__nav__menu" href="#">À propos</a>
-        <router-link class="header__nav__menu" :to="{name: 'cats'}">Les chats</router-link>
-        <router-link class="header__nav__menu" :to="{name: 'registration'}"
-          >Inscription</router-link>
-        <router-link class="header__nav__menu" :to="{name: 'login'}"
+        <router-link class="header__nav__menu" :to="{ name: 'cats' }"
+          >Les chats</router-link
+        >
+        <router-link class="header__nav__menu" :to="{ name: 'registration' }"
+          >Inscription</router-link
+        >
+        <router-link class="header__nav__menu" :to="{ name: 'login' }"
           >Connexion</router-link
         >
         <!-- <a class="header__nav__menu" href="#">Déconnexion</a>  -->
