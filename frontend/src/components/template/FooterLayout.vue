@@ -1,7 +1,11 @@
 <template>
-    <footer class="footer">
-        <div class="footer__visuals">
-            <img class="footer__visuals__logo" src="../../assets/logo/Logo-white.png" alt="Logo Cat To Home blanc">
+  <footer class="footer">
+    <div class="footer__visuals">
+      <img
+        class="footer__visuals__logo"
+        src="../../assets/logo/Logo-white.png"
+        alt="Logo Cat To Home blanc"
+      />
 
             <div class="footer__visuals__social-media">
                 <a class="footer__visuals__social-media__item" href="#"> <img src="../../assets/icones/insta.png"
@@ -36,9 +40,7 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style lang="scss">
