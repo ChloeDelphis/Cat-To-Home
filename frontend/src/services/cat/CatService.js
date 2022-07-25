@@ -14,7 +14,7 @@ const apiClient = axios.create({
 export default {
     // permet de créer un nouvel utlisateur
     async findAll() {
-        const response = await apiClient.get("/cat");
+        const response = await apiClient.get("/cat?_embed");
         return response.data;
     }
     

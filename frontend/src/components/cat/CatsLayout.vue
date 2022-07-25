@@ -39,7 +39,11 @@
         <section class="post__list">
             <div class="post__list__container">
 
-                <CatCardLayout /> 
+                <CatCardLayout
+                v-bind:localisation="cat._embedded['wp:term'][2][0].name"
+                v-bind:name="cat.title.rendered" 
+                v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url"
+                v-for="cat in cats" v-bind:key="cat.title" /> 
 
             </div>
             
