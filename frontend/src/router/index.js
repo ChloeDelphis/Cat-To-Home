@@ -5,12 +5,14 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta : {title: 'Accueil'}
   },
   {
     path: '/cat/add',
     name: 'cat_add',
-    component: () => import(/* webpackChunkName: "cat_add" */ '../views/AddCatView.vue')
+    component: () => import(/* webpackChunkName: "cat_add" */ '../views/CatAddView.vue'),
+    meta : {title: 'creation d\'une fiche d\'adoption'}
   },
   {
     path: '/about',
@@ -26,5 +28,11 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+const DEFAULT_TITLE = 'Cat to home';
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title ?? DEFAULT_TITLE;
+  next();
+});
 
 export default router

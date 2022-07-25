@@ -2,8 +2,8 @@
       <header class="header">
 
         <h1>
-            <a href="#"><img class="header__logo" src="../../assets/logo/Logo.png" alt="logoCatToHome">
-            </a>
+            <router-link :to="{name: 'home'}"><img class="header__logo" src="../../assets/logo/Logo.png" alt="logoCatToHome">
+            </router-link>
         </h1>
         <nav class="header__nav">
 
@@ -16,8 +16,8 @@
             Ajouter la classe fixed à l'élément header  -->
 
             <div class="header__nav--desktop">
-                <a class="header__nav__don button__orange--papate" href="#">
-                    Je donne un chat</a>
+                <router-link class="header__nav__don button__orange--papate" :to="{name: 'cat_add'}">
+                    Je donne un chat</router-link>
                 <a class="header__nav__menu" href="#">À propos</a>
                 <a class="header__nav__menu" href="#">Les chats</a>
                 <!-- <a class="header__nav__menu" href="#">Inscription</a>

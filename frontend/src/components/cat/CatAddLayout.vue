@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <form action="">
+    <main>
+        <h2 class="adoption__title">Créé la fiche adoption de ton chat</h2>
+        <form action="">
             <section class="adoption">
                 <div class="adoption__left__part">
                     <fieldset class="adoption__form">
@@ -85,12 +86,13 @@
 
                     <div class="adoption__description">
                         <label class="input__name" for="description">Description</label>
-                        <textarea class="input adoption__description__textarea" id="description" name="description"> </textarea>
+                        <textarea class="input adoption__description__textarea" id="description"
+                            name="description"> </textarea>
                     </div>
                 </div>
 
                 <div class="adoption__add__picture">
-                    <a href=""><img src="../../assets/icones/Vector (13).png" alt=""></a>
+                     <a href=""><img src="../../assets/icones/Vector(13).png" alt=""></a>
                 </div>
 
             </section>
@@ -164,12 +166,13 @@
 
             </section>
         </form>
-  </div>
+    </main>
+
 </template>
 
 <script>
 export default {
-
+    name: "CatAddLayout"
 }
 </script>
 
