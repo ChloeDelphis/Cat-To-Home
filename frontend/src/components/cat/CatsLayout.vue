@@ -40,14 +40,6 @@
             <div class="post__list__container">
 
                 <CatCardLayout /> 
-                <CatCardLayout /> 
-                <CatCardLayout />
-                <CatCardLayout /> 
-                <CatCardLayout /> 
-                <CatCardLayout />  
-                <CatCardLayout /> 
-                <CatCardLayout /> 
-                <CatCardLayout /> 
 
             </div>
             
@@ -65,10 +57,21 @@
 
 <script>
 import CatCardLayout from "@/components/cat/CatCardLayout.vue";
+import CatService from "@/services/cat/CatService";
 export default {
     name: "CatsLayout",
     components: {
         CatCardLayout
+    },
+    async mounted() {
+        // contient la liste des fiches adoption renvoyée par notre API
+        this.cats = await CatService.findAll();
+        console.log(this.cats);
+    },
+    data() {
+        return {
+            cats: []
+        }
     }
 }
 </script>
