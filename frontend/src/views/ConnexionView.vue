@@ -1,11 +1,9 @@
 <template>
-<div>
-
+  <div>
     <HeaderLayout />
-        <LoginFormLayout />
-            <FooterLayout />
-    </div>
-
+    <LoginFormLayout />
+    <FooterLayout />
+  </div>
 </template>
 
 <script>
@@ -14,7 +12,7 @@ import LoginFormLayout from "@/components/user/LoginFormLayout";
 import HeaderLayout from "@/components/template/HeaderLayout";
 
 export default {
-  name: "Homeview",
+  name: "ConnexionView",
   components: {
     HeaderLayout,
     LoginFormLayout,

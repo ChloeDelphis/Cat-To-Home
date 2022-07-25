@@ -4,7 +4,6 @@
     <RegistrationFormLayout />
     <FooterLayout />
   </div>
-
 </template>
 
 <script>
@@ -13,7 +12,7 @@ import HeaderLayout from "../components/template/HeaderLayout";
 import RegistrationFormLayout from "@/components/user/RegistrationFormLayout";
 
 export default {
-  name: "HomeView",
+  name: "RegistrationView",
   components: {
     HeaderLayout,
     RegistrationFormLayout,

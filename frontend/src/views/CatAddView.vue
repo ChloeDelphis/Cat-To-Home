@@ -1,24 +1,24 @@
 <template>
-    <div>
-        <headerLayout />
-        <CatAddLayout />
-        <FooterLayout />
-    </div>
+  <div>
+    <headerLayout />
+    <CatAddLayout />
+    <FooterLayout />
+  </div>
 </template>
 
 <script>
-import HeaderLayout from '@/components/template/HeaderLayout';
-import FooterLayout from '@/components/template/FooterLayout';
-import CatAddLayout from '@/components/cat/CatAddLayout';
+import HeaderLayout from "@/components/template/HeaderLayout";
+import FooterLayout from "@/components/template/FooterLayout";
+import CatAddLayout from "@/components/cat/CatAddLayout";
 
 export default {
-    name: 'NewRecipeView',
-    components: {
+  name: "CatAddView",
+  components: {
     HeaderLayout,
     FooterLayout,
-    CatAddLayout
-}
-}
+    CatAddLayout,
+  },
+};
 </script>
 
 <style scoped>
