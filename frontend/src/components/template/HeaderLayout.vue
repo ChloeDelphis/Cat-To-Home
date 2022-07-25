@@ -19,7 +19,7 @@
                 <router-link class="header__nav__don button__orange--papate" :to="{name: 'cat_add'}">
                     Je donne un chat</router-link>
                 <a class="header__nav__menu" href="#">À propos</a>
-                <a class="header__nav__menu" href="#">Les chats</a>
+                <router-link class="header__nav__menu" v-bind:to="{name: 'cat_list'}">Les chats</router-link>
                 <!-- <a class="header__nav__menu" href="#">Inscription</a>
                 <a class="header__nav__menu" href="#">Connexion</a>
                 <a class="header__nav__menu" href="#">Déconnexion</a> -->

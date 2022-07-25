@@ -15,6 +15,12 @@ const routes = [
     meta : {title: 'creation d\'une fiche d\'adoption'}
   },
   {
+    path: '/cats',
+    name: 'cat_list',
+    component: () => import(/* webpackChunkName: "cat_list" */ '../views/CatListView.vue'),
+    meta : {title: 'liste des chats'}
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting

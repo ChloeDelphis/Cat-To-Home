@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    name: "CatCard",
+    name: "CatCardLayout",
     // Definit des propriétés qui sont fournis par le parent
     props: {
         name: String,
