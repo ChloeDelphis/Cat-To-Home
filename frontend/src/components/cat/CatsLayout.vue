@@ -39,59 +39,15 @@
         <section class="post__list">
             <div class="post__list__container">
 
-                <article class="post">
-                    <div class="post__img"></div>
-                    <div class="post__content">
-                        <span class="post__cat__name">Timothy</span>
-                        <span class="post__cat__age">8 month</span>
-                        <p class="post__cat__localisation"><span class="bold">Localisation</span>- RENNES FRANCE</p>
-                    </div>  
-                </article> 
-
-                <article class="post">
-                    <div class="post__img"></div>
-                    <div class="post__content">
-                        <span class="post__cat__name">Timothy</span>
-                        <span class="post__cat__age">8 month</span>
-                        <p class="post__cat__localisation"><span class="bold">Localisation</span>- RENNES FRANCE</p>
-                    </div>  
-                </article>
-
-                <article class="post">
-                    <div class="post__img"></div>
-                    <div class="post__content">
-                        <span class="post__cat__name">Timothy</span>
-                        <span class="post__cat__age">8 month</span>
-                        <p class="post__cat__localisation"><span class="bold">Localisation</span>- RENNES FRANCE</p>
-                    </div>  
-                </article>
-
-                <article class="post">
-                    <div class="post__img"></div>
-                    <div class="post__content">
-                        <span class="post__cat__name">Timothy</span>
-                        <span class="post__cat__age">8 month</span>
-                        <p class="post__cat__localisation"><span class="bold">Localisation</span>- RENNES FRANCE</p>
-                    </div>  
-                </article>
-
-                <article class="post">
-                    <div class="post__img"></div>
-                    <div class="post__content">
-                        <span class="post__cat__name">Timothy</span>
-                        <span class="post__cat__age">8 month</span>
-                        <p class="post__cat__localisation"><span class="bold">Localisation</span>- RENNES FRANCE</p>
-                    </div>  
-                </article>
-
-                <article class="post">
-                    <div class="post__img"></div>
-                    <div class="post__content">
-                        <span class="post__cat__name">Timothy</span>
-                        <span class="post__cat__age">8 month</span>
-                        <p class="post__cat__localisation"><span class="bold">Localisation</span>- RENNES FRANCE</p>
-                    </div>  
-                </article>
+                <CatCardLayout /> 
+                <CatCardLayout /> 
+                <CatCardLayout />
+                <CatCardLayout /> 
+                <CatCardLayout /> 
+                <CatCardLayout />  
+                <CatCardLayout /> 
+                <CatCardLayout /> 
+                <CatCardLayout /> 
 
             </div>
             
@@ -108,8 +64,12 @@
 </template>
 
 <script>
+import CatCardLayout from "@/components/cat/CatCardLayout.vue";
 export default {
-
+    name: "CatsLayout",
+    components: {
+        CatCardLayout
+    }
 }
 </script>
 

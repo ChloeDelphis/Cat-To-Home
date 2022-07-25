@@ -21,6 +21,12 @@ const routes = [
     meta : {title: 'Liste des chats'}
   },
   {
+    path: '/sheet',
+    name: 'cat',
+    component: () => import(/* webpackChunkName: "cat" */ '../views/CatDetailView.vue'),
+    meta : {title: 'Détail de la fiche'}
+  },
+  {
     path: '/registration',
     name: 'registration',
     component: () => import(/* webpackChunkName: "registration" */ '../views/RegistrationView.vue'),
