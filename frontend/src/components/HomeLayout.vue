@@ -2,7 +2,7 @@
   <main>
         <section class="home home__response__reverse">
             <div class="home__bloc__text">
-                <h2 class="home__title">Tu cherches a donner ou adopter un chat ? Tu es au bon endroit ! </h2>
+                <h2 class="home__title">Tu cherches à donner ou adopter un chat ? Tu es au bon endroit ! </h2>
                 <p class="home__paragraph">Cat To Home est un site web dédié à la sensibilisation au problème de
                     l’abandon d’animaux et se veut être une solution complémentaire aux refuges pour permettre
                     l’adoption d’un animal et mettant en relation des particuliers propriétaires d’animaux et des

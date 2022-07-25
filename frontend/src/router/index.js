@@ -12,7 +12,25 @@ const routes = [
     path: '/cat/add',
     name: 'cat_add',
     component: () => import(/* webpackChunkName: "cat_add" */ '../views/CatAddView.vue'),
-    meta : {title: 'creation d\'une fiche d\'adoption'}
+    meta : {title: 'Creation d\'une fiche d\'adoption'}
+  },
+  {
+    path: '/cats',
+    name: 'cats',
+    component: () => import(/* webpackChunkName: "cats" */ '../views/CatListView.vue'),
+    meta : {title: 'Liste des chats'}
+  },
+  {
+    path: '/registration',
+    name: 'registration',
+    component: () => import(/* webpackChunkName: "registration" */ '../views/RegistrationView.vue'),
+    meta : {title: 'Inscription'}
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/ConnexionView.vue'),
+    meta : {title: 'Connexion'}
   },
   {
     path: '/about',
