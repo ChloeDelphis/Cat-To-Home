@@ -29,10 +29,15 @@
       </div>
       <div class="home__bloc__text">
         <h2 class="home__title">Trouve ton futur compagnon félin !</h2>
-        <form class="home__form" action="">
+        <form class="home__form" action="/cats">
           <label class="home__form__label" for="department">Localisation</label>
-          <input @change="sendLocation" v-model="location_input" type="text" class="input" name="departement" id="department">
-          <div class="home__form__list"></div>
+          <input @keyup="sendLocation" v-model="location_input" type="text" class="input input--selection" name="departement" id="department">
+          <div class="home__form__list"> <ItemListLocation v-for="location in locations" :key="location.code" 
+                                            :name="location.nom" 
+                                            :code="location.code"
+                                            @choiceLocation="selectedLocation"
+                                          /> 
+          </div>
           <br />
           <label class="home__form__label" for="filter"
             >Filtre de recherche</label
@@ -114,9 +119,12 @@
 
 <script>
 import LocationService from '@/services/cat/LocationService';
-import CatCardLayout from './cat/CatCardLayout';
+import CatCardLayout from '@/components/cat/CatCardLayout';
+import ItemListLocation from '@/components/home/ItemListLocation';
 export default {
-  components: { CatCardLayout },
+  components: { 
+    CatCardLayout, ItemListLocation 
+  },
   name: "HomeLayout",
   data() {
     return {
@@ -127,12 +135,31 @@ export default {
   methods: {
     async sendLocation() {
       this.locations = [];
-      console.log('ici');
-      this.locations = await LocationService.find(this.location_input);
+      document.querySelector('.home__form__list').style.height = '0';
+
+      if (this.location_input != '') {
+        const response = await LocationService.find(this.location_input);
+        document.querySelector('.home__form__list').style.height = '12rem';
+        this.locations = response.data
+      }
+    },
+    selectedLocation(event) {
+      const choiceLocation = event.currentTarget.textContent;
+      this.location_input = choiceLocation
+      this.locations = [];
+      document.querySelector('.home__form__list').style.height = '0';
     }
   }
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+.home__form__list {
+  // height: 12rem;
+  overflow-x: auto;
+}
+
+.home__form__list::-webkit-scrollbar {
+  display: none;
+}
 </style>
