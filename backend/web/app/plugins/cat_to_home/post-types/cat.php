@@ -39,7 +39,7 @@ function cat_init()
 			'hierarchical'          => false,
 			'show_ui'               => true,
 			'show_in_nav_menus'     => true,
-			'supports'              => ['title', 'editor', 'thumbnail', 'author', 'trackbacks'],
+			'supports'              => ['title', 'editor', 'thumbnail', 'author', 'custom-fields'],
 			'taxonomies' 			=> ['disease', 'environment', 'location', 'sex', 'vaccinate'],
 			'has_archive'           => true,
 			'rewrite'               => true,
@@ -123,3 +123,17 @@ function cat_bulk_updated_messages($bulk_messages, $bulk_counts)
 }
 
 add_filter('bulk_post_updated_messages', 'cat_bulk_updated_messages', 10, 2);
+
+// Ajout du postmeta 'birthDate'
+function register_experience_meta_fields(){
+	
+	register_meta( 'post', 'birthDate', array(
+		'type' => 'string',
+        'description' => 'age du chat',
+        'single' => true,
+        'show_in_rest' => true
+    ));
+	
+}
+
+add_action( 'rest_api_init', 'register_experience_meta_fields');
