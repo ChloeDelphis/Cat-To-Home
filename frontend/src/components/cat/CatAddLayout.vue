@@ -7,11 +7,11 @@
                     <fieldset class="adoption__form">
                         <div class="adoption__form__pair">
                             <label class="input__name" for="lastname">Nom</label>
-                            <input class="input" type="text" id="lastname" name="lastname" placeholder="Doe">
+                            <input class="input" v-model="title" type="text" id="lastname" name="lastname" placeholder="Doe">
                         </div>
                         <div class="adoption__form__pair">
                             <label class="input__name" for="sexe">Sexe</label>
-                            <select class="input" name="sexe" id="sexe">
+                            <select v-model="sexe" class="input" name="sexe" id="sexe">
                                 <option value="" selected>Sexe</option>
                                 <option value="male">Mâle</option>
                                 <option value="female">Femelle</option>
@@ -24,7 +24,7 @@
                         </div>
                         <div class="adoption__form__pair">
                             <label class="input__name" for="department">Département</label>
-                            <select class="input" name="departement" id="department">
+                            <select v-model="departement" class="input" name="departement" id="department">
                                 <option value="" selected>Département</option>
                                 <option value="Finistère">29 - Finistère</option>
                                 <option value="Morbihan">56 - Morbihan</option>
@@ -35,7 +35,7 @@
 
                         <div class="adoption__form__pair">
                             <label class="input__name" for="environment">Environnement</label>
-                            <select class="input" name="environment" id="environment">
+                            <select v-model="environment" class="input" name="environment" id="environment">
                                 <option value="" selected>Environnement</option>
                                 <option value="">Interieur</option>
                                 <option value="">Exterieur</option>
@@ -44,21 +44,21 @@
 
                         <div class="adoption__form__pair">
                             <label class="input__name" for="age">Date de naissance</label>
-                            <input class="input" type="date" id="age" name="age" min="2000-01-01" max="20-12-31">
+                            <input v-model="date" class="input" type="date" id="age" name="age" min="2000-01-01" max="20-12-31">
                         </div>
 
                         <div class="adoption__form__pair">
                             <label class="input__name" for="vaccine">Vacciné contre</label>
                             <div>
-                                <input type="checkbox" id="vaccine1" name="vaccine1" value="vaccine1">
+                                <input v-model="checkedVaccins" type="checkbox" id="vaccine1" name="vaccine1" value="vaccine1">
                                 <label for="vaccine1"> La rage</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="vaccine2" name="vaccine2" value="vaccine2">
+                                <input v-model="checkedVaccins" type="checkbox" id="vaccine2" name="vaccine2" value="vaccine2">
                                 <label for="vaccine2"> Le coryza du chat</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="vaccine3" name="vaccine3" value="vaccine3">
+                                <input v-model="checkedVaccins" type="checkbox" id="vaccine3" name="vaccine3" value="vaccine3">
                                 <label for="vaccine3"> Le typhus félin</label>
                             </div>
                         </div>
@@ -70,15 +70,15 @@
                                 </legend>
                             </div>
                             <div>
-                                <input type="radio" id="yes" name="sickness" value="yes">
+                                <input v-model="sickness" type="radio" id="yes" name="sickness" value="yes">
                                 <label for="yes">Oui</label>
                             </div>
                             <div>
-                                <input type="radio" id="no" name="sickness" value="no">
+                                <input v-model="sickness" type="radio" id="no" name="sickness" value="no">
                                 <label for="no">Non</label>
                             </div>
                             <div>
-                                <input type="radio" id="unknown" name="sickness" value="unknown">
+                                <input v-model="sickness" type="radio" id="unknown" name="sickness" value="unknown">
                                 <label for="unknown">Ne sais pas</label>
                             </div>
                         </fieldset>
@@ -86,7 +86,7 @@
 
                     <div class="adoption__description">
                         <label class="input__name" for="description">Description</label>
-                        <textarea class="input adoption__description__textarea" id="description"
+                        <textarea class="input adoption__description__textarea" v-model="content" id="description"
                             name="description"> </textarea>
                     </div>
                 </div>
@@ -158,7 +158,7 @@
                             </div>
                         </div>
                         <div class=" button__adoption__add">
-                            <button class="button__orange">Valider la création de la fiche</button>
+                            <button class="button__orange" v-on:click="sendNewCat"> Valider la création de la fiche</button>
                         </div>
                     </div>
                     <img class="img__cat__information" src="../../assets/img/purr-cat-21.png" alt="">
@@ -171,8 +171,48 @@
 </template>
 
 <script>
+import NewCat from '@/services/cat/NewCat';
+
 export default {
-    name: "CatAddLayout"
+    name: "CatAddLayout",
+    data() {
+        return {
+            errors: [],
+            title: null,
+            content: null,
+            checkedVaccins: null,
+            sexe: null,
+            environment: null,
+            departement: null,
+            date: null,
+            sickness: null,
+        }
+    },
+    methods: {
+        async sendNewCat() {
+            this.errors = [];
+            if(!this.content) {
+                this.errors.push('Content is empty, please, fill it!');
+            }
+              if(!this.title) {
+                this.errors.push('Title is empty, please, fill it!');
+            }
+            if(this.errors.length === 0) {
+                // On fait la requete AJAX
+                const response = await NewCat.create({
+                    title: this.title,
+                    content: this.content,
+
+                    status: 'draft'
+                })
+                // Si mon insertion a fonctionnée
+                this.$router.push({name: 'home'});
+                console.log(response);
+            } else {
+                this.errors.push('Oops\' quelque chose c\'est mal passé');
+            }
+        }
+    },
 }
 </script>
 

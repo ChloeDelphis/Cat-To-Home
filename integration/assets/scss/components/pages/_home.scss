@@ -1,6 +1,12 @@
 @use '../../abstracts/variables/colors';
 @use "../../abstracts/variables/font";
 
+@media screen and (max-width: 480px) {
+    .arrow {
+        width: 4rem;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .home {
 
@@ -77,12 +83,13 @@
     &__title {
         margin-top: 10rem;
         color: colors.$color-blue;
+
         &__abandonment {
-        color: white;
-    }
+            color: white;
+        }
     }
 
-    
+
 }
 
 
