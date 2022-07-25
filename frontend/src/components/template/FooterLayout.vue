@@ -25,7 +25,7 @@
                 <a class="footer__nav__item" href="#">Contact</a>
             </div>
             <div class="footer__nav__right">
-                <a class="footer__nav__item" href="#">Les chats</a>
+                <router-link class="footer__nav__item" v-bind:to="{name: 'cats'}">Les chats</router-link>
                 <a class="footer__nav__item" href="#">Inscription</a>
                 <a class="footer__nav__item" href="#">Connexion</a>
                 <!-- <a class="footer__nav__item" href="#">Déconnexion</a> -->
