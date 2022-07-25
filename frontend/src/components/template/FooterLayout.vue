@@ -21,7 +21,7 @@
         <nav class="footer__nav">
             <div class="footer__nav__left">
                 <a class="footer__nav__item" href="#">Homepage</a>
-                <a class="footer__nav__item" href="#">À propos</a>
+                <router-link class="footer__nav__item" :to="{name: 'about'}">À propos</router-link>
                 <a class="footer__nav__item" href="#">Contact</a>
             </div>
             <div class="footer__nav__right">
