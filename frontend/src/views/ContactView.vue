@@ -1,21 +1,21 @@
 <template>
   <div>
     <HeaderLayout />
-    <MentionsLegales />
+    <ContactForm />
     <FooterLayout />
   </div>
 </template>
 
 <script>
 import FooterLayout from "@/components/template/FooterLayout";
-import MentionsLegales from "@/components/supports/MentionsLegales.vue";
+import ContactForm from "@/components/supports/ContactForm";
 import HeaderLayout from "@/components/template/HeaderLayout";
 
 export default {
-  name: "ConnexionView",
+  name: "ContactView",
   components: {
     HeaderLayout,
-    MentionsLegales,
+    ContactForm,
     FooterLayout,
   },
 };
