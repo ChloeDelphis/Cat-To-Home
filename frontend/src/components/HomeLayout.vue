@@ -31,13 +31,8 @@
         <h2 class="home__title">Trouve ton futur compagnon félin !</h2>
         <form class="home__form" action="">
           <label class="home__form__label" for="department">Localisation</label>
-          <select class="input" name="departement" id="department">
-            <option value="" selected>Département</option>
-            <option value="Finistère">29 - Finistère</option>
-            <option value="Morbihan">56 - Morbihan</option>
-            <option value="Côtes d'Armor">22 - Côtes d'Armor</option>
-            <option value="Ille-et-Vilaine">35 - Ille-et-Vilaine</option>
-          </select>
+          <input @change="sendLocation" v-model="location_input" type="text" class="input" name="departement" id="department">
+          <div class="home__form__list"></div>
           <br />
           <label class="home__form__label" for="filter"
             >Filtre de recherche</label
@@ -118,10 +113,24 @@
 </template>
 
 <script>
-import CatCardLayout from './cat/CatCardLayout.vue';
+import LocationService from '@/services/cat/LocationService';
+import CatCardLayout from './cat/CatCardLayout';
 export default {
   components: { CatCardLayout },
   name: "HomeLayout",
+  data() {
+    return {
+      location_input: null,
+      locations: []
+    }
+  },
+  methods: {
+    async sendLocation() {
+      this.locations = [];
+      console.log('ici');
+      this.locations = await LocationService.find(this.location_input);
+    }
+  }
 };
 </script>
 
