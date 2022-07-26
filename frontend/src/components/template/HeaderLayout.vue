@@ -28,7 +28,7 @@
         <router-link v-if="!this.$store.getters.getToken" class="header__nav__menu" :to="{name: 'login'}" >Connexion</router-link>
         <a class="header__nav__menu" href="#">Contact</a>
 
-        <a class="header__nav__menu" v-if="this.$store.getters.getToken" v-on:click="disconnect" >Déconnection</a>
+        <a class="header__nav__menu" v-if="this.$store.getters.getToken" v-on:click="disconnect" >Déconnexion</a>
         <router-link class="header__nav__profile" v-if="this.$store.getters.getToken" :to="{name: 'profile'}"><img class="header__nav__profile--icon" src="../../assets/icones/profil.png" alt="icône vers profil utilisateur" /><span class="header__nav__profile--text">Profil</span></router-link>
       </div>
     </nav>
