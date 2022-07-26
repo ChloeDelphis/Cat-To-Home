@@ -14,13 +14,18 @@ const apiClient = axios.create({
 export default {
 
 
-
-
-
-
-
-
-
+ // Recupere les infos de l'utilisateur par id de connexion. 
+    async find(id) {
+        try{
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.get('/wp/v2/users/' + id?context:edit);
+            return response.data
+        
+    } catch(error) {
+        return error.response.data
+    }
+},
+    
 
     async login(params) {
         try {

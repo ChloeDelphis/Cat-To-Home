@@ -21,7 +21,7 @@ const routes = [
     meta : {title: 'Liste des chats'}
   },
   {
-    path: '/cat/:id',
+    path: '/cat/:id?',
     name: 'cat',
     component: () => import(/* webpackChunkName: "cat" */ '../views/CatDetailView.vue'),
     meta : {title: 'Détail de la fiche'}
@@ -66,7 +66,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/profile',
+    path: '/profile/:id?',
     name: 'profile',
     // route level code-splitting
     // this generates a separate chunk (profile.[hash].js) for this route
