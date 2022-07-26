@@ -2,7 +2,7 @@
   <main class="cat__details">
         <section class="cat__details__container">
             <div class="cat__details__photo">
-                <img src="{{picture}}" alt="Photo de chat">
+                <img v-bind:src="picture" alt="Photo de chat">
             </div>
             <div class="cat__details__infos1">
                 <h2>Coucou ! Mon nom est {{name}} ! Tu veux m’adopter ?</h2>
@@ -25,7 +25,7 @@
                     <span class="bold">
                         Informations complémentaires :
                     </span><br>
-                    Minou est un chat timide et craintif aux premiers abords, mais qui une fois la confiance instaurée est très câlin. Aucun problème avec les enfants à condition de ne pas lui faire mal. S’aventure parfois dehors (actuellement dans une maison) mais jamais très longtemps
+                    <span v-html="infos"></span>
                 </p>
                 <p>
                     <span class="bold">Informations réglementaires :</span><br>
@@ -77,15 +77,18 @@ export default {
             this.vaccinated = response._embedded['wp:term'][4][0].name;
             this.diseases = response._embedded['wp:term'][0][0].name;
             this.environment = response._embedded['wp:term'][1][0].name;
+            this.infos = response.content.rendered;
         }
     }
 }
 </script>
 
-<style>
+<style lang="scss">
 
-li{
-    text-transform: capitalize;
+.cat__details__infos1 {
+
+    li{
+        text-transform: capitalize;
+    }
 }
-
 </style>
