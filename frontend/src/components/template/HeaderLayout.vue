@@ -50,19 +50,13 @@ export default {
   mounted() {
 
     const headerElmnt = document.querySelector("#header");
-    console.log(headerElmnt);
     const burgerElmnt = document.querySelector("#burger");
-    console.log(burgerElmnt);
     const crossElmnt = document.querySelector("#cross");
-    console.log(crossElmnt);
     const menu = document.querySelector("#menu");
-    console.log(menu);
-
 
     burgerElmnt.addEventListener("click", displaySmallMenuHandle);
 
     function displaySmallMenuHandle() {
-
       menu.classList.remove("header__nav--desktop");
       menu.classList.add("header__nav--small");
       headerElmnt.classList.add("fixed");
@@ -71,19 +65,17 @@ export default {
       crossElmnt.style.display="block";
     }
 
-     crossElmnt.addEventListener("click", displayDesktopMenuHandle);
+    crossElmnt.addEventListener("click", displayDesktopMenuHandle);
 
     function displayDesktopMenuHandle() {
-      
+ 
       menu.classList.remove("header__nav--small");
       menu.classList.add("header__nav--desktop");
       headerElmnt.classList.remove("fixed");
 
       burgerElmnt.style.display="block";
       crossElmnt.style.display="none";
-    }
-    
-    
+    } 
   }
 };
 </script>
