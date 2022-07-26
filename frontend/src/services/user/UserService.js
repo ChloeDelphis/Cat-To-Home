@@ -29,5 +29,15 @@ export default {
             } catch(error) {
             return error.response.data
         }
+    },
+
+    async getRoles(id) {
+        try {
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const role = await apiClient.get('/wp/v2/users/' + id + '?context=edit');
+            return role.data
+        } catch(error) {
+            return error.response.data
+        }
     }
 }

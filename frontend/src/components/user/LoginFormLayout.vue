@@ -47,8 +47,10 @@ export default {
     },
     methods: {
         async login() {
+            this.passwordError = '';
+            this.emailError = '';
             if(!this.email) {
-                this.emailError = "Email / email cannot be empty";
+                this.emailError = "Email cannot be empty";
             }
 
             if(!this.password) {
@@ -56,14 +58,14 @@ export default {
             }
 
             if(!this.passwordError && !this.emailError) {
-                console.log('LOGIN');
+                // console.log('LOGIN');
                 // Requete Ajax pour connexion utilisateur
                 const response = await UserService.login({
                   username: this.email,
                   password: this.password
                 })
                 if(response.success === true) {
-                  console.log('OK');
+                  // console.log('OK');
                   // On execute une mutation pour stocker le token dans le sessionStorage
                   // Et le synchroniser avec le store afin de rendre notre store.token reactif
                   this.$store.commit('setToken', response.data.token);

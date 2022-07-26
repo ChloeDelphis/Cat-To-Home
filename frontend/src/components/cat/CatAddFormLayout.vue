@@ -4,7 +4,7 @@
       <fieldset class="adoption__form">
         <div class="adoption__form__pair">
           <label class="input__name" for="lastname">Nom</label>
-          <input
+          <input v-model="title"
             class="input"
             type="text"
             id="lastname"
@@ -14,7 +14,7 @@
         </div>
         <div class="adoption__form__pair">
           <label class="input__name" for="sexe">Sexe</label>
-          <select class="input" name="sexe" id="sexe">
+          <select v-model="sex" class="input" name="sexe" id="sexe">
             <option value="" selected>Sexe</option>
             <option value="male">Mâle</option>
             <option value="female">Femelle</option>
@@ -23,17 +23,12 @@
         </div>
         <div class="adoption__form__pair">
           <label class="input__name" for="localisation">Localisation</label>
-          <input
-            class="input"
-            type="text"
-            id="localisation"
-            name="localisation"
-            placeholder="Paris"
+          <input  v-model="localisation" class="input" type="text" id="localisation" name="localisation" placeholder="Paris"
           />
         </div>
         <div class="adoption__form__pair">
           <label class="input__name" for="department">Département</label>
-          <select class="input" name="departement" id="department">
+          <select v-model="department" class="input" name="department" id="department">
             <option value="" selected>Département</option>
             <option value="Finistère">29 - Finistère</option>
             <option value="Morbihan">56 - Morbihan</option>
@@ -44,52 +39,30 @@
 
         <div class="adoption__form__pair">
           <label class="input__name" for="environment">Environnement</label>
-          <select class="input" name="environment" id="environment">
+          <select v-model="environment" class="input" name="environment" id="environment">
             <option value="" selected>Environnement</option>
-            <option value="">Interieur</option>
-            <option value="">Exterieur</option>
+            <option value="interieur">Interieur</option>
+            <option value="exterieur">Exterieur</option>
           </select>
         </div>
 
         <div class="adoption__form__pair">
           <label class="input__name" for="age">Date de naissance</label>
-          <input
-            class="input"
-            type="date"
-            id="age"
-            name="age"
-            min="2000-01-01"
-            max="20-12-31"
-          />
+          <input v-model="date" class="input" type="date" id="age" name="age" min="2000-01-01" max="20-12-31"/>
         </div>
 
         <div class="adoption__form__pair">
           <label class="input__name" for="vaccine">Vacciné contre</label>
           <div>
-            <input
-              type="checkbox"
-              id="vaccine1"
-              name="vaccine1"
-              value="vaccine1"
-            />
+            <input  type="checkbox" id="rage" name="rage" value="vaccine1" v-model="checkedVaccins"/>
             <label for="vaccine1"> La rage</label>
           </div>
           <div>
-            <input
-              type="checkbox"
-              id="vaccine2"
-              name="vaccine2"
-              value="vaccine2"
-            />
+            <input  type="checkbox" id="coryza" name="coryza" value="vaccine2" v-model="checkedVaccins"/>
             <label for="vaccine2"> Le coryza du chat</label>
           </div>
           <div>
-            <input
-              type="checkbox"
-              id="vaccine3"
-              name="vaccine3"
-              value="vaccine3"
-            />
+            <input  type="checkbox" id="typhus" name="typhus" value="vaccine3" v-model="checkedVaccins"/>
             <label for="vaccine3"> Le typhus félin</label>
           </div>
         </div>
@@ -102,15 +75,15 @@
             </legend>
           </div>
           <div>
-            <input type="radio" id="yes" name="sickness" value="yes" />
+            <input v-model="diseases" type="radio" id="yes" name="sickness" value="yes" />
             <label for="yes">Oui</label>
           </div>
           <div>
-            <input type="radio" id="no" name="sickness" value="no" />
+            <input v-model="diseases" type="radio" id="no" name="sickness" value="no" />
             <label for="no">Non</label>
           </div>
           <div>
-            <input type="radio" id="unknown" name="sickness" value="unknown" />
+            <input v-model="diseases" type="radio" id="unknown" name="sickness" value="unknown" />
             <label for="unknown">Ne sais pas</label>
           </div>
         </fieldset>
@@ -118,13 +91,10 @@
 
       <div class="adoption__description">
         <label class="input__name" for="description">Description</label>
-        <textarea
-          class="input adoption__description__textarea"
-          id="description"
-          name="description"
-        >
+        <textarea v-model="content" class="input adoption__description__textarea" id="description" name="description">
         </textarea>
       </div>
+      <button v-on:click="sendNewCat" type="submit" class="button__orange" > Valider la création de la fiche</button>
 
       <!-- Boutons à ne faire apparaître que quand le composant est appelé par ProfilePublishedSheetsLayout  -->
       <div v-if="this.$route.name === 'profile'" class="profil__adoption__buttons">
@@ -142,8 +112,71 @@
 </template>
 
 <script>
+import NewCat from '@/services/cat/NewCat';
 export default {
   name: "CatAddFormLayout",
+   
+   data() {
+        return {
+            errors: [],
+            title: null,
+            sex: null,
+            localisation: null,
+            department: null,
+            environment: null,
+            date: null,
+            checkedVaccins: [],
+            diseases: null,
+            content: null,
+        }
+    },
+    methods: {
+        async sendNewCat() {
+             this.errors = [];
+             // Validation du contenu du formulaire
+             if(!this.title) {
+                 this.errors.push("Title cannot be empty");
+             }
+             if(!this.sex) {
+                 this.errors.push("sex cannot be empty");
+             }
+             if(!this.localisation) {
+                 this.errors.push("localisation cannot be empty");
+             }
+             if(!this.department) {
+                 this.errors.push("department cannot be empty");
+             }
+             if(!this.environment) {
+                 this.errors.push("environment cannot be empty");
+             }
+             if(!this.date) {
+                 this.errors.push("date cannot be empty");
+             }
+             if(!this.content) {
+                 this.errors.push("content cannot be empty");
+             }
+             if(this.errors.length === 0) {
+                console.log(this.title)
+                 let params = {
+                     "title": this.title,
+                     "content": this.content,
+                     "status": 'draft'
+                 }
+                 switch (this.$store.getters.getRole) {
+                  case 'owner':
+                    params.status = "draft"
+                    break;
+                 }
+                 const response = await NewCat.create(params);
+                 // Reception de la réponse et affichage
+                 if(response.id) {
+                   this.$router.push({name: 'home'});
+                 } else {
+                     alert(response.message);
+                 }
+            }
+        }
+    },
 };
 </script>
 

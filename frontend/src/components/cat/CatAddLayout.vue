@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <div class=" button__adoption__add">
-                            <button class="button__orange" > Valider la création de la fiche</button>
+                            <button v-on:click="sendNewCat" type="submit" class="button__orange" > Valider la création de la fiche</button>
                         </div>
                     </div>
                     <img class="img__cat__information" src="../../assets/img/purr-cat-21.png" alt="">
@@ -81,7 +81,8 @@ export default {
     name: "CatAddLayout",
     components: { 
         CatAddFormLayout 
-    }
+    },
+
 }
 </script>
 
