@@ -12,9 +12,9 @@
                     <li class="icon" id="price"><span class="bold">Prix</span> : {{price}}</li>
                     <li class="icon" id="sex"><span class="bold">Sexe</span> : {{sexe}}</li>
                     <li class="icon" id="age"><span class="bold">Âge</span> : 10 ans</li>
-                    <li class="icon" id="vaccinate"><span class="bold">Vaccins</span> : {{vaccinated}}</li>
-                    <li class="icon" id="disease"><span class="bold">Maladies</span> : {{diseases}}</li>
-                    <li class="icon" id="environmnent"><span class="bold">Environnement</span> : {{environment}}</li>
+                    <li class="icon" id="vaccinate"><span class="bold">Vaccins</span> : <span class="result" v-for="vaccin in vaccinated" v-bind:key="vaccin.name" v-html="vaccin.name"></span></li>
+                    <li class="icon" id="disease"><span class="bold">Maladies</span> : <span class="result" v-for="disease in diseases" v-bind:key="disease.name" v-html="disease.name"></span></li>
+                    <li class="icon" id="environmnent"><span class="bold">Environnement</span> : <span class="result" v-for="environment in environments" v-bind:key="environment.name" v-html="environment.name"></span></li>
                 </ul>
             </div>
             <div class="cat__details__illustration">
@@ -36,7 +36,13 @@
                         <li>Le donneur certifie avoir l'âge légal en accord avec les lois de son pays;</li>
                     </ul>
                 </p>
-                <button class="button__blue">Contacter le propriétaire</button>
+                <button v-if="this.$store.getters.getToken" class="button__blue">Contacter le propriétaire</button>
+                <div class="contact__information">
+                    <ul>
+                        <li>Téléphone : <span></span></li>
+                        <li>Adresse e-mail : <span></span></li>
+                    </ul>
+                </div>
             </div>
 
         </section>
@@ -56,15 +62,16 @@ export default {
             price: "Gratuit",
             sexe: null,
             age: null,
-            vaccinated: null,
-            diseases: null,
-            environment: null,
+            vaccinated: [],
+            diseases: [],
+            environments: [],
             infos: null
         }
     },
     async mounted(){
         let id = this.$route.params.id;
         const response = await CatService.find(id);
+        console.log(response);
         if(response.code){
             alert(response.message);
         } else {
@@ -74,9 +81,9 @@ export default {
             this.department = null;
             this.sexe = response._embedded['wp:term'][3][0].name;
             this.age = null;
-            this.vaccinated = response._embedded['wp:term'][4][0].name;
-            this.diseases = response._embedded['wp:term'][0][0].name;
-            this.environment = response._embedded['wp:term'][1][0].name;
+            this.vaccinated = response._embedded['wp:term'][4];
+            this.diseases = response._embedded['wp:term'][0];
+            this.environments = response._embedded['wp:term'][1];
             this.infos = response.content.rendered;
         }
     }
@@ -85,10 +92,20 @@ export default {
 
 <style lang="scss">
 
-.cat__details__infos1 {
+    .cat__details__infos1 {
 
-    li{
-        text-transform: capitalize;
+        li{
+            text-transform: capitalize;
+
+            .result {
+                margin-right: 1rem;
+            }
+        }
+
     }
-}
+
+    .contact__information {
+        display: none;
+        margin-bottom: 5rem;
+    }
 </style>
