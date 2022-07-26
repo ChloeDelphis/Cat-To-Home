@@ -17,6 +17,15 @@ export default {
         const response = await apiClient.get("/cat?_embed");
         return response.data;
     },
+    
+    async findAllByOrder(params) {
+        try {
+            const response = await apiClient.get('/cat?_embed&order=' + params);
+            return response.data;
+        } catch (error) {
+            return error.response;
+        }
+    },
 
     // Permet de récupérer une fiche adoption de chat avec son ID
     async find(id) {
