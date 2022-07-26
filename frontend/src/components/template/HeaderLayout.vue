@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header" id="header">
     <h1>
       <router-link :to="{ name: 'home' }"
         ><img
@@ -10,15 +10,16 @@
       </router-link>
     </h1>
     <nav class="header__nav">
-      <div class="header__nav--mobtab">
-        <a href="#">|||</a>
+      <div class="header__nav--mobtab ">
+        <a id="burger" href="#">|||</a>
+        <a id="cross" href="#">&#10060;</a>
       </div>
 
       <!-- pour faire apparaître le menu en mode mobile et tablette :
                 Ajouter la classe header__nav--small à la div ci-dessous
             Ajouter la classe fixed à l'élément header  -->
 
-      <div class="header__nav--desktop">
+      <div id="menu" class="header__nav--desktop">
         <router-link
           class="header__nav__don button__orange--papate"
           :to="{ name: 'cat_add' }"
@@ -48,8 +49,54 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "HeaderLayout",
+  mounted() {
+
+    const headerElmnt = document.querySelector("#header");
+    console.log(headerElmnt);
+    const burgerElmnt = document.querySelector("#burger");
+    console.log(burgerElmnt);
+    const crossElmnt = document.querySelector("#cross");
+    console.log(crossElmnt);
+    const menu = document.querySelector("#menu");
+    console.log(menu);
+
+
+    burgerElmnt.addEventListener("click", displaySmallMenuHandle);
+
+    function displaySmallMenuHandle() {
+
+      menu.classList.remove("header__nav--desktop");
+      menu.classList.add("header__nav--small");
+      headerElmnt.classList.add("fixed");
+
+      burgerElmnt.style.display="none";
+      crossElmnt.style.display="block";
+    }
+
+     crossElmnt.addEventListener("click", displayDesktopMenuHandle);
+
+    function displayDesktopMenuHandle() {
+      
+      menu.classList.remove("header__nav--small");
+      menu.classList.add("header__nav--desktop");
+      headerElmnt.classList.remove("fixed");
+
+      burgerElmnt.style.display="block";
+      crossElmnt.style.display="none";
+    }
+    
+    
+  }
+};
 </script>
 
 <style lang="scss">
+
+#cross {
+  display: none;
+  font-size: 4rem;
+}
+
 </style>
