@@ -15,8 +15,8 @@
                     <input @keyup="sendLocation" v-model="location_input" type="text" class="input input--selection"
                         name="departement" id="department">
                     <div id="home__form__list">
-                        <ItemListLocation v-for="location in locations" :key="location.code" :name="location.nom"
-                            :code="location.code" @choiceLocation="selectedLocation" />
+                        <ItemListLocation v-for="location in locations" :key="location" :name="location"
+                             @choiceLocation="selectedLocation" />
                     </div>
                     <!-- <select name="departement" id="department">
                         <option value="" selected>Département</option>
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import LocationService from '@/services/cat/LocationService';
+import LocationService from '@/services/taxonomies/LocationService';
 import ItemListLocation from '@/components/home/ItemListLocation';
 import CatCardLayout from "@/components/cat/CatCardLayout";
 import CatService from "@/services/cat/CatService";
@@ -85,13 +85,18 @@ export default {
     methods: {
         // Récupere la liste des départements en fonction de se qu'il est tapé dans l'input
         async sendLocation() {
-        this.locations = [];
-        document.querySelector('#home__form__list').style.height = '0';
+            this.locations = [];
+            document.querySelector('#home__form__list').style.height = '0';
 
-        if (this.location_input != '') {
-            const response = await LocationService.find(this.location_input);
-            document.querySelector('#home__form__list').style.height = '12rem';
-            this.locations = response.data
+            if (this.location_input != '') {
+                const response = await LocationService.findAll();
+                document.querySelector('#home__form__list').style.height = '12rem';
+                response.forEach(location => {
+                    if (location.name.toLowerCase().includes(this.location_input.toLowerCase())) {
+                        this.locations.push(location.name)
+                    }
+                });
+                // this.locations = response.data
             }
         },
         // Récupere le département selectionné par l'utilisateur et l'ajoute à l'input
@@ -105,7 +110,7 @@ export default {
         async searchCats() {
             if (this.order !== '' && this.location_input !== '') {
                 this.cats = [];
-                this.cats = await CatService.findAllByOrder(this.order);  
+                this.cats = await CatService.findAllByOrder(this.order);
                 this.location = this.location_input;
             }
         }
@@ -139,13 +144,11 @@ export default {
 <style lang="scss">
 .research {
     #home__form__list {
-    width: auto;
-    position: relative;
-    z-index: 999;
-    bottom: 22px;
-    overflow: scroll;
-    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+        width: auto;
+        position: relative;
+        z-index: 999;
+        bottom: 22px;
+        overflow: scroll;
+    }
 }
-}
-
 </style>
