@@ -49,9 +49,23 @@
 
             }
 
+            &__mention {
+                align-self: flex-end;
+                padding-top: 2rem;
+                color: colors.$color-orange;
+                font-weight: 700;
+                font-size: 1rem;
+            }
+
             &__field {
                 margin-bottom: 2rem;
                 width: 100%;
+
+                &__error{
+                    padding-top: 0.2rem;
+                    color: darkred;
+                    font-size: 1.5rem;
+                }
 
                 .radio {
                     padding: 0 2rem;
@@ -105,9 +119,17 @@
                 align-items: center;
             }
 
-            &__fieldset__field {
+            &__fieldset{
+            
+                &__mention {
+                    font-size: 1.5rem;
+                }
+            
+            &__field {
                 width: 70%;
             }
+
+        }
 
         }
 
@@ -145,6 +167,10 @@
                 .right {
                     align-items: flex-start;
 
+                }
+
+                &__mention {
+                    align-self: flex-start;
                 }
 
                 &__field {
