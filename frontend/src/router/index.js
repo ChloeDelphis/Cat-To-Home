@@ -15,13 +15,13 @@ const routes = [
     meta : {title: 'Creation d\'une fiche d\'adoption'}
   },
   {
-    path: '/cats',
+    path: '/cats/:order?/:location?',
     name: 'cats',
     component: () => import(/* webpackChunkName: "cats" */ '../views/CatListView.vue'),
     meta : {title: 'Liste des chats'}
   },
   {
-    path: '/cat/:id',
+    path: '/cat/:id?',
     name: 'cat',
     component: () => import(/* webpackChunkName: "cat" */ '../views/CatDetailView.vue'),
     meta : {title: 'Détail de la fiche'}
@@ -39,7 +39,7 @@ const routes = [
     meta : {title: 'Connexion'}
   },
 {
-    path: '/404',
+    path: '/:pathMatch(.*)*',
     name: '404',
     component: () => import(/* webpackChunkName: "404" */ '../views/Error404View.vue'),
     meta : {title: 'NotFound'}

@@ -10,6 +10,7 @@ export default {
         name: String
     },
     methods: {
+        // Renvoie l'info que l'élément a été ciblé à son composent parent 
         choiceLocation(event) {
             this.$emit('choiceLocation', event);
         }
@@ -20,7 +21,7 @@ export default {
 
 <style>
 
-.home__form__list .input {
+#home__form__list .input {
     
     position: relative;
     bottom: 2px;
@@ -28,7 +29,7 @@ export default {
     cursor: pointer;
 }
 
-.home__form__list .input:hover {
+#home__form__list .input:hover {
     opacity: 0.7;
 }
 </style>
