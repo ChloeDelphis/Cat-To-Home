@@ -12,7 +12,7 @@ const apiClient = axios.create({
 });
 
 export default {
-    // permet de créer un nouvel utlisateur
+    // permet de récupérer toutes les fiches adotpions de chats
     async findAll() {
         const response = await apiClient.get("/cat?_embed");
         return response.data;
@@ -25,5 +25,14 @@ export default {
         } catch (error) {
             return error.response;
         }
+
+    // Permet de récupérer une fiche adoption de chat avec son ID
+    async find(id) {
+        try{
+            const response = await apiClient.get("/cat/" + id + "?_embed");
+            return response.data
+        } catch(error) {
+            return error.response.data
+        }    
     }
 }

@@ -1,6 +1,5 @@
 <template>
-
-    <router-link :to="{name: 'cat'}" >
+    <router-link :to="{name: 'cat', params: {id: id}}" >
       <article class="post">
           <!--Image à ajouter en v-if si le composant est appelé par une page spécifique (profil adoptant) <img class="hearth" src="../../assets/icones/coeur.png" alt="" /> -->
 
