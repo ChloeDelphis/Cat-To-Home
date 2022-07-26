@@ -19,20 +19,10 @@
                 Ajouter la classe header__nav--small à la div ci-dessous
             Ajouter la classe fixed à l'élément header  -->
 
-<<<<<<< HEAD
       <div class="header__nav--desktop">
         <router-link v-if="this.$store.getters.getToken" class="header__nav__don button__orange--papate" :to="{ name: 'cat_add' }" >Je donne un chat</router-link>
         <router-link v-if="!this.$store.getters.getToken" class="header__nav__don button__orange--papate" :to="{ name: 'registration' }" >Je donne un chat</router-link>
 
-=======
-      <div id="menu" class="header__nav--desktop">
-        <router-link
-          class="header__nav__don button__orange--papate"
-          :to="{ name: 'cat_add' }"
-        >
-          Je donne un chat</router-link
-        >
->>>>>>> vue-burger-menu
         <router-link class="header__nav__menu" :to="{name: 'about'}">À propos</router-link>
         <router-link class="header__nav__menu" :to="{name: 'cats'}">Les chats</router-link>
         <router-link v-if="!this.$store.getters.getToken" class="header__nav__menu" :to="{name: 'registration'}">Inscription</router-link>
