@@ -2,7 +2,7 @@
   <main class="cat__details">
         <section class="cat__details__container">
             <div class="cat__details__photo">
-                <img src="@/assets/img/melvil.jpg" alt="Photo de chat">
+                <img v-bind:src="picture" alt="Photo de chat">
             </div>
             <div class="cat__details__infos1">
                 <h2>Coucou ! Mon nom est {{name}} ! Tu veux m’adopter ?</h2>
@@ -69,7 +69,7 @@ export default {
             alert(response.message);
         } else {
             this.name = response.title.rendered;
-            this.picture = response._embedded['wp:featuredmedia'][0].media_details.original_image;
+            this.picture = response._embedded['wp:featuredmedia'][0].source_url;
             this.localisation = response._embedded['wp:term'][2][0].name;
             this.department = null;
             this.sexe = response._embedded['wp:term'][3][0].name;
