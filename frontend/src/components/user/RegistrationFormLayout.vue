@@ -17,7 +17,7 @@
               <input
                 class="inscription__form__fieldset__field__input input"
                 type="text"
-                v-model="lastname"
+                v-model="lastName"
               />
               <p class="inscription__form__fieldset__field__error">
                 {{ lastNameError }}
@@ -28,7 +28,7 @@
               <input
                 class="inscription__form__fieldset__field__input input"
                 type="text"
-                v-model="firstname"
+                v-model="firstName"
               />
               <p class="inscription__form__fieldset__field__error">
                 {{ firstNameError }}
@@ -102,14 +102,14 @@
             </div>
             <div class="inscription__form__fieldset__field">
               <div>
-                <input type="radio" name="role" value="owner" />
+                <input type="radio" name="role" value="owner" v-model="role" />
                 <label for="owner"
                   >Je souhaite <span>donner</span> un chat</label
                 >
               </div>
 
               <div>
-                <input type="radio" name="role" value="adopter" />
+                <input type="radio" name="role" value="adopter" v-model="role"/>
 
                 <label for="adopter"
                   >Je souhaite <span class="bold">adopter</span> un chat</label
@@ -151,6 +151,15 @@ export default {
       passwordError: null,
       confPasswordError: null,
       roleError: null,
+      lastName : "",
+      firstName: "",
+      pseudo: "",
+      birth: "",
+      email: "",
+      confEmail: "",
+      password: "",
+      confPassword: "",
+      role: "",
     };
   },
 
@@ -158,10 +167,10 @@ export default {
     async sendForm() {
       this.errors = [];
       // Validation du contenu du formulaire
-      if (!this.lastname) {
+      if (!this.lastName) {
         this.lastNameError = "Merci de renseigner votre nom";
       }
-      if (!this.firstname) {
+      if (!this.firstName) {
         this.firstNameError = "Merci de renseigner votre prénom";
       }
       if (!this.birth) {
@@ -173,7 +182,7 @@ export default {
       if (this.email !== this.confEmail) {
         this.confEmailError = "Vos adresses email ne sont pas identiques";
       }
-      if (!this.password || !this.confPassword) {
+      if (!this.password) {
         this.passwordError =
           "Merci de renseigner et confirmer votre mot de passe";
       }
@@ -186,11 +195,22 @@ export default {
 
       //! Ajouter une vérification : âge > 18 ans
 
-      // Si le tableau d'erreur est vide alors on envoie la requête vers l'API
-      if (!this.lastNameError && !this.firstNameError &&!this.birthError &&!this.emailError && !this.confEmailError && !this.passwordError && !this.confPasswordError && !this.roleError) {
+      // Si on n'a aucune erreur
+      if (
+        !this.lastNameError &&
+        !this.firstNameError &&
+        !this.birthError &&
+        !this.emailError &&
+        !this.confEmailError &&
+        !this.passwordError &&
+        !this.confPasswordError &&
+        !this.roleError
+      ) {
+        // On envoie la requête vers l'API
+        // console.log("envoi requête inscription");
         const response = await UserService.register({
-          lastname: this.lastname,
-          firstname: this.firstname,
+          lastname: this.lastName,
+          firstname: this.firstName,
           pseudo: this.pseudo,
           birth: this.birth,
           email: this.email,
@@ -210,9 +230,13 @@ export default {
             (this.confPassword = null),
             (this.role = null),
             alert("Vous êtes inscrit !");
+
+            // On redirige vers la page connexion
+            this.$router.push({name : "login"});
         } else {
           alert(response.message);
         }
+        // console.log(response);
       }
     },
   },
