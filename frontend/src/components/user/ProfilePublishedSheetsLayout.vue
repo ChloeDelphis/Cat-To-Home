@@ -8,6 +8,15 @@
       <h2>Mes fiches adoption</h2>
 
       <CatAddFormLayout />
+
+      <!-- Boutons à ne faire apparaître que quand le composant est appelé par ProfilePublishedSheetsLayout  -->
+      <div class="profil__adoption__buttons">
+        <button class="button__orange" type="submit">
+          Valider les modification
+        </button>
+        <button class="button__orange" type="submit">Supprimer la fiche</button>
+      </div>
+      
     </section>
   </div>
 </template>
