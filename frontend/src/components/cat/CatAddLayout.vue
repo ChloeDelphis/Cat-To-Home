@@ -1,6 +1,7 @@
 <template>
     <main>
         <h2 class="adoption__title">Créé la fiche adoption de ton chat</h2>
+<<<<<<< HEAD
         <form v-on:click="sendNewCat">
             <section class="adoption">
                 <div class="adoption__left__part">
@@ -96,6 +97,9 @@
                 </div>
 
             </section>
+=======
+            <CatAddFormLayout />
+>>>>>>> develop
 
             <section class="information">
                 <div class="information__content">
@@ -164,12 +168,12 @@
                     <img class="img__cat__information" src="../../assets/img/purr-cat-21.png" alt="">
                 </div>
             </section>
-        </form>
     </main>
 
 </template>
 
 <script>
+<<<<<<< HEAD
 import NewCat from '@/services/cat/NewCat';
 
 export default {
@@ -214,6 +218,14 @@ export default {
             }
         }
     },
+=======
+import CatAddFormLayout from './CatAddFormLayout';
+export default {
+    name: "CatAddLayout",
+    components: { 
+        CatAddFormLayout 
+    }
+>>>>>>> develop
 }
 </script>
 

@@ -21,7 +21,7 @@ const routes = [
     meta : {title: 'Liste des chats'}
   },
   {
-    path: '/sheet',
+    path: '/cat/:id',
     name: 'cat',
     component: () => import(/* webpackChunkName: "cat" */ '../views/CatDetailView.vue'),
     meta : {title: 'Détail de la fiche'}
@@ -38,6 +38,25 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '../views/ConnexionView.vue'),
     meta : {title: 'Connexion'}
   },
+{
+    path: '/404',
+    name: '404',
+    component: () => import(/* webpackChunkName: "404" */ '../views/Error404View.vue'),
+    meta : {title: 'NotFound'}
+  },
+  {
+    path: '/legals-mention',
+    name: 'legals-mention',
+    component: () => import(/* webpackChunkName: "login" */ '../views/LegalMentionView.vue'),
+    meta : {title: 'MentionsLegales'}
+  },
+   {
+    path: '/contact',
+    name: 'contact',
+    component: () => import(/* webpackChunkName: "login" */ '../views/ContactView.vue'),
+    // meta : {title: 'Contact'}
+  },
+
   {
     path: '/about',
     name: 'about',
@@ -45,7 +64,16 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    // route level code-splitting
+    // this generates a separate chunk (profile.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "profile" */ '../views/ProfileView.vue')
+  },
+
 ]
 
 const router = createRouter({

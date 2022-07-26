@@ -19,36 +19,34 @@
             Ajouter la classe fixed à l'élément header  -->
 
       <div class="header__nav--desktop">
-        <router-link
-          class="header__nav__don button__orange--papate"
-          :to="{ name: 'cat_add' }"
-        >
-          Je donne un chat</router-link
-        >
+        <router-link v-if="this.$store.getters.getToken" class="header__nav__don button__orange--papate" :to="{ name: 'cat_add' }" >Je donne un chat</router-link>
+        <router-link v-if="!this.$store.getters.getToken" class="header__nav__don button__orange--papate" :to="{ name: 'registration' }" >Je donne un chat</router-link>
+
         <router-link class="header__nav__menu" :to="{name: 'about'}">À propos</router-link>
         <router-link class="header__nav__menu" :to="{name: 'cats'}">Les chats</router-link>
-        <router-link class="header__nav__menu" :to="{name: 'registration'}"
-          >Inscription</router-link>
-        <router-link class="header__nav__menu" :to="{name: 'login'}"
-          >Connexion</router-link
-        >
-        <!-- <a class="header__nav__menu" href="#">Déconnexion</a>  -->
-
+        <router-link v-if="!this.$store.getters.getToken" class="header__nav__menu" :to="{name: 'registration'}">Inscription</router-link>
+        <router-link v-if="!this.$store.getters.getToken" class="header__nav__menu" :to="{name: 'login'}" >Connexion</router-link>
         <a class="header__nav__menu" href="#">Contact</a>
-        <a class="header__nav__profile" href="#"
-          ><img
-            class="header__nav__profile--icon"
-            src="../../assets/icones/profil.png"
-            alt="icône vers profil utilisateur"
-          /><span class="header__nav__profile--text">Profil</span></a
-        >
+
+        <a class="header__nav__menu" v-if="this.$store.getters.getToken" v-on:click="disconnect" >Déconnexion</a>
+        <router-link class="header__nav__profile" v-if="this.$store.getters.getToken" :to="{name: 'profile'}"><img class="header__nav__profile--icon" src="../../assets/icones/profil.png" alt="icône vers profil utilisateur" /><span class="header__nav__profile--text">Profil</span></router-link>
       </div>
     </nav>
   </header>
 </template>
 
 <script>
-export default {};
+export default {
+  name: 'HeaderLayout',
+  methods: {
+        disconnect() {
+            // On execute la mutation qui va supprimer le token dans le store et dans le sessionStorage
+            this.$store.commit('deleteToken');
+            // On redirige l'utilisateur
+            this.$router.push({name: 'login'});
+        }
+    },
+};
 </script>
 
 <style lang="scss">
