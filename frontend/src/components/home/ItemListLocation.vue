@@ -1,12 +1,11 @@
 <template>
-  <p @click="choiceLocation" class="input">{{code}} - {{name}}</p>
+  <p @click="choiceLocation" class="input">{{name}}</p>
 </template>
 
 <script>
 export default {
     name: 'ItemListLocation',
     props: {
-        code: String,
         name: String
     },
     methods: {

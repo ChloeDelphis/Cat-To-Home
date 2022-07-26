@@ -13,21 +13,23 @@ const apiClient = axios.create({
 
 export default {
 
-
-
-
-
-
-
-
-
-
+    // permet de créer un nouvel utlisateur
+    async register(params) {
+        try {
+            const response = await apiClient.post('/wp/v2/users/register', params);
+            return response.data
+        } catch (error) {
+            return error.response.data
+        }
+    },
+    
     async login(params) {
         try {
             const response = await apiClient.post('/jwt-auth/v1/token', params);
             return response.data
-            } catch(error) {
+        } catch (error) {
             return error.response.data
         }
-    }
+    },
+
 }

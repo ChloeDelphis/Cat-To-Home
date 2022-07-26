@@ -33,9 +33,8 @@
           <label class="home__form__label" for="department">Localisation</label>
           <input @keyup="sendLocation" v-model="location_input" type="text" class="input input--selection" name="departement" id="department">
           <div id="home__form__list"> 
-            <ItemListLocation v-for="location in locations" :key="location.code" 
-              :name="location.nom" 
-              :code="location.code"
+            <ItemListLocation v-for="location in locations" :key="location" 
+              :name="location"
               @choiceLocation="selectedLocation"
             /> 
           </div>
@@ -141,8 +140,13 @@ export default {
 
       if (this.location_input != '') {
         const response = await LocationService.findAll();
-        // document.querySelector('#home__form__list').style.height = '12rem';
-        console.log(response);
+
+        document.querySelector('#home__form__list').style.height = '12rem';
+        response.forEach(location => {
+          if (location.name.toLowerCase().includes(this.location_input.toLowerCase())) {
+            this.locations.push(location.name)
+          }
+        });
         // this.locations = response.data
       }
     },
@@ -158,7 +162,6 @@ export default {
 
 <style lang="scss">
 #home__form__list {
-  // height: 12rem;
   overflow-x: auto;
 }
 
