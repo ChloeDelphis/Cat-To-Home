@@ -33,6 +33,7 @@ function cat_to_home_rest_user_register_handler($request)
     $role = sanitize_text_field($parameters['role']);
     $firstname = sanitize_text_field($parameters['firstname']);
     $lastname = sanitize_text_field($parameters['lastname']);
+    $birth = $parameters['birth'];
 
 
     // Préparation des erreurs en cas de non validation des données
@@ -63,6 +64,10 @@ function cat_to_home_rest_user_register_handler($request)
     if ($lastname === $firstname) {
         $error->add(404, __("Le prénom et le nom ne doivent pas être les mêmes", 'wp-rest-user'), array('status' => 400));
     }
+    if (empty($birth)) {
+        $error->add(404, __("La date de naissance est obligatoire.", 'wp-rest-user'), array('status' => 400));
+        return $error;
+    }
 
     // Verification qu'un utilisateur avec le même mail n'existe pas.
     if (!email_exists($email)) {
@@ -71,7 +76,8 @@ function cat_to_home_rest_user_register_handler($request)
             'user_login' => $email,
             'user_email' => $email,
             'first_name' => $firstname,
-            'last_name' => $lastname
+            'last_name' => $lastname,
+            'birth' => $birth,
         ]);
         // Si la création du nouvel utilisateur est bonne
         if (!is_wp_error($user_id)) {
