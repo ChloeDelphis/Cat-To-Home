@@ -1,7 +1,7 @@
 <template>
     <main>
         <h2 class="adoption__title">Créé la fiche adoption de ton chat</h2>
-        <form action="">
+        <form v-on:click="sendNewCat">
             <section class="adoption">
                 <div class="adoption__left__part">
                     <fieldset class="adoption__form">
@@ -37,8 +37,8 @@
                             <label class="input__name" for="environment">Environnement</label>
                             <select v-model="environment" class="input" name="environment" id="environment">
                                 <option value="" selected>Environnement</option>
-                                <option value="">Interieur</option>
-                                <option value="">Exterieur</option>
+                                <option value="Interieur">Interieur</option>
+                                <option value="Exterieur">Exterieur</option>
                             </select>
                         </div>
 
@@ -158,12 +158,11 @@
                             </div>
                         </div>
                         <div class=" button__adoption__add">
-                            <button class="button__orange" v-on:click="sendNewCat"> Valider la création de la fiche</button>
+                            <button class="button__orange" > Valider la création de la fiche</button>
                         </div>
                     </div>
                     <img class="img__cat__information" src="../../assets/img/purr-cat-21.png" alt="">
                 </div>
-
             </section>
         </form>
     </main>
@@ -190,6 +189,8 @@ export default {
     },
     methods: {
         async sendNewCat() {
+            console.log('oui'),
+            
             this.errors = [];
             if(!this.content) {
                 this.errors.push('Content is empty, please, fill it!');
