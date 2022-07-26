@@ -16,6 +16,14 @@ export default {
     async findAll() {
         const response = await apiClient.get("/cat?_embed");
         return response.data;
-    }
+    },
     
+    async findAllBy(params) {
+        try {
+            const response = await apiClient.get('/cat?_embedaorder=' + params);
+            return response.data;
+        } catch (error) {
+            return error.response;
+        }
+    }
 }

@@ -42,14 +42,14 @@
           <label class="home__form__label" for="filter"
             >Filtre de recherche</label
           >
-          <select class="input" name="filter" id="filter">
-            <option value="anciens" selected>
+          <select v-model="order" class="input" name="filter" id="filter">
+            <option value="desc" selected>
               Du plus anciens au plus récent
             </option>
-            <option value="recents">Du plus récent au plus anciens</option>
-            <option value="age">Âge</option>
+            <option value="asc">Du plus récent au plus anciens</option>
+            <option value="birthDate">Âge</option>
           </select>
-           <router-link class="button__orange--papate" v-bind:to="{ name: 'cats' }">
+           <router-link class="button__orange--papate" v-bind:to="{ name: 'cats', params: {order: order, location: location_input} }">
           Je trouve mon chat</router-link
         >
         </form>
@@ -129,7 +129,8 @@ export default {
   data() {
     return {
       location_input: null,
-      locations: []
+      locations: [],
+      order: null
     }
   },
   methods: {

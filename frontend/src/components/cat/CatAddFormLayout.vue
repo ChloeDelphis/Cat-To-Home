@@ -127,7 +127,7 @@
       </div>
 
       <!-- Boutons à ne faire apparaître que quand le composant est appelé par ProfilePublishedSheetsLayout  -->
-      <div class="profil__adoption__buttons">
+      <div v-if="this.$route.name === 'profile'" class="profil__adoption__buttons">
         <button class="button__orange" type="submit">
           Valider les modification
         </button>

@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import CatCardLayout from "@/components/cat/CatCardLayout.vue";
+import CatCardLayout from "@/components/cat/CatCardLayout";
 import CatService from "@/services/cat/CatService";
 export default {
     name: "CatsLayout",
