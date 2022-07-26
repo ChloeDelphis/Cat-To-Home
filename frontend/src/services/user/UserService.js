@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-    baseURL: 'http://cat-to-home.local/wp-json',
+    baseURL: 'http://cat_to_home.local/wp-json',
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
