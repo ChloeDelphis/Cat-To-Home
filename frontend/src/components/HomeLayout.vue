@@ -32,11 +32,12 @@
         <form class="home__form" action="/cats">
           <label class="home__form__label" for="department">Localisation</label>
           <input @keyup="sendLocation" v-model="location_input" type="text" class="input input--selection" name="departement" id="department">
-          <div class="home__form__list"> <ItemListLocation v-for="location in locations" :key="location.code" 
-                                            :name="location.nom" 
-                                            :code="location.code"
-                                            @choiceLocation="selectedLocation"
-                                          /> 
+          <div id="home__form__list"> 
+            <ItemListLocation v-for="location in locations" :key="location.code" 
+              :name="location.nom" 
+              :code="location.code"
+              @choiceLocation="selectedLocation"
+            /> 
           </div>
           <br />
           <label class="home__form__label" for="filter"
@@ -118,7 +119,7 @@
 </template>
 
 <script>
-import LocationService from '@/services/cat/LocationService';
+import LocationService from '@/services/taxonomies/LocationService';
 import CatCardLayout from '@/components/cat/CatCardLayout';
 import ItemListLocation from '@/components/home/ItemListLocation';
 export default {
@@ -136,31 +137,32 @@ export default {
   methods: {
     async sendLocation() {
       this.locations = [];
-      document.querySelector('.home__form__list').style.height = '0';
+      document.querySelector('#home__form__list').style.height = '0';
 
       if (this.location_input != '') {
-        const response = await LocationService.find(this.location_input);
-        document.querySelector('.home__form__list').style.height = '12rem';
-        this.locations = response.data
+        const response = await LocationService.findAll();
+        // document.querySelector('#home__form__list').style.height = '12rem';
+        console.log(response);
+        // this.locations = response.data
       }
     },
     selectedLocation(event) {
       const choiceLocation = event.currentTarget.textContent;
       this.location_input = choiceLocation
       this.locations = [];
-      document.querySelector('.home__form__list').style.height = '0';
+      document.querySelector('#home__form__list').style.height = '0';
     }
   }
 };
 </script>
 
 <style lang="scss">
-.home__form__list {
+#home__form__list {
   // height: 12rem;
   overflow-x: auto;
 }
 
-.home__form__list::-webkit-scrollbar {
+#home__form__list::-webkit-scrollbar {
   display: none;
 }
 </style>

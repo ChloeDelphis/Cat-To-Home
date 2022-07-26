@@ -34,18 +34,21 @@
             align-items: center;
 
             div {
-                margin-bottom: 2rem;
+                // margin-bottom: 2rem;
                 width: 28rem;
+                overflow: hidden;
                 
                 label {
                     color: colors.$color-orange;
                 }
 
-                select {
+                #department,
+                #filter {
                     width: 100%;
                     padding: 0.7rem;
                     border-radius: 1rem;
                     margin-top: 1rem;
+                    margin-bottom: 2rem;
                     background-color: white;
                     color: colors.$color-blue;
                     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -143,7 +146,6 @@
                 align-items: center;
 
                 div {
-                    margin-bottom: 2rem;
                     width: 33%;
                 }
             }
@@ -174,7 +176,6 @@
                 align-items: center;
 
                 div {
-                    margin-bottom: 2rem;
                     width: 37%;
                 }
             }

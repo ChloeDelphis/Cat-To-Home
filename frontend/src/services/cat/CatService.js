@@ -18,13 +18,14 @@ export default {
         return response.data;
     },
     
-    async findAllBy(params) {
+    async findAllByOrder(params) {
         try {
-            const response = await apiClient.get('/cat?_embedaorder=' + params);
+            const response = await apiClient.get('/cat?_embed&order=' + params);
             return response.data;
         } catch (error) {
             return error.response;
         }
+    },
 
     // Permet de récupérer une fiche adoption de chat avec son ID
     async find(id) {
