@@ -229,7 +229,8 @@ export default {
         !this.confEmailError &&
         !this.passwordError &&
         !this.confPasswordError &&
-        !this.roleError
+        !this.roleError &&
+        !this.validEmailError
       ) {
         // On envoie la requête vers l'API
         // console.log("envoi requête inscription");
@@ -288,10 +289,8 @@ export default {
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
       if (input.match(validRegex)) {
-        alert("Valid email address!");
         return true;
       } else {
-        alert("Invalid email address!");
         return false;
       }
     },
