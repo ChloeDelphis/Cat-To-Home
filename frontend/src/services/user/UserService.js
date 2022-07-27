@@ -32,20 +32,6 @@ export default {
         }
     },
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    async getRoles(id) {
-        try {
-            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
-            const role = await apiClient.get('/wp/v2/users/' + id + '?context=edit');
-            return role.data
-        } catch(error) {
-            return error.response.data
-        }
-    }
->>>>>>> vue-addcat
-=======
     async find(id) {
         try {
             apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
@@ -56,5 +42,4 @@ export default {
         }
     }
 
->>>>>>> 887feb3691ef804d5ef34d9aff72a0fffc064a72
 }
