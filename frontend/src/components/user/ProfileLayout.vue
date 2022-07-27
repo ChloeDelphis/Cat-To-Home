@@ -36,7 +36,7 @@
               placeholder="jadoreleschaton2022"
               v-model="pseudo"
             /><br />
-
+            <!-- 
             <label for="birth">Date de naissance</label><br />
             <input
               type="text"
@@ -44,7 +44,7 @@
               name="birth"
               placeholder="JJ/MM/AAA"
               v-model="birth"
-            /><br />
+            /><br /> -->
 
             <label for="phone">Numéro de télèphone</label><br />
             <input
@@ -54,8 +54,7 @@
               placeholder="06 XX XX XX XX"
               v-model="phone"
             /><br />
-          </fieldset>
-          <fieldset class="right">
+
             <label for="email">Adresse e-mail</label><br />
             <input
               type="email"
@@ -64,7 +63,8 @@
               placeholder="johndoe@gmal.bzh"
               v-model="email"
             /><br />
-
+          </fieldset>
+          <fieldset class="right">
             <label for="confirmEmail">Confirmer adresse e-mail</label><br />
             <input
               type="email"
