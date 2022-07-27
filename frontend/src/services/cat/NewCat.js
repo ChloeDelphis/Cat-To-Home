@@ -15,7 +15,7 @@ const apiClient = axios.create({
 export default {
     async create(params) {
         // On passe le token de connexion
-        // apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
             const response = await apiClient.post('/cat', params);
             return response.data
