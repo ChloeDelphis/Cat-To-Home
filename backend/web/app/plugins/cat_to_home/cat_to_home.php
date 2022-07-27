@@ -41,6 +41,7 @@ require_once plugin_dir_path(__FILE__) . './taxonomies/vaccinate.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/registration.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/favorite.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/catByAge.php';
+require_once plugin_dir_path(__FILE__) . './endpoints/sendMail.php';
 
 
 register_activation_hook(__FILE__, 'cat_to_home_create_custom_roles');
@@ -57,4 +58,17 @@ function cat_to_home_remove_custom_roles()
     Adopter::cat_to_home_remove_adopter_role();
     Owner::cat_to_home_remove_owner_role();
     User_PostMigration::cat_to_home_deleteTable();
+}
+
+add_action( 'phpmailer_init', 'send_smtp_email' );
+
+function send_smtp_email( $phpmailer ) {
+    $phpmailer->isSMTP();
+    $phpmailer->Host       = 'cat_to_home.local';
+    $phpmailer->Port       = '8080';
+    $phpmailer->SMTPSecure = 'tls';
+    $phpmailer->SMTPAuth   = true;
+    $phpmailer->Username   = 'admin';
+    $phpmailer->Password   = 'admin';
+    $phpmailer->addReplyTo('info@example.com', 'Information');
 }

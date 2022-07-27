@@ -27,6 +27,9 @@
               type="password"
             />
           </div>
+          <div>
+            <button class="btn--reinit__pass">Réinitialiser son mot de passe</button>
+          </div>
           <ul class="field__error-list">
             <li>
               {{ passwordError }}
