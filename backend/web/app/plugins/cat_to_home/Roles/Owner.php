@@ -6,7 +6,9 @@ class Owner
 {
     public static function cat_to_home_create_owner_role()
     {
-        add_role('owner', 'Owner', get_role('editor')->capabilities);
+        $capabilitie = get_role('editor')->capabilities;
+        $capabilitie .= 'edit_users';
+        add_role('owner', 'Owner', $capabilitie);
     }
 
     public static function cat_to_home_remove_owner_role()
