@@ -127,7 +127,7 @@ add_filter('bulk_post_updated_messages', 'cat_bulk_updated_messages', 10, 2);
 // Ajout du postmeta 'birthDate'
 function register_experience_meta_fields(){
 	
-	register_meta( 'post', 'birthDate', array(
+	register_meta( 'post', 'age', array(
 		'type' => 'string',
         'description' => 'age du chat',
         'single' => true,

@@ -35,5 +35,24 @@ export default {
         } catch(error) {
             return error.response.data
         }    
+    },
+
+    // Récupère les IDs des fiches en fonction de l'age mis en param
+    async findAllByAge(param) {
+        try{
+            const response = await apiClient.get("/cat/filter/" + param);
+            return response.data
+        } catch(error) {
+            return error.response.data
+        }    
+    },
+    // Récupère les IDs des fiches en fonction de l'age mis en param
+    async findAllByIds(param) {
+        try{
+            const response = await apiClient.get("/cat?_embed&include=" + param);
+            return response.data
+        } catch(error) {
+            return error.response.data
+        }    
     }
 }
