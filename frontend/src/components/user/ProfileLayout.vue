@@ -46,6 +46,16 @@
               v-model="birth"
             /><br />
 
+            <label for="phone">Numéro de télèphone</label><br />
+            <input
+              type="phone"
+              id="phone"
+              name="phone"
+              placeholder="06 XX XX XX XX"
+              v-model="phone"
+            /><br />
+          </fieldset>
+          <fieldset class="right">
             <label for="email">Adresse e-mail</label><br />
             <input
               type="email"
@@ -54,8 +64,7 @@
               placeholder="johndoe@gmal.bzh"
               v-model="email"
             /><br />
-          </fieldset>
-          <fieldset class="right">
+
             <label for="confirmEmail">Confirmer adresse e-mail</label><br />
             <input
               type="email"
@@ -114,6 +123,7 @@ export default {
       pseudo: null,
       birth: null,
       email: null,
+      phone: null,
     };
   },
   async mounted() {
@@ -128,8 +138,9 @@ export default {
       this.lastname = response.last_name;
       this.firstname = response.first_name;
       this.pseudo = response.nickname;
-      this.birth = response.birth;
+      this.birth = response.meta.birth;
       this.email = response.email;
+      this.phone = response.phone;
     }
   },
 };
