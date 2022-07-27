@@ -15,6 +15,7 @@
               type="text"
               id="lastname"
               name="lastname"
+              vue
               placeholder="Doe"
               v-model="lastname"
             /><br />

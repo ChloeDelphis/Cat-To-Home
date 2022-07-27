@@ -41,6 +41,12 @@ require_once plugin_dir_path(__FILE__) . './taxonomies/vaccinate.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/registration.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/favorite.php';
 
+// Customs users meta keys
+require_once plugin_dir_path(__FILE__) . './users/birth.php';
+require_once plugin_dir_path(__FILE__) . './users/phone.php';
+
+
+
 
 register_activation_hook(__FILE__, 'cat_to_home_create_custom_roles');
 function cat_to_home_create_custom_roles()
