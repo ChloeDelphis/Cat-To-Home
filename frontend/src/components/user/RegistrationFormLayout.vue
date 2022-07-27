@@ -61,7 +61,7 @@
                 v-model="email"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ emailError }}
+                {{ emailError }}{{ validEmailError }}
               </p>
             </div>
           </div>
@@ -157,6 +157,7 @@ export default {
       passwordError: null,
       confPasswordError: null,
       roleError: null,
+      validEmailError : null,
       lastName: "titi",
       firstName: "t",
       pseudo: "titi",
@@ -181,6 +182,7 @@ export default {
       this.passwordError = null;
       this.confPasswordError = null;
       this.roleError = null;
+      this.validEmailError = null;
 
       // Validation du contenu du formulaire
       if (!this.lastName) {
@@ -210,6 +212,9 @@ export default {
       }
       if (!this.role) {
         this.roleError = "Veuillez choisir votre rôle";
+      }
+      if (!this.validateEmail(this.email)){
+        this.validEmailError = "Votre adresse email n'est pas valide";
       }
 
       //! Ajouter une vérification : âge > 18 ans
@@ -254,17 +259,17 @@ export default {
 
             // On remet le formulaire à zéro
             (this.lastname = null),
-            (this.firstname = null),
-            (this.pseudo = null),
-            (this.birth = null),
-            (this.email = null),
-            (this.confEmail = null),
-            (this.password = null),
-            (this.confPassword = null),
-            (this.role = null),
-            // On execute une mutation pour stocker le token dans le sessionStorage
-            // Et le synchroniser avec le store afin de rendre notre store.token reactif
-            this.$store.commit("setToken", response.data.token);
+              (this.firstname = null),
+              (this.pseudo = null),
+              (this.birth = null),
+              (this.email = null),
+              (this.confEmail = null),
+              (this.password = null),
+              (this.confPassword = null),
+              (this.role = null),
+              // On execute une mutation pour stocker le token dans le sessionStorage
+              // Et le synchroniser avec le store afin de rendre notre store.token reactif
+              this.$store.commit("setToken", response.data.token);
 
             // On redirige vers la page d'accueil
             this.$router.push({ name: "home" });
@@ -275,6 +280,19 @@ export default {
           alert(response.message);
         }
         console.log(response);
+      }
+    },
+
+    validateEmail: function (input) {
+      const validRegex =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+      if (input.match(validRegex)) {
+        alert("Valid email address!");
+        return true;
+      } else {
+        alert("Invalid email address!");
+        return false;
       }
     },
   },
