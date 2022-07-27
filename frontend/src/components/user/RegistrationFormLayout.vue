@@ -31,7 +31,7 @@
                 v-model="firstName"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ firstNameError }}
+                {{ firstNameError }} {{ nameError }}
               </p>
             </div>
             <div class="inscription__form__fieldset__field">
@@ -61,7 +61,7 @@
                 v-model="email"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ emailError }}
+                {{ emailError }}{{ validEmailError }}
               </p>
             </div>
           </div>
@@ -109,7 +109,12 @@
               </div>
 
               <div>
-                <input type="radio" name="role" value="adopter" v-model="role"/>
+                <input
+                  type="radio"
+                  name="role"
+                  value="adopter"
+                  v-model="role"
+                />
 
                 <label for="adopter"
                   >Je souhaite <span class="bold">adopter</span> un chat</label
@@ -143,6 +148,7 @@ export default {
   name: "RegistrationFormLayout",
   data() {
     return {
+      nameError: null,
       lastNameError: null,
       firstNameError: null,
       birthError: null,
@@ -151,27 +157,42 @@ export default {
       passwordError: null,
       confPasswordError: null,
       roleError: null,
-      lastName : "",
-      firstName: "",
-      pseudo: "",
-      birth: "",
-      email: "",
-      confEmail: "",
-      password: "",
+      validEmailError : null,
+      lastName: "titi",
+      firstName: "t",
+      pseudo: "titi",
+      birth: "2020-07-05",
+      email: "titi@y.com",
+      confEmail: "titi@y.com",
+      password: "titi",
       confPassword: "",
-      role: "",
+      role: "owner",
     };
   },
 
   methods: {
     async sendForm() {
-      this.errors = [];
+      // On vide les erreurs
+      this.nameError = null;
+      this.lastNameError = null;
+      this.firstNameError = null;
+      this.birthError = null;
+      this.emailError = null;
+      this.confEmailError = null;
+      this.passwordError = null;
+      this.confPasswordError = null;
+      this.roleError = null;
+      this.validEmailError = null;
+
       // Validation du contenu du formulaire
       if (!this.lastName) {
         this.lastNameError = "Merci de renseigner votre nom";
       }
       if (!this.firstName) {
         this.firstNameError = "Merci de renseigner votre prénom";
+      }
+      if (this.lastName === this.firstName) {
+        this.nameError = "Le prénom et le nom ne peuvent pas être identiques";
       }
       if (!this.birth) {
         this.birthError = "Merci de renseigner votre date de naissance";
@@ -192,11 +213,15 @@ export default {
       if (!this.role) {
         this.roleError = "Veuillez choisir votre rôle";
       }
+      if (!this.validateEmail(this.email)){
+        this.validEmailError = "Votre adresse email n'est pas valide";
+      }
 
       //! Ajouter une vérification : âge > 18 ans
 
       // Si on n'a aucune erreur
       if (
+        !this.nameError &&
         !this.lastNameError &&
         !this.firstNameError &&
         !this.birthError &&
@@ -219,24 +244,55 @@ export default {
         });
         // En cas de réussite
         if (response.code === 200) {
-          // On remet le formulaire à zéro
-          (this.lastname = null),
-            (this.firstname = null),
-            (this.pseudo = null),
-            (this.birth = null),
-            (this.email = null),
-            (this.confEmail = null),
-            (this.password = null),
-            (this.confPassword = null),
-            (this.role = null),
-            alert("Vous êtes inscrit !");
+          alert("Vous êtes inscrit !");
 
-            // On redirige vers la page connexion
-            this.$router.push({name : "login"});
+          // On connecte l'utilisateur avec ses nouveaux identifiants
+
+          // Requete Ajax pour connexion utilisateur
+          const response = await UserService.login({
+            username: this.email,
+            password: this.password,
+          });
+
+          if (response.success === true) {
+            console.log("Connexion ok");
+
+            // On remet le formulaire à zéro
+            (this.lastname = null),
+              (this.firstname = null),
+              (this.pseudo = null),
+              (this.birth = null),
+              (this.email = null),
+              (this.confEmail = null),
+              (this.password = null),
+              (this.confPassword = null),
+              (this.role = null),
+              // On execute une mutation pour stocker le token dans le sessionStorage
+              // Et le synchroniser avec le store afin de rendre notre store.token reactif
+              this.$store.commit("setToken", response.data.token);
+
+            // On redirige vers la page d'accueil
+            this.$router.push({ name: "home" });
+          } else {
+            alert(response.message);
+          }
         } else {
           alert(response.message);
         }
-        // console.log(response);
+        console.log(response);
+      }
+    },
+
+    validateEmail: function (input) {
+      const validRegex =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+      if (input.match(validRegex)) {
+        alert("Valid email address!");
+        return true;
+      } else {
+        alert("Invalid email address!");
+        return false;
       }
     },
   },
