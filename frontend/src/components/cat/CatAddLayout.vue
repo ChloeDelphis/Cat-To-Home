@@ -289,11 +289,11 @@ export default {
 
         if (this.location_input != '') {
             const response = await LocationService.find(this.location_input);
-
+            console.log(response);
             // document.querySelector('#home__form__list').style.height = '12rem';
             response.forEach(location => {
-            if (location.name.toLowerCase().includes(this.location_input.toLowerCase())) {
-                this.locations.push(location.name)
+            if (location.nom.toLowerCase().includes(this.location_input.toLowerCase())) {
+                this.locations.push(location.nom)
             }
             });
             // this.locations = response.data
