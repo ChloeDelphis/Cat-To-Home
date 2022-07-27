@@ -19,7 +19,7 @@ export default createStore({
       // Si l'utilisateur n'existe pas dans le store
       if(state.userId === null) {
         // Je le recupere depuis le sessionStorage
-        state.userId = sessionStorage.getItem('token');
+        state.userId = sessionStorage.getItem('userId');
       }
       return state.userId;
     }

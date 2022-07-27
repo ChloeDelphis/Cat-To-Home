@@ -108,6 +108,7 @@ export default {
   },
   data() {
     return {
+      id: null,
       lastname: null,
       firstname: null,
       pseudo: null,
@@ -122,9 +123,11 @@ export default {
     if (response.code) {
       alert(response.message);
     } else {
-      this.lastname = response.lastname;
-      this.firstname = response.firstname;
-      this.pseudo = response.pseudo;
+      console.log(response);
+      this.id = response.id;
+      this.lastname = response.last_name;
+      this.firstname = response.first_name;
+      this.pseudo = response.nickname;
       this.birth = response.birth;
       this.email = response.email;
     }
