@@ -17,15 +17,16 @@
                     <div class="adoption__form__pair">
                         <label class="input__name" for="sexe">Sexe</label>
                         <select v-model="sex" class="input" name="sexe" id="sexe">
-                            <option value="" selected>Sexe</option>
-                            <option value="male">Mâle</option>
-                            <option value="female">Femelle</option>
-                            <option value="unknown">Inconnu</option>
+                            <option  v-for="sex in sexes" :key="sex.id" :value="sex.id">{{sex.name}}</option>
                         </select>
                     </div>
                     <div class="adoption__form__pair">
-                        <label class="input__name" for="localisation">Localisation</label>
-                        <input  v-model="localisation" class="input" type="text" id="localisation" name="localisation" placeholder="Paris"/>
+                        <label class="input__name" for="department">Localisation</label>
+                        <input @keyup="sendLocation" v-model="location_input" type="text" class="input" name="departement" id="department">
+                        <div id="home__form__list" >
+                            <ItemListLocation v-for="location in locations" :key="location" :name="location"
+                            @choiceLocation="selectedLocation" />
+                        </div>
                     </div>
 
                     <div class="adoption__form__pair">
@@ -42,31 +43,32 @@
                     <div class="adoption__form__pair">
                         <label class="input__name" for="environment">Environnement</label>
                         <select v-model="environment" class="input" name="environment" id="environment">
-                            <option value="" selected>Environnement</option>
-                            <option value="5">Interieur</option>
-                            <option value="6">Exterieur</option>
+                            <option v-for="environment in environments" :key="environment.id" :value="environment.id">{{environment.name}}</option> 
                         </select>
                     </div>
 
                     <div class="adoption__form__pair">
+                        <label class="input__name" for="filter">Filtre par age</label>
+                        <select v-model="age" class="input" name="filter" id="filter">
+                            <option value="tout_age">Tout âge</option>
+                            <option value="bebe">Bébé</option>
+                            <option value="junior">Junior</option>
+                            <option value="adulte">Adulte</option>
+                            <option value="senior">Sénior</option>
+                        </select>
+                    </div>
+
+                    <!-- <div class="adoption__form__pair">
                     <label class="input__name" for="age">Date de naissance</label>
                     <input v-model="date" class="input" type="date" id="age" name="age" min="2000-01-01" max="20-12-31"/>
-                    </div>
+                    </div> -->
 
                     <div class="adoption__form__pair">
                     <label class="input__name" for="vaccine">Vacciné contre</label>
-                    <div>
-                        <input  type="checkbox" id="rage" name="rage" value="vaccine1" v-model="checkedVaccins"/>
-                        <label for="vaccine1"> La rage</label>
-                    </div>
-                    <div>
-                        <input  type="checkbox" id="coryza" name="coryza" value="vaccine2" v-model="checkedVaccins"/>
-                        <label for="vaccine2"> Le coryza du chat</label>
-                    </div>
-                    <div>
-                        <input  type="checkbox" id="typhus" name="typhus" value="vaccine3" v-model="checkedVaccins"/>
-                        <label for="vaccine3"> Le typhus félin</label>
-                    </div>
+                        <div v-for="vaccinate in vaccinates" :key="vaccinate.id">
+                         <input  type="checkbox" id="rage" name="rage" :value="vaccinate.id" v-model="checkedVaccins"/>
+                            <label > {{vaccinate.name}}</label>
+                        </div>
                     </div>
 
                     <fieldset class="adoption__form__pair">
@@ -186,14 +188,18 @@
 
 </template>
 
-<script>
+<script> 
 import NewCat from '@/services/cat/NewCat';
+import LocationService from '@/services/cat/LocationService';
+import EnvironmentService from '@/services/taxonomies/FindAllService';
 
 export default {
     name: "CatAddLayout",
 
     data() {
         return {
+
+            // Recuperation des valeurs mise dans la fiche
             errors: [],
             title: null,
             sex: null,
@@ -204,7 +210,21 @@ export default {
             checkedVaccins: [],
             diseases: null,
             content: null,
+
+            // Recuperation taxonomies
+            environments: [],
+            vaccinates: [],
+            sexes: [],
+
+            location_input: '',
+            locations: []
         }
+    },
+    async mounted() {
+        this.environments = await EnvironmentService.findAllEnvironment();
+        this.sexes = await EnvironmentService.findAllSex();
+        this.vaccinates = await EnvironmentService.findAllVaccinate();
+
     },
     
     methods: {
@@ -226,12 +246,12 @@ export default {
              if(!this.environment) {
                  this.errors.push("Environment cannot be empty");
              }
-             if(!this.date) {
-                 this.errors.push("Date cannot be empty");
-             }
-             if(!this.diseases) {
-                 this.errors.push("Diseases cannot be empty");
-             }
+            //  if(!this.date) {
+            //      this.errors.push("Date cannot be empty");
+            //  }
+            //  if(!this.diseases) {
+            //      this.errors.push("Diseases cannot be empty");
+            //  }
              if(!this.content) {
                  this.errors.push("Content cannot be empty");
              }
@@ -243,9 +263,9 @@ export default {
                      "location": this.localisation,
                      "departement": this.department,
                      "environment": this.environment,
-                     "date": this.date,
+                    //  "date": this.date,
                      "vaccinate": this.checkedVaccins,
-                     "diseases": this.diseases,
+                    //  "diseases": this.diseases,
                      "content": this.content,
                      "status": 'publish'
                  }
@@ -262,8 +282,30 @@ export default {
                      alert(response.message);
                  }
             }
+        },
+        async sendLocation() {
+        this.locations = [];
+        // document.querySelector('#home__form__list').style.height = '0';
+
+        if (this.location_input != '') {
+            const response = await LocationService.find(this.location_input);
+
+            // document.querySelector('#home__form__list').style.height = '12rem';
+            response.forEach(location => {
+            if (location.name.toLowerCase().includes(this.location_input.toLowerCase())) {
+                this.locations.push(location.name)
+            }
+            });
+            // this.locations = response.data
         }
-    },
+        },
+        selectedLocation(event) {
+            const choiceLocation = event.currentTarget.textContent;
+            this.location_input = choiceLocation
+            this.locations = [];
+            // document.querySelector('#home__form__list').style.height = '0';
+            }
+        },
 }
 </script>
 
