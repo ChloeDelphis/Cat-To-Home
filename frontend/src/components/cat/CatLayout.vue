@@ -11,10 +11,10 @@
                     <li class="icon" id="department"><span class="bold">Département</span> : Côtes d'Armor</li>
                     <li class="icon" id="price"><span class="bold">Prix</span> : {{price}}</li>
                     <li class="icon" id="sex"><span class="bold">Sexe</span> : {{sexe}}</li>
-                    <li class="icon" id="age"><span class="bold">Âge</span> : 10 ans</li>
-                    <li class="icon" id="vaccinate"><span class="bold">Vaccins</span> : {{vaccinated}}</li>
-                    <li class="icon" id="disease"><span class="bold">Maladies</span> : {{diseases}}</li>
-                    <li class="icon" id="environmnent"><span class="bold">Environnement</span> : {{environment}}</li>
+                    <li class="icon" id="age"><span class="bold">Âge</span> : {{age}}</li>
+                    <li class="icon" id="vaccinate"><span class="bold">Vaccins</span> : <span class="result" v-for="vaccin in vaccinated" v-bind:key="vaccin.name" v-html="vaccin.name"></span></li>
+                    <li class="icon" id="disease"><span class="bold">Maladies</span> : <span class="result" v-for="disease in diseases" v-bind:key="disease.name" v-html="disease.name"></span></li>
+                    <li class="icon" id="environmnent"><span class="bold">Environnement</span> : <span class="result" v-for="environment in environments" v-bind:key="environment.name" v-html="environment.name"></span></li>
                 </ul>
             </div>
             <div class="cat__details__illustration">
@@ -36,7 +36,13 @@
                         <li>Le donneur certifie avoir l'âge légal en accord avec les lois de son pays;</li>
                     </ul>
                 </p>
-                <button class="button__blue">Contacter le propriétaire</button>
+                <button v-if="this.$store.getters.getToken" v-on:click="displayContactInfos" class="button__blue">Contacter le propriétaire</button>
+                <div class="contact__information">
+                    <ul>
+                        <li>Téléphone : </li>
+                        <li>Adresse e-mail : {{email}}</li>
+                    </ul>
+                </div>
             </div>
 
         </section>
@@ -45,10 +51,13 @@
 
 <script>
 import CatService from '@/services/cat/CatService';
+import UserService from '@/services/user/UserService';
 export default {
     name: "CatLayout",
     data() {
         return {
+
+            // informations about the cat
             name: null,
             picture: null,
             localisation: null,
@@ -56,28 +65,52 @@ export default {
             price: "Gratuit",
             sexe: null,
             age: null,
-            vaccinated: null,
-            diseases: null,
-            environment: null,
-            infos: null
+            vaccinated: [],
+            diseases: [],
+            environments: [],
+            infos: null,
+
+            // information about the owner
+            authorId: null,
+            phoneNumber: null,
+            email: null
         }
     },
     async mounted(){
+
+        // Récupération of the cat's informations
         let id = this.$route.params.id;
-        const response = await CatService.find(id);
-        if(response.code){
-            alert(response.message);
+        const catResponse = await CatService.find(id);
+        console.log(catResponse);
+        if(catResponse.code){
+            alert(catResponse.message);
         } else {
-            this.name = response.title.rendered;
-            this.picture = response._embedded['wp:featuredmedia'][0].source_url;
-            this.localisation = response._embedded['wp:term'][2][0].name;
+            this.name = catResponse.title.rendered;
+            this.picture = catResponse._embedded['wp:featuredmedia'][0].source_url;
+            this.localisation = catResponse._embedded['wp:term'][2][0].name;
             this.department = null;
-            this.sexe = response._embedded['wp:term'][3][0].name;
-            this.age = null;
-            this.vaccinated = response._embedded['wp:term'][4][0].name;
-            this.diseases = response._embedded['wp:term'][0][0].name;
-            this.environment = response._embedded['wp:term'][1][0].name;
-            this.infos = response.content.rendered;
+            this.sexe = catResponse._embedded['wp:term'][3][0].name;
+            this.age = catResponse.meta.birthDate;
+            this.vaccinated = catResponse._embedded['wp:term'][4];
+            this.diseases = catResponse._embedded['wp:term'][0];
+            this.environments = catResponse._embedded['wp:term'][1];
+            this.infos = catResponse.content.rendered;
+            this.authorId = catResponse.author;
+        }
+
+        // Récupération of the owner's informations 
+        const userResponse = await UserService.find(this.authorId);
+        console.log(userResponse);
+        if(userResponse.code){
+            alert(userResponse.message);
+        } else {
+            this.email = userResponse.email;
+        }
+    },
+    methods: {
+        async displayContactInfos() {
+            const contactInfosElmnt = document.querySelector(".contact__information");
+            contactInfosElmnt.style.display = "block";
         }
     }
 }
@@ -85,10 +118,29 @@ export default {
 
 <style lang="scss">
 
-.cat__details__infos1 {
+    .cat__details__infos1 {
 
-    li{
-        text-transform: capitalize;
+        li{
+            text-transform: capitalize;
+
+            .result {
+                margin-right: 1rem;
+            }
+        }
+
     }
-}
+
+    .contact__information {
+        width: auto;
+        display: none;
+        margin-bottom: 5rem;
+
+        ul{
+            li{
+                float: inline-block;
+                width: 32rem;
+            }
+        }
+
+    }
 </style>

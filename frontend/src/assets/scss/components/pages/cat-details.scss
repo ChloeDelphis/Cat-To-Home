@@ -37,6 +37,7 @@
 
             li {
                 margin-bottom: 2rem;
+                list-style-position: outside;
                 
             }
 
@@ -93,6 +94,7 @@
         .cat__details__infos2 {
 
             margin-top: 2rem;
+            margin-bottom: 5rem;
             display: flex;
             flex-direction: column;
             
@@ -137,6 +139,9 @@
 
             .cat__details__infos1 {
                 order: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
             }
 
             .cat__details__photo {
@@ -144,9 +149,10 @@
                 padding: 2rem;
                 display: flex;
                 justify-content: center;
+                align-items: center;
 
                 img {
-                    width: 90%;
+                    width: 80%;
                 }
             }
 
@@ -156,10 +162,11 @@
                 margin-bottom: 10rem;
                 display: flex;
                 justify-content: center;
+                align-items: center;
 
                 
                 img{
-                    width: 70%;
+                    width: 60%;
                 }
             }
 

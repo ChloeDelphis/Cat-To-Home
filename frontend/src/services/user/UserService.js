@@ -33,6 +33,7 @@ export default {
     },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     async getRoles(id) {
         try {
@@ -44,4 +45,16 @@ export default {
         }
     }
 >>>>>>> vue-addcat
+=======
+    async find(id) {
+        try {
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.get('/wp/v2/users/' + id + '?context=edit');
+            return response.data
+        } catch (error) {
+            return error.response.data
+        }
+    }
+
+>>>>>>> 887feb3691ef804d5ef34d9aff72a0fffc064a72
 }
