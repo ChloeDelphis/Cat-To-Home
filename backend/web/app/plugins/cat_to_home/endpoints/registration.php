@@ -76,12 +76,12 @@ function cat_to_home_rest_user_register_handler($request)
             'user_login' => $email,
             'user_email' => $email,
             'first_name' => $firstname,
-            'last_name' => $lastname,
-            'birth' => $birth,
+            'last_name' => $lastname
         ]);
         // Si la création du nouvel utilisateur est bonne
         if (!is_wp_error($user_id)) {
 
+            add_user_meta($user_id, 'birth', $birth);
             // Recuperation de l'objet user
             $user = get_user_by('id', $user_id);
 
