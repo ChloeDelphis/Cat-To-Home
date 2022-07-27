@@ -27,6 +27,7 @@
                         <label class="input__name" for="localisation">Localisation</label>
                         <input  v-model="localisation" class="input" type="text" id="localisation" name="localisation" placeholder="Paris"/>
                     </div>
+
                     <div class="adoption__form__pair">
                         <label class="input__name" for="department">Département</label>
                         <select v-model="department" class="input" name="department" id="department">
