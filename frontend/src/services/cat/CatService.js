@@ -54,5 +54,23 @@ export default {
         } catch(error) {
             return error.response.data
         }    
+    },
+
+    async delete(id){
+        try{
+            const response = await apiClient.delete('/cat/' + id);
+            return response.data
+        } catch(error) {
+            return error.response.data
+        }
+    },
+
+    async update(id){
+        try{
+            const response = await apiClient.post('/cat/' + id);
+            return response.data
+        } catch(error) {
+            return error.response.data
+        }
     }
 }
