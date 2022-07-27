@@ -11,30 +11,31 @@
         <section class="research">
             <div class="search__cat__form">
                 <div>
-                    <label for="department">Localisation</label><br>
-                    <input @keyup="sendLocation" v-model="location_input" type="text" class="input input--selection"
-                        name="departement" id="department">
+                    <label for="department">Localisation</label>
+                    <input @keyup="sendLocation" v-model="location_input" type="text" class="input" name="departement"
+                        id="department">
                     <div id="home__form__list">
                         <ItemListLocation v-for="location in locations" :key="location" :name="location"
-                             @choiceLocation="selectedLocation" />
+                            @choiceLocation="selectedLocation" />
                     </div>
-                    <!-- <select name="departement" id="department">
-                        <option value="" selected>Département</option>
-                        <option value="Finistère">29 - Finistère</option>
-                        <option value="Morbihan">56 - Morbihan</option>
-                        <option value="Côtes d'Armor">22 - Côtes d'Armor</option>
-                        <option value="Ille-et-Vilaine">35 - Ille-et-Vilaine</option>
-                    </select> -->
                 </div>
                 <div>
-                    <label for="filter">Filtre de recherche</label><br>
+                    <label for="filter">Filtre de recherche</label>
                     <select v-model="order" name="filter" id="filter" class="input">
                         <option value="desc" selected>Du plus anciens au plus récent</option>
                         <option value="asc">Du plus récent au plus anciens</option>
-                        <option value="birthDate">Âge</option>
                     </select>
                 </div>
-
+                <div>
+                    <label class="home__form__label" for="filter">Filtre par age</label>
+                    <select v-model="age" class="input" name="filter" id="filter">
+                        <option value="tout_age">Tout âge</option>
+                        <option value="bebe">Bébé</option>
+                        <option value="junior">Junior</option>
+                        <option value="adulte">Adulte</option>
+                        <option value="senior">Sénior</option>
+                    </select>
+                </div>
                 <button @click="searchCats" class="button__orange--papate">Je trouve mon chat</button>
 
             </div>
@@ -47,7 +48,7 @@
 
                 <CatCardLayout v-bind:id="cat.id" v-bind:localisation="cat._embedded['wp:term'][2][0].name"
                     v-bind:name="cat.title.rendered" v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url"
-                    v-for="cat in catsList" v-bind:key="cat.title" />
+                    v-for="cat in cats" v-bind:key="cat.title" />
 
             </div>
 
@@ -75,12 +76,7 @@ export default {
         ItemListLocation
     },
     async mounted() {
-        // Récupere la liste complètes de chats s'il n'y a pas de param order
-        if (this.order === '') {
-            this.cats = await CatService.findAll();
-        } else {
-            this.cats = await CatService.findAllByOrder(this.order);
-        }
+        this.searchCats();
     },
     methods: {
         // Récupere la liste des départements en fonction de se qu'il est tapé dans l'input
@@ -90,41 +86,59 @@ export default {
 
             if (this.location_input != '') {
                 const response = await LocationService.findAll();
-                document.querySelector('#home__form__list').style.height = '12rem';
-                response.forEach(location => {
-                    if (location.name.toLowerCase().includes(this.location_input.toLowerCase())) {
-                        this.locations.push(location.name)
-                    }
-                });
-                // this.locations = response.data
+                if (response.length != 0) {
+                    document.querySelector('#home__form__list').style.height = '12rem';
+                    response.forEach(location => {
+                        if (location.name.toLowerCase().includes(this.location_input.toLowerCase())) {
+                            this.locations.push(location.name)
+                        }
+                    });
+                }
             }
         },
         // Récupere le département selectionné par l'utilisateur et l'ajoute à l'input
         selectedLocation(event) {
             const choiceLocation = event.currentTarget.textContent;
-            this.location_input = choiceLocation
-            this.locations = [];
+            console.log(choiceLocation);
+            this.location_input = choiceLocation;
+            this.location_selected = choiceLocation;
             document.querySelector('#home__form__list').style.height = '0';
         },
         // Permet de lancer la recherche en fonction des filtres selectionnés
         async searchCats() {
-            if (this.order !== '' && this.location_input !== '') {
-                this.cats = [];
-                this.cats = await CatService.findAllByOrder(this.order);
-                this.location = this.location_input;
-            }
-        }
-    },
-    computed: {
-        // Filtre les fiches à afficher selon la localisation
+            this.cats = [];
+            this.cats = this.order === 'asc' ? this.cats = await CatService.findAllByOrder(this.order) : this.cats = await CatService.findAll();
+            this.location_selected = this.location_input;
+            this.cats = this.catsList();
+
+        },
+        // filtre le tableau cats en fonction des filtres sélectionnés
         catsList() {
             return this.cats.filter((cat) => {
-                if (this.location === '') {
+                if (this.location_selected === '' && this.age === '') {
                     return true
-                } else if (cat._embedded['wp:term'][2][0].name === this.location) {
+                } else if (this.age == 'tout_age' && this.location_selected === '') {
                     return true;
                 } else {
-                    return false;
+                    if (this.location_selected !== '' && this.age !== '') {
+                        if (this.age == 'tout_age') {
+                            if (cat._embedded['wp:term'][2][0].name === this.location_selected) {
+                                return true;
+                            }
+                        } else if (cat._embedded['wp:term'][2][0].name === this.location_selected && cat.meta.age === this.age) {
+                            return true;
+                        }
+                    } else if (this.location_selected !== '' && this.age === '') {
+                        if (cat._embedded['wp:term'][2][0].name === this.location_selected) {
+                            return true;
+                        }
+                    } else if (this.age !== '' && this.location_selected === '') {
+                        if (cat.meta.age === this.age) {
+                            return true;
+                        }
+                    } else {
+                        return false;
+                    }
                 }
             })
         }
@@ -132,16 +146,17 @@ export default {
     data() {
         return {
             cats: [],
-            location_input: '',
+            location_input: this.$route.params.location || '',
             locations: [],
-            location: this.$route.params.location ?? '',
-            order: this.$route.params.order ?? ''
+            location_selected: this.$route.params.location || '',
+            order: this.$route.params.order || '',
+            age: this.$route.params.age || '',
         }
     }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .research {
     #home__form__list {
         width: auto;
@@ -149,6 +164,14 @@ export default {
         z-index: 999;
         bottom: 22px;
         overflow: scroll;
+    }
+
+    #home__form__list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .search__cat__form div {
+        margin-right: 1rem;
     }
 }
 </style>

@@ -15,7 +15,7 @@ const routes = [
     meta : {title: 'Creation d\'une fiche d\'adoption'}
   },
   {
-    path: '/cats/:order?/:location?',
+    path: '/cats/:order?/:location?/:age?',
     name: 'cats',
     component: () => import(/* webpackChunkName: "cats" */ '../views/CatListView.vue'),
     meta : {title: 'Liste des chats'}

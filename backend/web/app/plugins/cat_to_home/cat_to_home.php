@@ -40,6 +40,7 @@ require_once plugin_dir_path(__FILE__) . './taxonomies/vaccinate.php';
 // Custom endpoint
 require_once plugin_dir_path(__FILE__) . './endpoints/registration.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/favorite.php';
+require_once plugin_dir_path(__FILE__) . './endpoints/catByAge.php';
 
 
 register_activation_hook(__FILE__, 'cat_to_home_create_custom_roles');

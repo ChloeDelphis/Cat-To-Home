@@ -22,36 +22,36 @@
     <!-- Formulaire de recherche -->
     <section class="home home__response bg__orange">
       <div class="home__img">
-        <img
-          src="../assets/img/IMG_CAT2.png"
-          alt="Chat tenu par des bras sortant d'un vortex"
-        />
+        <img src="../assets/img/IMG_CAT2.png" alt="Chat tenu par des bras sortant d'un vortex" />
       </div>
       <div class="home__bloc__text">
         <h2 class="home__title">Trouve ton futur compagnon félin !</h2>
         <form class="home__form" action="/cats">
           <label class="home__form__label" for="department">Localisation</label>
-          <input @keyup="sendLocation" v-model="location_input" type="text" class="input input--selection" name="departement" id="department">
-          <div id="home__form__list"> 
-            <ItemListLocation v-for="location in locations" :key="location" 
-              :name="location"
-              @choiceLocation="selectedLocation"
-            /> 
+          <input @keyup="sendLocation" v-model="location_input" type="text" class="input"
+            name="departement" id="department">
+          <div id="home__form__list">
+            <ItemListLocation v-for="location in locations" :key="location" :name="location"
+              @choiceLocation="selectedLocation" />
           </div>
-          <br />
-          <label class="home__form__label" for="filter"
-            >Filtre de recherche</label
-          >
+          <label class="home__form__label" for="filter">Trier</label>
           <select v-model="order" class="input" name="filter" id="filter">
-            <option value="desc" selected>
+            <option value="desc">
               Du plus anciens au plus récent
             </option>
             <option value="asc">Du plus récent au plus anciens</option>
-            <option value="birthDate">Âge</option>
           </select>
-           <router-link class="button__orange--papate" v-bind:to="{ name: 'cats', params: {order: order, location: location_input} }">
-          Je trouve mon chat</router-link
-        >
+          <label class="home__form__label" for="filter">Filtre par age</label>
+          <select v-model="age" class="input" name="filter" id="filter">
+            <option value="tout_age">Tout âge</option>
+            <option value="bebe">Bébé</option>
+            <option value="junior">Junior</option>
+            <option value="adulte">Adulte</option>
+            <option value="senior">Sénior</option>
+          </select>
+          <router-link class="button__orange--papate"
+            v-bind:to="{ name: 'cats', params: { order: order, location: location_input, age: age } }">
+            Je trouve mon chat</router-link>
         </form>
       </div>
     </section>
@@ -62,16 +62,12 @@
         Il attendent un foyer depuis longtemps...!
       </h2>
       <div class="home">
-        <a href=""
-          ><img class="arrow" src="../assets/icones/fleche_gauche.png" alt=""
-        /></a>
+        <a href=""><img class="arrow" src="../assets/icones/fleche_gauche.png" alt="" /></a>
 
         <!-- composant cards -->
-        <CatCardLayout/>
+        <CatCardLayout />
 
-        <a href=""
-          ><img class="arrow" src="../assets/icones/fleche_droite.png" alt=""
-        /></a>
+        <a href=""><img class="arrow" src="../assets/icones/fleche_droite.png" alt="" /></a>
       </div>
     </section>
 
@@ -122,15 +118,16 @@ import LocationService from '@/services/taxonomies/LocationService';
 import CatCardLayout from '@/components/cat/CatCardLayout';
 import ItemListLocation from '@/components/home/ItemListLocation';
 export default {
-  components: { 
-    CatCardLayout, ItemListLocation 
+  components: {
+    CatCardLayout, ItemListLocation
   },
   name: "HomeLayout",
   data() {
     return {
       location_input: null,
       locations: [],
-      order: null
+      order: null,
+      age: null
     }
   },
   methods: {
@@ -160,12 +157,19 @@ export default {
 };
 </script>
 
-<style lang="scss">
-#home__form__list {
-  overflow-x: auto;
+<style lang="scss" scoped>
+.home__form {
+  #home__form__list {
+    overflow-x: auto;
+  }
+
+  #home__form__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .input {
+    margin-bottom: 1rem;
+  }
 }
 
-#home__form__list::-webkit-scrollbar {
-  display: none;
-}
 </style>
