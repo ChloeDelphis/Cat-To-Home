@@ -25,7 +25,7 @@
                         <label class="input__name" for="department">Département</label>
                         <input @keyup="sendLocation" v-model="location_input" type="text" class="input" name="departement" id="department">
                         <div id="home__form__list" >
-                            <ItemListLocation v-for="location in locations" :key="location" :name="location" :value="location.id"
+                            <ItemListLocation v-for="location in locations" :key="location" :name="location"
                             @choiceLocation="selectedLocation" />
                         </div>
                     </div>
@@ -259,7 +259,7 @@ export default {
                  let params = {
                      "title": this.title,
                      "sex": this.sex,
-                     "location": this.location_input,
+                    //  "location": this.location_input,
                      "meta": {"age": this.age, "city": this.city},
                      "vaccinate": this.checkedVaccins,
                      "diseases": this.disease_input,
