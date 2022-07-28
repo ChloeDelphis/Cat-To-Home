@@ -20,7 +20,7 @@
                 v-model="lastName"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ lastNameError }}
+                {{ lastNameError }} {{ lastNameLengthError }}
               </p>
             </div>
             <div class="inscription__form__fieldset__field">
@@ -30,9 +30,10 @@
                 type="text"
                 v-model="firstName"
               />
-              <p class="inscription__form__fieldset__field__error">
-                {{ firstNameError }} {{ nameError }}
-              </p>
+              <ul class="inscription__form__fieldset__field__error">
+                <li v-for="error in firstNameErrors" :key="error">{{error}} </li>
+                
+              </ul>
             </div>
             <div class="inscription__form__fieldset__field">
               <label for="pseudo">Pseudo</label><br />
@@ -50,7 +51,7 @@
                 v-model="birth"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ birthError }}
+                {{ birthError }} {{ validAgeError }}
               </p>
             </div>
             <div class="inscription__form__fieldset__field">
@@ -86,7 +87,7 @@
                 v-model="password"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ passwordError }}
+                {{ passwordError }} {{ passwordFormatError }}
               </p>
             </div>
             <div class="inscription__form__fieldset__field">
@@ -148,16 +149,21 @@ export default {
   name: "RegistrationFormLayout",
   data() {
     return {
-      nameError: null,
+      // nameError: null,
       lastNameError: null,
-      firstNameError: null,
+      firstNameErrors: [],
       birthError: null,
+      validAgeError: null,
       emailError: null,
+      validEmailError: null,
       confEmailError: null,
       passwordError: null,
       confPasswordError: null,
       roleError: null,
-      validEmailError : null,
+      lastNameLengthError: null,
+      // firstNameLengthError: null,
+      passwordFormatError: null,
+
       lastName: "titi",
       firstName: "t",
       pseudo: "titi",
@@ -173,26 +179,36 @@ export default {
   methods: {
     async sendForm() {
       // On vide les erreurs
-      this.nameError = null;
+      // this.nameError = null;
       this.lastNameError = null;
-      this.firstNameError = null;
+      this.firstNameErrors = [];
       this.birthError = null;
+      this.validAgeError = null;
       this.emailError = null;
+      this.validEmailError = null;
       this.confEmailError = null;
       this.passwordError = null;
       this.confPasswordError = null;
       this.roleError = null;
-      this.validEmailError = null;
+      this.lastNameLengthError = null;
+      // this.firstNameLengthError = null;
+      this.passwordFormatError = null;
 
       // Validation du contenu du formulaire
       if (!this.lastName) {
         this.lastNameError = "Merci de renseigner votre nom";
       }
+      if (this.lastName.length < 2) {
+        this.lastNameLengthError = "Le nom ne fait qu'un seul caractère";
+      }
       if (!this.firstName) {
-        this.firstNameError = "Merci de renseigner votre prénom";
+        this.firstNameErrors.push ("Merci de renseigner votre prénom");
+      }
+      if (this.firstName.length < 2) {
+        this.firstNameErrors.push ("Le prénom ne fait qu'un seul caractère");
       }
       if (this.lastName === this.firstName) {
-        this.nameError = "Le prénom et le nom ne peuvent pas être identiques";
+        this.firstNameErrors.push ("Le prénom et le nom ne peuvent pas être identiques");
       }
       if (!this.birth) {
         this.birthError = "Merci de renseigner votre date de naissance";
@@ -207,30 +223,39 @@ export default {
         this.passwordError =
           "Merci de renseigner et confirmer votre mot de passe";
       }
+      if (!this.validatePassword(this.password)){
+        this.passwordFormatError = "Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une majuscule et un chiffre"
+      }
       if (this.password !== this.confPassword) {
         this.confPasswordError = "Vos mots de passe ne sont pas identiques";
       }
       if (!this.role) {
         this.roleError = "Veuillez choisir votre rôle";
       }
-      if (!this.validateEmail(this.email)){
+      if (!this.validateEmail(this.email)) {
         this.validEmailError = "Votre adresse email n'est pas valide";
       }
-
-      //! Ajouter une vérification : âge > 18 ans
+      if (!this.validateAge(this.birth)) {
+        this.validAgeError = "Vous devez être majeur pour vous inscrire";
+      }
 
       // Si on n'a aucune erreur
       if (
-        !this.nameError &&
+        // !this.nameError &&
         !this.lastNameError &&
-        !this.firstNameError &&
+        !this.lastNameLengthError &&
+        // !this.firstNameError &&
+        // !this.firstNameLengthError &&
+        this.firstNameErrors.length === 0 &&
         !this.birthError &&
         !this.emailError &&
         !this.confEmailError &&
         !this.passwordError &&
         !this.confPasswordError &&
         !this.roleError &&
-        !this.validEmailError
+        !this.validEmailError &&
+        !this.validAgeError &&
+        !this.passwordFormatError
       ) {
         // On envoie la requête vers l'API
         // console.log("envoi requête inscription");
@@ -284,8 +309,42 @@ export default {
       }
     },
 
+    validateAge: function (input) {
+      // On récupère today et birth en millisecondes
+      const today = new Date();
+      const birth = new Date(input);
+      // On fait la différence
+      // Et on traduit le résultat en jours de vie
+      const daysLived = Math.floor((today - birth) / (1000 * 60 * 60 * 24));
+      console.log(daysLived);
+      // Quand on a 18 ans on a vécu 365 jours X 18 ans
+      // Soit 6570 jours
+      // On compare les deux nombres de jours
+      if (daysLived >= 6570) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    validatePassword: function (input) {
+      // On veut que la chaîne de caractères contienne :
+      // Au moins un chiffre (digit)
+      // Au moins une lettre en minuscule et une en majuscule
+      // On veut que sa taille complète soit de 8 caractères minimum et on autorise les caractères spéciaux
+      const validRegex = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{8,}$/;
+
+      if (input.match(validRegex)){
+        return true;
+      } else {
+        return false;
+      }
+    },
+
     validateEmail: function (input) {
       const validRegex =
+      // On veut que la chaîne de caractères ait un format
+      // avec un @ entouré par des chaînes de caractères
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
       if (input.match(validRegex)) {
