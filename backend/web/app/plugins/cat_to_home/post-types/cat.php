@@ -133,6 +133,13 @@ function register_experience_meta_fields(){
         'single' => true,
         'show_in_rest' => true
     ));
+
+	register_meta( 'post', 'city', array(
+		'type' => 'string',
+        'description' => 'Ville du chat',
+        'single' => true,
+        'show_in_rest' => true
+    ));
 	
 }
 
