@@ -149,7 +149,6 @@ export default {
   name: "RegistrationFormLayout",
   data() {
     return {
-      // nameError: null,
       lastNameError: null,
       firstNameErrors: [],
       birthError: null,
@@ -161,25 +160,24 @@ export default {
       confPasswordError: null,
       roleError: null,
       lastNameLengthError: null,
-      // firstNameLengthError: null,
       passwordFormatError: null,
 
-      lastName: "titi",
-      firstName: "t",
-      pseudo: "titi",
-      birth: "2020-07-05",
-      email: "titi@y.com",
-      confEmail: "titi@y.com",
-      password: "titi",
-      confPassword: "",
-      role: "owner",
+      // Testing area enables inputs auto-filling for testing purposes
+      // lastName: "titi",
+      // firstName: "t",
+      // pseudo: "titi",
+      // birth: "2020-07-05",
+      // email: "titi@y.com",
+      // confEmail: "titi@y.com",
+      // password: "titi",
+      // confPassword: "",
+      // role: "owner",
     };
   },
 
   methods: {
     async sendForm() {
       // On vide les erreurs
-      // this.nameError = null;
       this.lastNameError = null;
       this.firstNameErrors = [];
       this.birthError = null;
@@ -191,7 +189,6 @@ export default {
       this.confPasswordError = null;
       this.roleError = null;
       this.lastNameLengthError = null;
-      // this.firstNameLengthError = null;
       this.passwordFormatError = null;
 
       // Validation du contenu du formulaire
@@ -241,11 +238,8 @@ export default {
 
       // Si on n'a aucune erreur
       if (
-        // !this.nameError &&
         !this.lastNameError &&
         !this.lastNameLengthError &&
-        // !this.firstNameError &&
-        // !this.firstNameLengthError &&
         this.firstNameErrors.length === 0 &&
         !this.birthError &&
         !this.emailError &&
