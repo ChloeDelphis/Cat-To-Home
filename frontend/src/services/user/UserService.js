@@ -46,10 +46,10 @@ export default {
         }
     },
      // Modifie les infos de l'utilisateur par id de connexion. 
-    async update(id) {
+    async update(id, params) {
         try {
             apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
-            const response = await apiClient.post('/wp/v2/users/' + id + '?context=edit');
+            const response = await apiClient.post('/wp/v2/users/' + id, params);
             return response.data
         } catch (error) {
             return error.response.data

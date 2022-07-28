@@ -52,20 +52,24 @@ import UserService from "@/services/user/UserService";
 export default {
   name: "LoginFormLayout",
   data() {
-        return {
-            passwordError: null,
-            emailError: null,
-            email: null,
-            password: null
-        }
-    },
-    methods: {
-        async login() {
-            this.passwordError = '';
-            this.emailError = '';
-            if(!this.email) {
-                this.emailError = "Email cannot be empty";
-            }
+    return {
+      passwordError: null,
+      emailError: null,
+      email: null,
+      password: null,
+    };
+  },
+  // mounted() {
+  // if
+  // location.reload(true);
+  // },
+  methods: {
+    async login() {
+      this.passwordError = "";
+      this.emailError = "";
+      if (!this.email) {
+        this.emailError = "Email cannot be empty";
+      }
 
       if (!this.password) {
         this.passwordError = "Password cannot be empty";

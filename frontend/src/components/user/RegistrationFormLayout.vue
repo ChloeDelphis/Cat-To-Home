@@ -157,7 +157,7 @@ export default {
       passwordError: null,
       confPasswordError: null,
       roleError: null,
-      validEmailError : null,
+      validEmailError: null,
       lastName: "titi",
       firstName: "t",
       pseudo: "titi",
@@ -213,7 +213,7 @@ export default {
       if (!this.role) {
         this.roleError = "Veuillez choisir votre rôle";
       }
-      if (!this.validateEmail(this.email)){
+      if (!this.validateEmail(this.email)) {
         this.validEmailError = "Votre adresse email n'est pas valide";
       }
 

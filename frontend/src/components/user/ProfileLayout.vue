@@ -8,7 +8,7 @@
       />
       <div class="profil__form__container">
         <h2 class="bold">Profil utilisateur</h2>
-        <form action="">
+        <div class="form">
           <fieldset class="left">
             <label for="lastname">Nom</label><br />
             <input
@@ -19,9 +19,9 @@
               placeholder="Doe"
               v-model="lastname"
             />
-            <p class="inscription__form__fieldset__field__error">
+            <!-- <p class="inscription__form__fieldset__field__error">
               {{ lastNameError }}
-            </p>
+            </p> -->
             <br />
 
             <label for="firstname">Prénom</label><br />
@@ -32,9 +32,9 @@
               placeholder="John"
               v-model="firstname"
             />
-            <p class="inscription__form__fieldset__field__error">
+            <!-- <p class="inscription__form__fieldset__field__error">
               {{ firstNameError }}
-            </p>
+            </p> -->
             <br />
 
             <label for="pseudo">Pseudo</label><br />
@@ -63,9 +63,9 @@
               placeholder="06 XX XX XX XX"
               v-model="phone"
             />
-            <p class="inscription__form__fieldset__field__error">
+            <!-- <p class="inscription__form__fieldset__field__error">
               {{ phoneError }}
-            </p>
+            </p> -->
             <br />
 
             <label for="email">Adresse e-mail</label><br />
@@ -76,9 +76,9 @@
               placeholder="johndoe@gmal.bzh"
               v-model="email"
             />
-            <p class="inscription__form__fieldset__field__error">
+            <!-- <p class="inscription__form__fieldset__field__error">
               {{ emailError }}{{ validEmailError }}
-            </p>
+            </p> -->
             <br />
           </fieldset>
           <fieldset class="right">
@@ -90,9 +90,9 @@
               placeholder="johndoe@gmal.bzh"
               v-model="confemail"
             />
-            <p class="inscription__form__fieldset__field__error">
+            <!-- <p class="inscription__form__fieldset__field__error">
               {{ confEmailError }}
-            </p>
+            </p> -->
             <br />
 
             <label for="new_password">Mot de passe</label><br />
@@ -102,9 +102,9 @@
               name="new_password"
               v-model="new_password"
             />
-            <p class="inscription__form__fieldset__field__error">
+            <!-- <p class="inscription__form__fieldset__field__error">
               {{ passwordError }}
-            </p>
+            </p> -->
             <br />
 
             <label for="confirmPassword">Confirmer mot de passe</label><br />
@@ -114,15 +114,15 @@
               name="confirmpPassword"
               v-model="confPassword"
             />
-            <p class="inscription__form__fieldset__field__error">
+            <!-- <p class="inscription__form__fieldset__field__error">
               {{ confPasswordError }}
-            </p>
+            </p> -->
             <br />
-            <button v-on:click="submit" type="submit" class="button__orange">
+            <button @click="submit" type="submit" class="button__orange">
               Modifier mes informations
             </button>
           </fieldset>
-        </form>
+        </div>
         <img
           id="ginger__cat"
           src="../../assets/img/purr-cat-17.png"
@@ -165,12 +165,12 @@ export default {
   },
   async mounted() {
     let id = this.$route.params.id;
-    console.log(this.$route.params.id);
+    // console.log(this.$route.params.id);
     const response = await UserService.find(id);
     if (response.code) {
-      alert(response.message);
+      // alert(response.message);
     } else {
-      console.log(response);
+      // console.log(response);
       this.id = response.id;
       this.lastname = response.last_name;
       this.firstname = response.first_name;
@@ -182,7 +182,57 @@ export default {
   },
   methods: {
     async submit() {
-      // On vide les erreurs
+      {
+        let id = this.$route.params.id;
+        let params = {
+          last_name: this.lastname,
+          first_name: this.firstname,
+          nickname: this.pseudo,
+          phone: this.phone,
+          email: this.email,
+          password: this.new_password,
+        };
+        const response = await UserService.update(id, params);
+        console.log(response);
+        if (response.id) {
+          // On écrase le token avec un nouveau token
+          const logUser = await UserService.login({
+            username: this.email,
+            password: this.password,
+          });
+
+          this.$store.commit("setToken", logUser.data.token);
+          // On supprime le token
+          this.$store.commit("deleteToken");
+          this.$route.redirectedFrom = this.$route.path;
+          this.$router.push({ name: "login" });
+        } else {
+          alert("ça marche pas !!!");
+        }
+      }
+    },
+    validateEmail: function (input) {
+      const validRegex =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+      if (input.match(validRegex)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+</style>
+
+
+
+<!-- 
+
+// On vide les erreurs
       this.nameError = null;
       this.lastNameError = null;
       this.firstNameError = null;
@@ -234,35 +284,4 @@ export default {
         !this.passwordError &&
         !this.confPasswordError &&
         !this.validEmailError
-      ) {
-        let id = this.$route.params.id;
-        // console.log(this.$route.params.id);
-        const response = await UserService.update(id)({
-          last_name: this.lastname,
-          first_name: this.firstname,
-          nickname: this.pseudo,
-          phone: this.phone,
-          email: this.email,
-          password: this.new_password,
-        });
-        if (response.code === 200) {
-          alert("Mofifications validé !");
-        }
-      }
-    },
-    validateEmail: function (input) {
-      const validRegex =
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-      if (input.match(validRegex)) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-  },
-};
-</script>
-
-<style lang="scss">
-</style>
+      )  -->
