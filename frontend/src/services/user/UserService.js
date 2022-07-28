@@ -36,9 +36,18 @@ export default {
         try {
             apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
             const response = await apiClient.get('/wp/v2/users/' + id + '?context=edit');
-            return response.data
+            return response.data;
         } catch (error) {
-            return error.response.data
+            return error.response.data;
+        }
+    },
+
+    async send(params) {
+        try {
+            const response = await apiClient.post('/wp/v2/users/send', params);
+            return response.data;
+        } catch (error) {
+            return error.response.data;
         }
     }
 

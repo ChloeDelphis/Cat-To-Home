@@ -38,6 +38,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '../views/ConnexionView.vue'),
     meta : {title: 'Connexion'}
   },
+  {
+    path: '/reinitialisation-mot-de-passe',
+    name: 'reinitPassword',
+    component: () => import(/* webpackChunkName: "reinitPassword" */ '../views/ReinitPassView.vue'),
+    meta : {title: 'Réinitialisation du mot de passe'}
+  },
 {
     path: '/:pathMatch(.*)*',
     name: '404',
