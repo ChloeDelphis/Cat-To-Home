@@ -72,5 +72,14 @@ export default {
         } catch(error) {
             return error.response.data
         }
+    },
+
+    async findByOwnerId(id) {
+        try{
+            const response = await apiClient.get('/cat?_embed&author=' + id);
+            return response.data
+        } catch(error) {
+            return error.response.data
+        }
     }
 }

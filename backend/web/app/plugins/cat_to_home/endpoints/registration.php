@@ -14,6 +14,8 @@ function cat_to_home_rest_user_register()
     ));
 }
 
+
+
 function cat_to_home_rest_user_register_handler($request)
 
 {
@@ -44,8 +46,12 @@ function cat_to_home_rest_user_register_handler($request)
         $error->add(401, "L'email est obligatoire.", 'wp-rest-user', array('status' => 400));
         return $error;
     }
+    if (is_email($email)) {
+        $error->add(401, "L'adresse n'a pas la forme d'un email.", 'wp-rest-user', array('status' => 400));
+        return $error;
+    }
     if (empty($password)) {
-        $error->add(404, "Le mot de passe est obligatoire.", 'wp-rest-user', array('status' => 400));
+        $error->add(401, "Le mot de passe est obligatoire.", 'wp-rest-user', array('status' => 400));
         return $error;
     }
     if (empty($role) || !in_array($role, $authorized_roles)) {
@@ -76,12 +82,15 @@ function cat_to_home_rest_user_register_handler($request)
             'user_login' => $email,
             'user_email' => $email,
             'first_name' => $firstname,
-            'last_name' => $lastname
+            'last_name' => $lastname,
+            'birth' => $birth
         ]);
         // Si la création du nouvel utilisateur est bonne
         if (!is_wp_error($user_id)) {
 
             add_user_meta($user_id, 'birth', $birth);
+            // Ajout de la meta Key birth dans la bdd
+
             // Recuperation de l'objet user
             $user = get_user_by('id', $user_id);
 

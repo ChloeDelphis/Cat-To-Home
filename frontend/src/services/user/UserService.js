@@ -13,6 +13,7 @@ const apiClient = axios.create({
 
 export default {
 
+
     // permet de créer un nouvel utlisateur
     async register(params) {
         try {
@@ -32,6 +33,7 @@ export default {
         }
     },
 
+     // Recupere les infos de l'utilisateur par id de connexion. 
     async find(id) {
         try {
             apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';

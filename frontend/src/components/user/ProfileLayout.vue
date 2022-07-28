@@ -15,6 +15,7 @@
               type="text"
               id="lastname"
               name="lastname"
+              vue
               placeholder="Doe"
               v-model="lastname"
             /><br />
@@ -36,7 +37,7 @@
               placeholder="jadoreleschaton2022"
               v-model="pseudo"
             /><br />
-
+            <!-- 
             <label for="birth">Date de naissance</label><br />
             <input
               type="text"
@@ -44,6 +45,15 @@
               name="birth"
               placeholder="JJ/MM/AAA"
               v-model="birth"
+            /><br /> -->
+
+            <label for="phone">Numéro de télèphone</label><br />
+            <input
+              type="phone"
+              id="phone"
+              name="phone"
+              placeholder="06 XX XX XX XX"
+              v-model="phone"
             /><br />
 
             <label for="email">Adresse e-mail</label><br />
@@ -114,6 +124,7 @@ export default {
       pseudo: null,
       birth: null,
       email: null,
+      phone: null,
     };
   },
   async mounted() {
@@ -128,8 +139,9 @@ export default {
       this.lastname = response.last_name;
       this.firstname = response.first_name;
       this.pseudo = response.nickname;
-      this.birth = response.birth;
+      this.birth = response.meta.birth;
       this.email = response.email;
+      this.phone = response.phone;
     }
   },
 };
