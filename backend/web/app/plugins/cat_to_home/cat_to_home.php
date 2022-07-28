@@ -24,7 +24,8 @@ global $wpdb;
 require __DIR__ . '/vendor/autoload.php';
 
 use Migration\User_PostMigration;
-use Roles\Adopter;
+use PHPMailer\PHPMailer\PHPMailer;
+use Roles\Adopter;use PHPMailer\PHPMailer\SMTP;
 use Roles\Owner;
 
 // Customs post-types
@@ -62,13 +63,25 @@ function cat_to_home_remove_custom_roles()
 
 add_action( 'phpmailer_init', 'send_smtp_email' );
 
-function send_smtp_email( $phpmailer ) {
+function send_smtp_email( PHPMailer $phpmailer ) {
     $phpmailer->isSMTP();
-    $phpmailer->Host       = 'cat_to_home.local';
-    $phpmailer->Port       = '8080';
+    $phpmailer->Host       = 'smtp.gmail.com';
+    $phpmailer->Port       = '587';
     $phpmailer->SMTPSecure = 'tls';
     $phpmailer->SMTPAuth   = true;
-    $phpmailer->Username   = 'admin';
-    $phpmailer->Password   = 'admin';
-    $phpmailer->addReplyTo('info@example.com', 'Information');
+    $phpmailer->Username   = 'd.laitani@gmail.com';
+    $phpmailer->Password   = '';
+    $phpmailer->debug_zval_dump;
+    $phpmailer->setFrom('d.laitani@gmail.com', 'Damien');
+    $phpmailer->FromName = 'test';
+    $phpmailer->SMTPDebug = 2;
+    $phpmailer->addReplyTo('d.laitani@gmail.com', 'Information');
 }
+
+// show wp_mail() errors
+add_action( 'wp_mail_failed', 'onMailError', 10, 1 );
+function onMailError( $wp_error ) {
+    echo "<pre>";
+    print_r($wp_error);
+    echo "</pre>";
+}  

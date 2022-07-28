@@ -22,9 +22,9 @@ function cat_to_home_rest_send_mail_handler()
 
     $headers = array(
         'Content-Type: text/html; charset=UTF-8',
-        "Reply-To: test test",
+        "Reply-To: damien laitani d.laitani@gmail.com",
     );
-    $isSend = wp_mail('d.laitani@gmail.com', 'Cat to home - Réinitialisation de votre mod de passe', 'cliquer ici');
+    $isSend = wp_mail('d.laitani@gmail.com', 'Cat to home - Réinitialisation de votre mod de passe', 'cliquer ici', $headers);
 
     return new WP_REST_Response($isSend, 200);
 
