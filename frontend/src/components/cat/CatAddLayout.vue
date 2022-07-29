@@ -16,10 +16,16 @@
                     </div>
 
                     <div class="adoption__form__pair">
+                        <label class="input__name" for="city">Ville</label>
+                        <input v-model="city" class="input" type="text" id="city" name="city"/>
+                    </div>
+
+                    <!-- imput département  -->
+                    <div class="adoption__form__pair">
                         <label class="input__name" for="department">Département</label>
                         <input @keyup="sendLocation" v-model="location_input" type="text" class="input" name="departement" id="department">
                         <div id="home__form__list" >
-                            <ItemListLocation v-for="location in locations" :key="location" :name="location" :value="location.id"
+                            <ItemListLocation v-for="location in locations" :key="location" :name="location"
                             @choiceLocation="selectedLocation" />
                         </div>
                     </div>
@@ -41,11 +47,6 @@
                         </select>
                     </div>
 
-                    <!-- <div class="adoption__form__pair">
-                    <label class="input__name" for="age">Date de naissance</label>
-                    <input v-model="date" class="input" type="date" id="age" name="age" min="2000-01-01" max="20-12-31"/>
-                    </div> -->
-
                     <fieldset class="adoption__form__pair">
                         <div class="input__name">
                             <legend>
@@ -53,25 +54,17 @@
                             <span>(si oui, préciser dans la déscription)</span>
                             </legend>
                         </div>
-                        <div>
-                            <input v-model="diseases" type="radio" id="yes" name="sickness" value="yes" />
-                            <label for="yes">Oui</label>
-                        </div>
-                        <div>
-                            <input v-model="diseases" type="radio" id="no" name="sickness" value="no" />
-                            <label for="no">Non</label>
-                        </div>
-                        <div>
-                            <input v-model="diseases" type="radio" id="unknown" name="sickness" value="unknown" />
-                            <label for="unknown">Ne sais pas</label>
-                        </div>
+                        <div v-for="disease in diseases" :key="disease.id">
+                            <input v-model="disease_input" :value="disease.id" type="radio" :id="disease.id" name="sickness"/>
+                            <label :for="disease.id">{{disease.name}}</label>
+                        </div> 
                     </fieldset>
 
                     <div class="adoption__form__pair">
                         <label class="input__name" for="vaccine">Vacciné contre</label>
                         <div v-for="vaccinate in vaccinates" :key="vaccinate.id">
-                            <input  type="checkbox" id="rage" name="rage" :value="vaccinate.id" v-model="checkedVaccins"/>
-                            <label > {{vaccinate.name}}</label>
+                            <input  type="checkbox" :id="vaccinate.id" name="vaccinate" :value="vaccinate.id" v-model="checkedVaccins"/>
+                            <label :for="vaccinate.id" > {{vaccinate.name}}</label>
                         </div>
                     </div>
 
@@ -183,7 +176,7 @@
 <script> 
 import NewCat from '@/services/cat/NewCat';
 import LocationService from '@/services/cat/LocationService';
-import EnvironmentService from '@/services/taxonomies/FindAllService';
+import FindAllService from '@/services/taxonomies/FindAllService';
 import ItemListLocation from '@/components/home/ItemListLocation';
 
 export default {
@@ -199,11 +192,12 @@ export default {
             errors: [],
             title: null,
             sex: null,
+            city: null,
             location_input: null,
             environment: null,
             age: null,
             checkedVaccins: [],
-            // diseases: null,
+            disease_input: null,
             content: null,
 
             // Recuperation taxonomies
@@ -211,15 +205,17 @@ export default {
             vaccinates: [],
             sexes: [],
             locations: [],
+            diseases: [],
             
             picture_file: null,
             preview_picture: ''
         }
     },
     async mounted() {
-        this.environments = await EnvironmentService.findAllEnvironment();
-        this.sexes = await EnvironmentService.findAllSex();
-        this.vaccinates = await EnvironmentService.findAllVaccinate();
+        this.environments = await FindAllService.findAllEnvironment();
+        this.sexes = await FindAllService.findAllSex();
+        this.vaccinates = await FindAllService.findAllVaccinate();
+        this.diseases = await FindAllService.findAllDisease();
 
     },
     
@@ -236,7 +232,7 @@ export default {
 
         async sendNewCat() {
              this.errors = [];
-             console.log(this.location_input)
+             console.log(this.location_input.id)
              // Validation du contenu du formulaire
              if(!this.title) {
                  this.errors.push("Title cannot be empty");
@@ -244,18 +240,18 @@ export default {
              if(!this.sex) {
                  this.errors.push("Sex cannot be empty");
              }
-             if(!this.localisation_input) {
-                 this.errors.push("Localisation cannot be empty");
-             }
-             if(!this.environment) {
-                 this.errors.push("Environment cannot be empty");
-             }
-            if(!this.age) {
-                this.errors.push("Age cannot be empty");
+            if(!this.location_input) {
+                this.errors.push("Localisation cannot be empty");
             }
-            //  if(!this.diseases) {
-            //      this.errors.push("Diseases cannot be empty");
-            //  }
+             if(!this.city) {
+                 this.errors.push("City cannot be empty");
+             }
+             if(!this.age) {
+                this.errors.push("Age cannot be empty");
+             }
+              if(!this.disease_input) {
+                this.errors.push("Disease cannot be empty");
+              }
              if(!this.content) {
                  this.errors.push("Content cannot be empty");
              }
@@ -263,12 +259,10 @@ export default {
                  let params = {
                      "title": this.title,
                      "sex": this.sex,
-                     "location": this.localisation,
-                     "departement": this.department,
-                     "environment": this.environment,
-                     "meta": {"age": this.age},
+                    //  "location": this.location_input,
+                     "meta": {"age": this.age, "city": this.city},
                      "vaccinate": this.checkedVaccins,
-                    //  "diseases": this.diseases,
+                     "diseases": this.disease_input,
                      "content": this.content,
                      "status": 'publish'
                  }
@@ -291,7 +285,7 @@ export default {
                         })
                         console.log(updatePost);
                     }
-                    // this.$router.push({name: 'home'});
+                    this.$router.push({name: 'home'});
                  } else {
                      alert(response.message);
                  }

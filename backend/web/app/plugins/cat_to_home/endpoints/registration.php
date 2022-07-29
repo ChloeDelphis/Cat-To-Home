@@ -46,7 +46,7 @@ function cat_to_home_rest_user_register_handler($request)
         $error->add(401, "L'email est obligatoire.", 'wp-rest-user', array('status' => 400));
         return $error;
     }
-    if (is_email($email)) {
+    if (!is_email($email)) {
         $error->add(401, "L'adresse n'a pas la forme d'un email.", 'wp-rest-user', array('status' => 400));
         return $error;
     }

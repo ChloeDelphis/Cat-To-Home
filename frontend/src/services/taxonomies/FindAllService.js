@@ -33,4 +33,12 @@ export default {
             return error.response.data;
         }
     },
+    async findAllDisease() {
+        try {
+            const response = await instance.get("/disease");
+            return response.data;
+        } catch (error) {
+            return error.response.data;
+        }
+    },
 }
