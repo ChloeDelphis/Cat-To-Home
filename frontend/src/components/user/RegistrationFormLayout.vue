@@ -272,54 +272,55 @@ export default {
           alert("Vous êtes inscrit !");
           // On redirige vers la page connexion
           this.$router.push({ name: "login" });
-          } else {
-            alert(response.message);
+        } else {
+          alert(response.message);
+        }
+
+        //! On connecte l'utilisateur avec ses nouveaux identifiants
+        //! A faire plus tard seulement car bug
+
+        //     // Requete Ajax pour connexion utilisateur
+        //     const response = await UserService.login({
+        //       username: this.email,
+        //       password: this.password,
+        //     });
+
+        if (response.success === true) {
+          console.log(response);
+
+          // On remet le formulaire à zéro
+          // (this.lastname = null),
+          //   (this.firstname = null),
+          //   (this.pseudo = null),
+          //   (this.birth = null),
+          //   (this.email = null),
+          //   (this.confEmail = null),
+          //   (this.password = null),
+          //   (this.confPassword = null),
+          //   (this.role = null),
+
+          const getRole = await UserService.find(response.id);
+          if (getRole.id) {
+            // On crée le user dans le store grace à une action
+            this.$store.dispatch(
+              "createUser",
+              response.token,
+              response.id,
+              getRole.roles[0]
+            );
           }
 
-          //! On connecte l'utilisateur avec ses nouveaux identifiants
-          //! A faire plus tard seulement car bug
-
-      //     // Requete Ajax pour connexion utilisateur
-      //     const response = await UserService.login({
-      //       username: this.email,
-      //       password: this.password,
-      //     });
-
-          if (response.success === true) {
-            console.log(response);
-
-            // On remet le formulaire à zéro
-            // (this.lastname = null),
-            //   (this.firstname = null),
-            //   (this.pseudo = null),
-            //   (this.birth = null),
-            //   (this.email = null),
-            //   (this.confEmail = null),
-            //   (this.password = null),
-            //   (this.confPassword = null),
-            //   (this.role = null),
-
-            const getRole = await UserService.find(response.id);
-            if (getRole.id) {
-              // On crée le user dans le store grace à une action
-              this.$store.dispatch(
-                "createUser",
-                response.token,
-                response.id,
-                getRole.roles[0]
-              );
-            }
-
-      //       // On redirige vers la page d'accueil
-      //       this.$router.push({ name: "home" });
-      //     } else {
-      //       alert(response.message);
-      //     }
-      //   } else {
-      //     alert(response.message);
-      //   }
-      //   console.log(response);
-      // }
+          //       // On redirige vers la page d'accueil
+          //       this.$router.push({ name: "home" });
+          //     } else {
+          //       alert(response.message);
+          //     }
+          //   } else {
+          //     alert(response.message);
+          //   }
+          //   console.log(response);
+          // }
+        }
       }
     },
 
