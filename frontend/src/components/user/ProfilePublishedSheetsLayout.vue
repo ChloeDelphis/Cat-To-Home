@@ -36,7 +36,7 @@ export default {
 
   async mounted(){
 
-    let id = this.$route.params.id;
+    let id = sessionStorage.getItem("userId");
     const response = await CatService.findByOwnerId(id);
     console.log(response);
     this.cats = response;
