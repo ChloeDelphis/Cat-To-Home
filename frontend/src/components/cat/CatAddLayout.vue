@@ -56,7 +56,7 @@
                         </div>
                         <div v-for="disease in diseases" :key="disease.id">
                             <input v-model="disease_input" :value="disease.id" type="radio" :id="disease.id" name="sickness"/>
-                            <label :for="disease.id">{{disease.name}}</label>
+                            <label :for="disease.id" >{{disease.name}}</label>
                         </div> 
                     </fieldset>
 
@@ -102,53 +102,26 @@
         <section v-if="this.$route.name === 'cat_add'" class="information">
             <div class="information__content">
                 <h2 class="information__content__title">
-                        Informations réglementaires
+                        Adoption Responsable
                 </h2>
                 <div class="information__content__paragraphe">
-                    <p> She shook her head, and shook it again, as if trying to
-                            clear it, which is what she was trying to
-                            do.
-                            They did not realize that because of the quasi-reciprocal and circular nature of all
-                            Improbability
-                            calculations, anything that was Infinitely Improbable was actually very likely to happen
-                            almost
-                            immediately. If beauty is in the eye of the beholder, then the beholder won’t be a Vogon,
-                            because
-                            even
-                            Vogons know how ugly they are. Think of something crazy, or if that’s too taxing just throw
-                            random
-                            adjectives and nouns together. He smiled the smile that Zaphod had wanted to hit and this
-                            time
-                            Zaphod
-                            hit it.
+                    <p>Adopter un animal (chien, chat, cheval, lapin, hamster, souris etc…) est un acte sérieux et une démarche qui se doit responsable. C’est un engagement financier et personnel afin d’offrir bien-être et santé à l’animal. En tant qu’être vivant, chaque animal, quelle que soit son espèce, mérite du temps, de l’attention et de l’amour! L’adoption implique tous les membres d’une famille qui s’engagent à respecter et à prendre soin de leur compagnon.
                     </p>
                     <br>
-                    <p>
-                            I don’t want to buy a ticket, I just want to buy the zoo. The shorter man noticed the new
-                            arrivals;
-                            it
-                            was pretty likely that he would, as one of them was shouting at him. Where do you stand on
-                            the
-                            whole
-                            Babel fish argument? He learned to communicate with birds and discovered that their
-                            conversation
-                            was
-                            fantastically boring. It was all to do with wind speed, wingspans, power-to-weight ratios
-                            and a
-                            fair
-                            bit
-                            about berries. “Zaphod! I am so happy to see you.”
+                    <p> Avoir un animal est une grande responsabilité au quotidien. Pour éviter tout désagrément et impact négatif, il est impératif de choisir un animal en fonction de votre caractère et de votre mode de vie. <br>
+                        Rappelez-vous qu’un animal a un coût jusqu’à la fin de sa vie: vétérinaire, nourriture, vacances… Ces obligations vous engagent sur plusieurs années, c’est pourquoi il est important de ne pas les oublier et de ne pas les minimiser. <br>
+                        Adopter est une décision qui prend du temps et un acte réfléchi. L’adoption responsable fera le bonheur de votre animal et aussi… le vôtre!
                     </p>
                 </div>
                 <div class="information__content__regulatory">
                     <div class="information__content__regulatory__checkbox">
                         <div class="input__name__checkbox">
-                            <input type="checkbox" id="permission1" name="permission1" value="permission1">
-                            <label for="permission1"> She shook her head, and shook it again</label>
+                            <input v-model="permissions1" type="checkbox" id="permission1" name="permission1" value="permission1">
+                            <label for="permission1"> Je m'engage à céder mon animal gratuitement.</label>
                         </div>
                         <div class="input__name__checkbox">
-                            <input type="checkbox" id="permission2" name="permission2" value="permission2">
-                            <label for="permission2"> She shook her head, and shook it again</label>
+                            <input v-model="permissions2" type="checkbox" id="permission2" name="permission2" value="permission2">
+                            <label for="permission2"> J'ai dit la verité sur les infromations remplis.</label>
                         </div>
                         <div class="input__name__checkbox">
                             <input type="checkbox" id="permission3" name="permission3" value="permission3">
@@ -208,7 +181,11 @@ export default {
             diseases: [],
             
             picture_file: null,
-            preview_picture: ''
+            preview_picture: '',
+
+            // Permission d'adoption
+            permissions1: null,
+            permissions2: null,
         }
     },
     async mounted() {
@@ -224,7 +201,7 @@ export default {
         previewPictureAdd(event) {
         // Revisualisation de l'image
             this.picture_file = event.target.files[0];
-            console.log(event.target.files[0])
+            // console.log(event.target.files[0])
 
             this.preview_picture = URL.createObjectURL(this.picture_file);
 
@@ -232,7 +209,6 @@ export default {
 
         async sendNewCat() {
              this.errors = [];
-             console.log(this.location_input.id)
              // Validation du contenu du formulaire
              if(!this.title) {
                  this.errors.push("Title cannot be empty");
@@ -255,14 +231,20 @@ export default {
              if(!this.content) {
                  this.errors.push("Content cannot be empty");
              }
+             if(!this.permissions1) {
+                this.errors.push("Permission cannot be empty");
+              }
+             if(!this.permissions2) {
+                 this.errors.push("Permission cannot be empty");
+             }
              if(this.errors.length === 0) {
                  let params = {
                      "title": this.title,
                      "sex": this.sex,
-                    //  "location": this.location_input,
                      "meta": {"age": this.age, "city": this.city},
+                     "environment": this.environment,
                      "vaccinate": this.checkedVaccins,
-                     "diseases": this.disease_input,
+                     "disease": this.disease_input,
                      "content": this.content,
                      "status": 'publish'
                  }
@@ -275,17 +257,29 @@ export default {
                  // Reception de la réponse et affichage
                  if(response.id) {
                     const postId = response.id
+                    // upload image dans le backend avec l'id du post
                     const createPicture = await NewCat.uploadPicture(postId, this.picture_file.name, {
                         headers: {"Content-Type": "image/jpeg"}
                     }, this.picture_file)
-                    // console.log(createPicture);
+                    // ajout de l'id de l'image dans le post créer
                     if (createPicture.id) {
-                        const updatePost = await NewCat.addFeaturedMedia(postId, {
-                            "featured_media": createPicture.id
-                        })
-                        console.log(updatePost);
-                    }
-                    this.$router.push({name: 'home'});
+                    const updatePostImage = await NewCat.addFeaturedMedia(postId, {
+                        "featured_media": createPicture.id
+                    })
+                    if (updatePostImage){
+                    // upload departement dans le backend avec l'id du post
+                    const createLocation = await NewCat.uploadLocation(postId, { "name":this.location_input})     
+                         // ajout de l'id du departement dans le post créer    
+                        if (createLocation.id) {
+                          const updatePostLocation = await NewCat.addLocation(postId, {
+                              "location": createLocation.id
+                          })
+                          if (updatePostLocation) {
+                              this.$router.push({name: 'home'});
+                          }
+                        }
+                      }
+                    } 
                  } else {
                      alert(response.message);
                  }
@@ -299,7 +293,7 @@ export default {
 
         if (this.location_input != '') {
             const response = await LocationService.find(this.location_input);
-            console.log(response);
+            // console.log(response);
             document.querySelector('#home__form__list').style.height = '12rem';
             response.forEach(location => {
             if (location.nom.toLowerCase().includes(this.location_input.toLowerCase())) {
