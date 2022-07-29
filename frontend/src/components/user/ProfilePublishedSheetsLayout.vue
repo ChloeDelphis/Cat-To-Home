@@ -8,18 +8,17 @@
       <h2>Mes fiches adoption</h2>
 
       <cat-modify-layout
-      v-for="cat in cats" v-bind:key="cat.id"
-      v-bind:initialId="cat.id"
+        v-for="cat in cats"
+        v-bind:key="cat.id"
+        v-bind:initialId="cat.id"
       />
-      
     </section>
   </div>
 </template>
 
 <script>
-
-import CatModifyLayout from "../cat/CatModifyLayout";
-import CatService from '@/services/cat/CatService';
+import CatModifyLayout from "@/components/cat/CatModifyLayout";
+import CatService from "@/services/cat/CatService";
 
 export default {
   name: "ProfilePublishedSheetsLayout",
@@ -28,20 +27,19 @@ export default {
     CatModifyLayout,
   },
 
-  data(){
+  data() {
     return {
-      cats: []
-    }
+      cats: [],
+    };
   },
 
-  async mounted(){
-
+  async mounted() {
     let id = sessionStorage.getItem("userId");
     const response = await CatService.findByOwnerId(id);
     console.log(response);
     this.cats = response;
     console.log(this.cats);
-  }
+  },
 };
 </script>
 

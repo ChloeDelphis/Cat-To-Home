@@ -31,8 +31,9 @@
                 v-model="firstName"
               />
               <ul class="inscription__form__fieldset__field__error">
-                <li v-for="error in firstNameErrors" :key="error">{{error}} </li>
-                
+                <li v-for="error in firstNameErrors" :key="error">
+                  {{ error }}
+                </li>
               </ul>
             </div>
             <div class="inscription__form__fieldset__field">
@@ -199,13 +200,15 @@ export default {
         this.lastNameLengthError = "Le nom ne fait qu'un seul caractère";
       }
       if (!this.firstName) {
-        this.firstNameErrors.push ("Merci de renseigner votre prénom");
+        this.firstNameErrors.push("Merci de renseigner votre prénom");
       }
       if (this.firstName.length < 2) {
-        this.firstNameErrors.push ("Le prénom ne fait qu'un seul caractère");
+        this.firstNameErrors.push("Le prénom ne fait qu'un seul caractère");
       }
       if (this.lastName === this.firstName) {
-        this.firstNameErrors.push ("Le prénom et le nom ne peuvent pas être identiques");
+        this.firstNameErrors.push(
+          "Le prénom et le nom ne peuvent pas être identiques"
+        );
       }
       if (!this.birth) {
         this.birthError = "Merci de renseigner votre date de naissance";
@@ -220,8 +223,9 @@ export default {
         this.passwordError =
           "Merci de renseigner et confirmer votre mot de passe";
       }
-      if (!this.validatePassword(this.password)){
-        this.passwordFormatError = "Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une majuscule et un chiffre"
+      if (!this.validatePassword(this.password)) {
+        this.passwordFormatError =
+          "Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une majuscule et un chiffre";
       }
       if (this.password !== this.confPassword) {
         this.confPasswordError = "Vos mots de passe ne sont pas identiques";
@@ -261,52 +265,62 @@ export default {
           email: this.email,
           password: this.password,
           role: this.role,
+          meta: { allowEmail: true },
         });
         // En cas de réussite
         if (response.code === 200) {
           alert("Vous êtes inscrit !");
           // On redirige vers la page connexion
           this.$router.push({ name: "login" });
-          } else {
-            alert(response.message);
+        } else {
+          alert(response.message);
+        }
+
+        //! On connecte l'utilisateur avec ses nouveaux identifiants
+        //! A faire plus tard seulement car bug
+
+        //     // Requete Ajax pour connexion utilisateur
+        //     const response = await UserService.login({
+        //       username: this.email,
+        //       password: this.password,
+        //     });
+
+        if (response.success === true) {
+          console.log(response);
+
+          // On remet le formulaire à zéro
+          // (this.lastname = null),
+          //   (this.firstname = null),
+          //   (this.pseudo = null),
+          //   (this.birth = null),
+          //   (this.email = null),
+          //   (this.confEmail = null),
+          //   (this.password = null),
+          //   (this.confPassword = null),
+          //   (this.role = null),
+
+          const getRole = await UserService.find(response.id);
+          if (getRole.id) {
+            // On crée le user dans le store grace à une action
+            this.$store.dispatch(
+              "createUser",
+              response.token,
+              response.id,
+              getRole.roles[0]
+            );
           }
 
-          //! On connecte l'utilisateur avec ses nouveaux identifiants
-          //! A faire plus tard seulement car bug
-
-      //     // Requete Ajax pour connexion utilisateur
-      //     const response = await UserService.login({
-      //       username: this.email,
-      //       password: this.password,
-      //     });
-
-      //     if (response.success === true) {
-      //       console.log("Connexion ok");
-
-      //       // On remet le formulaire à zéro
-      //       (this.lastname = null),
-      //         (this.firstname = null),
-      //         (this.pseudo = null),
-      //         (this.birth = null),
-      //         (this.email = null),
-      //         (this.confEmail = null),
-      //         (this.password = null),
-      //         (this.confPassword = null),
-      //         (this.role = null),
-      //         // On execute une mutation pour stocker le token dans le sessionStorage
-      //         // Et le synchroniser avec le store afin de rendre notre store.token reactif
-      //         this.$store.commit("setToken", response.data.token);
-
-      //       // On redirige vers la page d'accueil
-      //       this.$router.push({ name: "home" });
-      //     } else {
-      //       alert(response.message);
-      //     }
-      //   } else {
-      //     alert(response.message);
-      //   }
-      //   console.log(response);
-      // }
+          //       // On redirige vers la page d'accueil
+          //       this.$router.push({ name: "home" });
+          //     } else {
+          //       alert(response.message);
+          //     }
+          //   } else {
+          //     alert(response.message);
+          //   }
+          //   console.log(response);
+          // }
+        }
       }
     },
 
@@ -333,9 +347,10 @@ export default {
       // Au moins un chiffre (digit)
       // Au moins une lettre en minuscule et une en majuscule
       // On veut que sa taille complète soit de 8 caractères minimum et on autorise les caractères spéciaux
-      const validRegex = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{8,}$/;
+      const validRegex =
+        /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{8,}$/;
 
-      if (input.match(validRegex)){
+      if (input.match(validRegex)) {
         return true;
       } else {
         return false;
@@ -344,8 +359,8 @@ export default {
 
     validateEmail: function (input) {
       const validRegex =
-      // On veut que la chaîne de caractères ait un format
-      // avec un @ entouré par des chaînes de caractères
+        // On veut que la chaîne de caractères ait un format
+        // avec un @ entouré par des chaînes de caractères
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
       if (input.match(validRegex)) {

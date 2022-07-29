@@ -65,6 +65,16 @@ export default createStore({
     }
   },
   actions: {
+    deleteUser({commit}) {
+      commit('deleteUserId');
+      commit('deleteToken');
+      commit('deleteRole');
+    },
+    createUser({commit, token, userId, role}) {
+      commit('setToken', token);
+      commit('setUserId', userId);
+      commit('setRole', role);
+    }
   },
   modules: {
   }
