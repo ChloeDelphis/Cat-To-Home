@@ -109,8 +109,12 @@
                     <button @click="deleteCat" class="button__orange">Supprimer la fiche</button>
                 </div>
             </div>
-
-            <a href=""><div class="adoption__add__picture" v-bind:style="{'backgroundImage': 'url(' + picture + ')', 'backgroundSize': 'cover', 'backgroundPosition': 'center'}"></div></a>
+            <div>
+                <div class="adoption__add__picture" v-bind:style="{'backgroundImage': 'url(' + picture + ')',   'backgroundSize': 'cover', 'backgroundPosition': 'center'}"></div>
+                <br>
+                <label for="uploadPicture">Pour changer la photo, cliquez ici : </label><br>    
+                <input @change="uploadPicture" id="uploadPicture" name="uploadPicture" type="file" accept=".png, .jpg, .jpeg">
+            </div>
         </div>
 </template>
 
@@ -120,6 +124,7 @@ import CatService from '@/services/cat/CatService';
 import FindAllService from '@/services/taxonomies/FindAllService';
 import ItemListLocation from '@/components/home/ItemListLocation';
 import LocationService from '@/services/cat/LocationService';
+import NewCat from '@/services/cat/NewCat';
 
 export default {
     name: "CatModifyLayout",
@@ -151,6 +156,11 @@ export default {
             diseases_input: null,
             content: null,
             picture: null,
+
+            // Feature image
+
+            picture_file: null,
+            preview_picture: null,
 
             // taxonomies
 
@@ -275,8 +285,15 @@ export default {
                  }
                  const response = await CatService.update(this.id, params);
                  // Reception de la réponse et affichage
-                 if(response.id) {
-                   this.$router.push({name: 'profile'});
+                if(response.id) {
+                    // upload image dans le backend avec l'id du post
+                    const updatePicture = await NewCat.uploadPicture(this.id, this.picture_file.name, {headers: {"Content-Type": "image/jpeg"}}, this.picture_file)
+                    // ajout de l'id de l'image dans le post créer
+                    if (updatePicture.id) {
+                    await NewCat.addFeaturedMedia(this.id, {
+                        "featured_media": updatePicture.id
+                    })}
+                    this.$router.push({name: 'profile'});
                  } else {
                      alert(response.message);
                  }
@@ -316,7 +333,18 @@ export default {
             this.department = choiceLocation
             this.locations = [];
             document.querySelector('#home__form__list').style.height = '0';
-        }
+        },
+
+        // Changement de la feature image
+
+        uploadPicture(event) {
+        // Revisualisation de l'image
+            this.picture_file = event.target.files[0];
+            console.log(event.target.files[0])
+
+            this.preview_picture = URL.createObjectURL(this.picture_file);
+
+        },
     },
 }
 </script>
