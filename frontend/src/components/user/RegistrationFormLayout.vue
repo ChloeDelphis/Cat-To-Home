@@ -207,7 +207,8 @@ export default {
       }
       if (this.lastName === this.firstName) {
         this.firstNameErrors.push(
-          "Le prénom et le nom ne peuvent pas être identiques");
+          "Le prénom et le nom ne peuvent pas être identiques"
+        );
       }
       if (!this.birth) {
         this.birthError = "Merci de renseigner votre date de naissance";
@@ -253,9 +254,8 @@ export default {
         !this.validEmailError &&
         !this.validAgeError &&
         !this.passwordFormatError
-        ) {
+      ) {
         // On envoie la requête vers l'API
-        // console.log("envoi requête inscription");
         const response = await UserService.register({
           lastname: this.lastName,
           firstname: this.firstName,
@@ -268,56 +268,31 @@ export default {
         });
         // En cas de réussite
         if (response.code === 200) {
-          alert("Vous êtes inscrit !");
-          // On redirige vers la page connexion
-          this.$router.push({ name: "login" });
-        } else {
-          alert(response.message);
-        }
+          const responseLogin = await UserService.login({
+            username: this.email,
+            password: this.password,
+          });
 
-        //! On connecte l'utilisateur avec ses nouveaux identifiants
-        //! A faire plus tard seulement car bug
+          if (responseLogin.success === true) {
+            this.$store.commit("setToken", responseLogin.data.token);
+            this.$store.commit("setUserId", responseLogin.data.id);
 
-        //     // Requete Ajax pour connexion utilisateur
-        const responseLogin = await UserService.login({
-          username: this.email,
-          password: this.password,
-        });
-
-        if (responseLogin.success === true) {
-          console.log(responseLogin);
-
-          // On remet le formulaire à zéro
-          // (this.lastname = null),
-          //   (this.firstname = null),
-          //   (this.pseudo = null),
-          //   (this.birth = null),
-          //   (this.email = null),
-          //   (this.confEmail = null),
-          //   (this.password = null),
-          //   (this.confPassword = null),
-          //   (this.role = null),
-
-          const getRole = await UserService.find(response.id);
-          if (getRole.id) {
-            // On crée le user dans le store grace à une action
-            this.$store.dispatch(
-              "createUser",
-              response.token,
-              response.id,
-              getRole.roles[0]
-            );
+            const getRole = await UserService.find(responseLogin.data.id);
+            if (getRole.id) {
+              // On crée le user dans le store grace à une action
+              this.$store.commit("setRole", getRole.roles[0]);
+            }
+            // On redirige vers la page d'accueil
+            this.$router.push({ name: "home" });
+          } else {
+            // alert(responseLogin.message);
           }
-          // On redirige vers la page d'accueil
-          this.$router.push({ name: "home" });
         } else {
-          alert(responseLogin.message);
+          // alert(response.message);
         }
       } else {
-        alert("Un erreur est survenue");
+        // alert("Un erreur est survenue");
       }
-      // console.log(response);
-    
     },
 
     validateAge: function (input) {
@@ -369,5 +344,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
