@@ -1,17 +1,21 @@
-.heart__container{
+.heart{
+    
+    &__container {
     padding: 3rem;
     position: absolute;
-    right:0;
-    top:0
+    right: 0;
+    top: 0;
+    display: flex;
 }
 
-.hidden{
+
+}
+
+.hidden {
     display: none;
 }
 
 
 
 
-@media (min-width : 768px) {
-
-}
+@media (min-width : 768px) {}
