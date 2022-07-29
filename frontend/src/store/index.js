@@ -3,7 +3,8 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     token: null,
-    userId: null
+    userId: null,
+    role: null
   },
   getters: {
     getToken: (state) => {
@@ -22,12 +23,23 @@ export default createStore({
         state.userId = sessionStorage.getItem('userId');
       }
       return state.userId;
+    },
+    getRole: (state) => {
+
+      if(state.role === null) {
+        state.role = sessionStorage.getItem('role');
+      }
+      return state.role;
     }
   },
   mutations: {
     deleteToken: (state) => {
       state.token = null;
       sessionStorage.removeItem('token');
+    },
+    deleteRole: (state) => {
+      state.role = null;
+      sessionStorage.removeItem('role');
     },
     // On va recuperer le token de connexion
     // Le stocker dans sessionStorage et faire
@@ -36,8 +48,6 @@ export default createStore({
       sessionStorage.setItem('token', newToken);
       state.token = sessionStorage.getItem('token');
     },
-
-
      deleteUserId: (state) => {
       state.userId = null;
       sessionStorage.removeItem('userId');
@@ -48,6 +58,10 @@ export default createStore({
     setUserId: (state, newUser) => {
       sessionStorage.setItem('userId', newUser);
       state.userId = sessionStorage.getItem('userId');
+    },
+    setRole: (state, newRole) => {
+      sessionStorage.setItem('role', newRole);
+      state.role = sessionStorage.getItem('role');
     }
   },
   actions: {
