@@ -14,6 +14,9 @@ const apiClient = axios.create({
 export default {
 
 
+  
+    
+
     // permet de créer un nouvel utlisateur
     async register(params) {
         try {
@@ -32,12 +35,21 @@ export default {
             return error.response.data
         }
     },
-
-     // Recupere les infos de l'utilisateur par id de connexion. 
+ // Recupere les infos de l'utilisateur par id de connexion. 
     async find(id) {
         try {
             apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
             const response = await apiClient.get('/wp/v2/users/' + id + '?context=edit');
+            return response.data
+        } catch (error) {
+            return error.response.data
+        }
+    },
+     // Modifie les infos de l'utilisateur par id de connexion. 
+    async update(id, params) {
+        try {
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.post('/wp/v2/users/' + id, params);
             return response.data
         } catch (error) {
             return error.response.data
