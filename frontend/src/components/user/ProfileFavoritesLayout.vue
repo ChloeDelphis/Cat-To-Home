@@ -2,7 +2,13 @@
   <section class="post__list">
     <h2>Mes coups de coeur</h2>
     <div class="post__list__container">
-      <CatCardLayout
+      <cat-card-layout 
+      v-for="cat in favoriteCats" 
+      v-bind:key="cat['post_info'].post_title"
+      v-bind:id="cat['post_info'].ID"
+      v-bind:name="cat['post_info'].post_title"
+      v-bind:localisation="cat['taxonomies_info'][1].slug"
+      v-bind:picture="cat['sourceurl']"
 
       />
     </div>
@@ -17,12 +23,13 @@
 <script>
 // import LocationService from "@/services/taxonomies/LocationService";
 // import ItemListLocation from "@/components/home/ItemListLocation";
-// import CatCardLayout from "@/components/cat/CatCardLayout.vue";
+import CatCardLayout from "@/components/cat/CatCardLayout.vue";
 import FavoriteService from "@/services/favorite/FavoriteService";
 
 export default {
   name: "ProfileFavoritesLayout",
   components: {
+    CatCardLayout,
     // CatCardLayout,
     // ItemListLocation,
   },
@@ -37,7 +44,6 @@ export default {
     console.log("mounted");
     this.favoriteCats = await FavoriteService.findAll();
     console.log(this.favoriteCats);
-    console.log(this.favoriteCats.post_info.ID);
   },
 };
 </script>

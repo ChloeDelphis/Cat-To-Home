@@ -12,9 +12,13 @@ const apiClient = axios.create({
 });
 
 export default{
-    // permet de récupérer les chats favoris d'un utilisateur donné en utilisant sont bearer token
+    // permet de récupérer les chats favoris d'un utilisateur donné en utilisant son bearer token
     async findAll(){
-        const response = await apiClient.get("/users/favorites");
-        return response.data;
+        try{
+            const response = await apiClient.get("/users/favorites");
+            return response.data;
+        } catch (error){
+            return error.response.data
+        }
     },
 }
