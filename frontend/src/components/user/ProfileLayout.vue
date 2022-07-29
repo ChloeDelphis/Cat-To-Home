@@ -119,12 +119,18 @@
             </p> -->
             <br />
 
-            <div id="checkbox">
-              <span>Je souhaite être contacté par mon :</span>
-              <input type="checkbox" value="yes" v-model="allowEmail" />
-              <label for="mail">email</label>
-              <input type="checkbox" value="yes" v-model="allowPhone" />
-              <label for="phone">télèphone</label>
+            <div
+              id="checkbox"
+              v-if="
+                this.$store.getters.getToken &&
+                this.$store.getters.getRole !== 'adopter'
+              "
+            >
+              <label>Je souhaite être contacté par mon : </label>
+              <input class="box" type="checkbox" v-model="allowEmail" />
+              <label class="box_response" for="mail">email </label>
+              <input class="box" type="checkbox" v-model="allowPhone" />
+              <label class="box_response" for="phone">téléphone</label>
               <br />
               <label> {{ checked }}</label>
               <br />
@@ -175,7 +181,7 @@ export default {
       new_password: null,
       confPassword: null,
       allowPhone: false,
-      allowEmail: false,
+      allowEmail: true,
       cheked: [],
     };
   },
@@ -241,9 +247,20 @@ export default {
 </script>
 
 <style lang="scss">
+.box {
+  height: 2rem;
+  width: 2rem;
+  margin-left: 3rem;
+}
+.box_response {
+  margin-left: 0.5rem;
+}
 </style>
 
-
+<!-- Il faut mettre un if allowEmail & allowPhone = false return erreur et pas de validation de la modification -->
+<!-- Il faut mettre un if numéro de télèphone non renseigné (et format téléphonique reconnu) alors return message d'erreur   -->
+<!-- Il faut intégrer toutes les erreurs proposé par chloé ci dessus -->
+<!-- Il faut faire apparaitre la checkbox ainsi que les élément téléphone etc uniquement sur le rôle Owner, voir la méthode d'antoine et la mettre en place -->
 
 <!-- 
 
