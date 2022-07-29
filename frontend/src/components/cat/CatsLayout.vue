@@ -81,16 +81,18 @@ export default {
     methods: {
         // Récupere la liste des départements en fonction de se qu'il est tapé dans l'input
         async sendLocation() {
+            // document.querySelector('#home__form__list').style.height = '0';
             this.locations = [];
-            document.querySelector('#home__form__list').style.height = '0';
 
-            if (this.location_input != '') {
+            if (this.location_input !== '') {
+
                 const response = await LocationService.findAll();
                 if (response.length != 0) {
-                    document.querySelector('#home__form__list').style.height = '12rem';
+                    // document.querySelector('#home__form__list').style.height = '12rem';
                     response.forEach(location => {
-                        if (location.name.toLowerCase().includes(this.location_input.toLowerCase())) {
-                            this.locations.push(location.name)
+                        if (location.name.toLowerCase().includes(this.location_input.toLowerCase())
+                            && !this.locations.includes(location.name)) {
+                            this.locations.push(location.name);   
                         }
                     });
                 }
@@ -164,6 +166,7 @@ export default {
         z-index: 999;
         bottom: 22px;
         overflow: scroll;
+        max-height: 12rem;
     }
 
     #home__form__list::-webkit-scrollbar {
