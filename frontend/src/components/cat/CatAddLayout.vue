@@ -245,6 +245,7 @@ export default {
                  // Permet de changer le curseur du bouton en mode wait
                  const boutonSend = document.querySelector("#send");
                  boutonSend.classList.add("wait");
+
                  const response = await NewCat.create(params);
                  // Reception de la réponse et affichage
                  if(response.id) {
@@ -259,8 +260,12 @@ export default {
                         "featured_media": createPicture.id
                     })
                     if (updatePostImage){
+                        
                     // upload departement dans le backend avec l'id du post
-                        const createLocation = await NewCat.uploadLocation(postId, { "name":this.location_input})     
+                        const createLocation = await NewCat.uploadLocation(postId, { "name":this.location_input})  
+                        console.log(createLocation)   
+                        const locationFindId = await NewCat.findAllLocation()
+                        console.log(locationFindId)
                          // ajout de l'id du departement dans le post créer    
                         if (createLocation.id) {
                           const updatePostLocation = await NewCat.addLocation(postId, {

@@ -62,4 +62,8 @@ export default {
             return error.response.data;
         }
     },
+    async findAllLocation() {
+        const response = await apiClient.get("/location");
+        return response.data;
+    },
 }
