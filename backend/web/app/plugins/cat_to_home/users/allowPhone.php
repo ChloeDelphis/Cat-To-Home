@@ -1,6 +1,6 @@
 <?php
 
-// Ajout du postmeta 'phone'
+// Ajout du postmeta 'allowPhone'
 
 
 function user_allowPhone()

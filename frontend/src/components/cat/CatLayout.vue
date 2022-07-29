@@ -39,8 +39,8 @@
                 <button v-if="this.$store.getters.getToken" v-on:click="displayContactInfos" class="button__blue">Contacter le propriétaire</button>
                 <div class="contact__information">
                     <ul>
-                        <li>Téléphone : </li>
-                        <li>Adresse e-mail : {{email}}</li>
+                        <li v-if="allowPhone === true">Téléphone : </li>
+                        <li v-if="allowEmail === true">Adresse e-mail : {{email}}</li>
                     </ul>
                 </div>
             </div>
@@ -73,7 +73,9 @@ export default {
             // information about the owner
             authorId: null,
             phoneNumber: null,
-            email: null
+            email: null,
+            allowPhone: null,
+            allowEmail: null,
         }
     },
     async mounted(){
@@ -90,7 +92,7 @@ export default {
             this.localisation = catResponse.meta.city;
             this.department = catResponse._embedded['wp:term'][2][0].name;
             this.sexe = catResponse._embedded['wp:term'][3][0].name;
-            this.age = catResponse.meta.birthDate;
+            this.age = catResponse.meta.age;
             this.vaccinated = catResponse._embedded['wp:term'][4];
             this.diseases = catResponse._embedded['wp:term'][0];
             this.environments = catResponse._embedded['wp:term'][1];
@@ -105,6 +107,8 @@ export default {
             alert(userResponse.message);
         } else {
             this.email = userResponse.email;
+            this.allowPhone = userResponse.meta.allowPhone;
+            this.allowEmail = userResponse.meta.allowEmail;
         }
     },
     methods: {
