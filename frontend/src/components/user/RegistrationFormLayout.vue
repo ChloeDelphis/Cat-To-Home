@@ -265,41 +265,48 @@ export default {
         // En cas de réussite
         if (response.code === 200) {
           alert("Vous êtes inscrit !");
-
-          // On connecte l'utilisateur avec ses nouveaux identifiants
-
-          // Requete Ajax pour connexion utilisateur
-          const response = await UserService.login({
-            username: this.email,
-            password: this.password,
-          });
-
-          if (response.success === true) {
-            console.log("Connexion ok");
-
-            // On remet le formulaire à zéro
-            (this.lastname = null),
-              (this.firstname = null),
-              (this.pseudo = null),
-              (this.birth = null),
-              (this.email = null),
-              (this.confEmail = null),
-              (this.password = null),
-              (this.confPassword = null),
-              (this.role = null),
-              // On execute une mutation pour stocker le token dans le sessionStorage
-              // Et le synchroniser avec le store afin de rendre notre store.token reactif
-              this.$store.commit("setToken", response.data.token);
-
-            // On redirige vers la page d'accueil
-            this.$router.push({ name: "home" });
+          // On redirige vers la page connexion
+          this.$router.push({ name: "login" });
           } else {
             alert(response.message);
           }
-        } else {
-          alert(response.message);
-        }
-        console.log(response);
+
+          //! On connecte l'utilisateur avec ses nouveaux identifiants
+          //! A faire plus tard seulement car bug
+
+      //     // Requete Ajax pour connexion utilisateur
+      //     const response = await UserService.login({
+      //       username: this.email,
+      //       password: this.password,
+      //     });
+
+      //     if (response.success === true) {
+      //       console.log("Connexion ok");
+
+      //       // On remet le formulaire à zéro
+      //       (this.lastname = null),
+      //         (this.firstname = null),
+      //         (this.pseudo = null),
+      //         (this.birth = null),
+      //         (this.email = null),
+      //         (this.confEmail = null),
+      //         (this.password = null),
+      //         (this.confPassword = null),
+      //         (this.role = null),
+      //         // On execute une mutation pour stocker le token dans le sessionStorage
+      //         // Et le synchroniser avec le store afin de rendre notre store.token reactif
+      //         this.$store.commit("setToken", response.data.token);
+
+      //       // On redirige vers la page d'accueil
+      //       this.$router.push({ name: "home" });
+      //     } else {
+      //       alert(response.message);
+      //     }
+      //   } else {
+      //     alert(response.message);
+      //   }
+      //   console.log(response);
+      // }
       }
     },
 
