@@ -21,7 +21,7 @@
 
       <div id="menu" class="header__nav--desktop">
         <router-link
-          v-if="this.$store.getters.getToken"
+          v-if="this.$store.getters.getToken && this.$store.getters.getRole !== 'adopter'"
           class="header__nav__don button__orange--papate"
           :to="{ name: 'cat_add' }"
           >Je donne un chat</router-link
@@ -84,6 +84,7 @@ export default {
     disconnect() {
       // On execute la mutation qui va supprimer le token dans le store et dans le sessionStorage
       this.$store.commit("deleteToken");
+      this.$store.commit('deleteRole');
       // On redirige l'utilisateur
       this.$router.push({ name: "login" });
     },
