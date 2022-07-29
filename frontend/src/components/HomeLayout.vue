@@ -12,7 +12,8 @@
           des particuliers propriétaires d’animaux et des personnes souhaitant
           en adopter.
         </p>
-        <router-link class="button__orange--papate" v-bind:to="{ name: 'cat_add' }">Je donne un chat</router-link>
+        <router-link class="button__orange--papate" v-bind:to="{ name: 'cat_add' }" v-if="this.$store.getters.getToken && this.$store.getters.getRole !== 'adopter'">Je donne un chat</router-link>
+        <router-link class="button__orange--papate" v-bind:to="{ name: 'cat_add' }" v-if="!this.$store.getters.getToken">Je donne un chat</router-link>
       </div>
       <div class="home__img">
         <img class="cat__one" src="../assets/img/IMG_CAT1.png" alt="" />

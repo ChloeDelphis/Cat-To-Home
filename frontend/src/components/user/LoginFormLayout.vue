@@ -20,8 +20,12 @@
             <button @click="ShowFormChangePass" class="btn--reinit__pass">Réinitialiser son mot de passe</button>
           </div>
           <div class="form__reinit__pass">
-            <input v-model="emailReinitPass" class="connexion__form__fieldset__field__input input" type="email" placeholder="email" />
+            <input v-model="emailReinitPass" class="connexion__form__fieldset__field__input input" type="email"
+              placeholder="email" />
             <button @click="sendMail" class="button__orange">Valider</button>
+          </div>
+          <div class="send__fail">
+            <p class="reinit__pass reinit__pass--hidden"></p>
           </div>
           <ul class="field__error-list">
             <li>
@@ -78,6 +82,8 @@ export default {
           // Et le synchroniser avec le store afin de rendre notre store.token & store.userId reactif
           this.$store.commit("setToken", response.data.token);
           this.$store.commit("setUserId", response.data.id);
+          const roles = await UserService.find(response.data.id);
+          this.$store.commit('setRole', roles.roles[0]);
           // On fait une redirection
           this.$router.push({ name: "home" });
         } else {
@@ -90,10 +96,22 @@ export default {
       formReInitPass.classList.toggle('form__reinit__pass--show');
     },
     async sendMail() {
-      const response = await UserService.send({
-        "email": this.emailReinitPass
-      });
-      console.log(response);
+      if (this.emailReinitPass) {
+        const response = await UserService.send({
+          "email": this.emailReinitPass
+        });
+          this.ShowFormChangePass();
+          const message = document.querySelector('.reinit__pass');
+          message.classList.remove('reinit__pass--hidden');
+        if (response.code === 200) {
+          message.textContent = 'Le mail a bien été envoyé';
+        } else {
+          message.textContent = 'Le mail n\'a pas pu être envoyé';
+
+        }
+        console.log(response);
+      }
+
     }
   },
 };
@@ -112,7 +130,8 @@ export default {
   opacity: 0.7;
 }
 
-.form__reinit__pass {
+.form__reinit__pass,
+.reinit__pass--hidden {
   display: none;
 }
 
@@ -120,5 +139,10 @@ export default {
   display: flex;
   gap: 2rem;
   margin-top: 1rem;
+}
+
+.reinit__pass {
+  text-align: center;
+  margin-top: 2rem;
 }
 </style>

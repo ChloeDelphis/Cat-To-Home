@@ -54,8 +54,10 @@ function cat_to_home_rest_send_mail_handler($request)
             "Reply-To: damien laitani d.laitani@gmail.com",
             'From: Damien <d.laitani@gmail.com>'
         );
-        $response = wp_mail('Damien <d.laitani@gmail.com>', $subject, $message, $headers);
+        $response['code'] = 200;
+        $response['sended'] = wp_mail('Damien <d.laitani@gmail.com>', $subject, $message, $headers);
     } else {
+        $response['code'] = 400;
         $response = 'Aucun utilisateur ne correspond à cette adresse mail.';
     }
     return new WP_REST_Response($response, 200);

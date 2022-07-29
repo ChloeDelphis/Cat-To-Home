@@ -29,6 +29,7 @@ require_once plugin_dir_path(__FILE__) . './endpoints/registration.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/favorite.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/catByAge.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/sendMail.php';
+require_once plugin_dir_path(__FILE__) . './endpoints/resetPassword.php';
 
 // Customs users meta keys
 require_once plugin_dir_path(__FILE__) . './users/birth.php';
@@ -37,6 +38,8 @@ require_once plugin_dir_path(__FILE__) . './users/reset_token.php';
 require_once plugin_dir_path(__FILE__) . './users/exp_date.php';
 require_once plugin_dir_path(__FILE__) . './users/reset_email.php';
 
+require_once plugin_dir_path(__FILE__) . './users/allowPhone.php';
+require_once plugin_dir_path(__FILE__) . './users/allowEmail.php';
 
 
 
