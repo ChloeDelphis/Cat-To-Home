@@ -22,13 +22,16 @@ function cat_to_home_rest_send_mail()
 
 function cat_to_home_rest_send_mail_handler($request)
 {
-   global $phpmailer;
     
     $parameters = $request->get_json_params();
     $email = sanitize_text_field($parameters['email']);
 
-    if (get_user_by('email', $email)) {
+    $user = get_user_by('email', $email);
+
+    if ($user) {
         $token = md5($email).rand(10,9999);
+
+        date_default_timezone_set('Europe/Paris');
 
         $expFormat = mktime(
             date("H"), date("i"), date("s"), date("m") ,date("d")+1, date("Y")
@@ -36,11 +39,15 @@ function cat_to_home_rest_send_mail_handler($request)
         
         $expDate = date("Y-m-d H:i:s",$expFormat);
 
-        $link = "<a href='http://localhost:8081/reinitialisation-mot-de-passe?key=".$email."&token=".$token."'>Click To Reset password</a>";
+        update_user_meta($user->ID, 'reset_token', $token);
+        update_user_meta($user->ID, 'exp_date', $expDate);
+        update_user_meta($user->ID, 'reset_email', $email);
+
+        $link = "<a href='http://localhost:8081/reinitialisation-mot-de-passe?key=".$user->ID."&token=".$token."&email=".$email."'>Reset password</a>";
         
         $subject = 'reset mot de passe';
 
-        $message = 'Clique sur le lien pour réinisialiser ton mot de passe' . $link;
+        $message = 'Clique sur le lien pour réinisialiser ton mot de passe ' . $link;
 
         $headers = array(
             'Content-Type: text/html; charset=UTF-8',
@@ -51,6 +58,7 @@ function cat_to_home_rest_send_mail_handler($request)
     } else {
         $response = 'Aucun utilisateur ne correspond à cette adresse mail.';
     }
+    return new WP_REST_Response($response, 200);
     
     // $phpmailer->SMTPDebug = SMTP::DEBUG_SERVER;
     // $phpmailer->isSMTP();
@@ -79,6 +87,5 @@ function cat_to_home_rest_send_mail_handler($request)
     //     $response = 'error : ' . $phpmailer->ErrorInfo;
     // }
 
-    return new WP_REST_Response($response, 200);
 
 }

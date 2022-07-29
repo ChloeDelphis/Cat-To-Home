@@ -44,6 +44,7 @@ export default {
         }
     },
 
+    // Envoi d'un mail pour la réinitialisation de mot de passe
     async send(params) {
         try {
             const response = await apiClient.post('/wp/v2/users/send', params);
@@ -51,6 +52,16 @@ export default {
         } catch (error) {
             return error.response.data;
         }
-    }
+    },
+
+    // Récupere les infos de base d'un user sans besoin de token JWT
+    async findForResetPass(id) {
+        try {
+            const response = await apiClient.get('/wp/v2/users/' + id);
+            return response.data;
+        } catch (error) {
+            return error.response.data;
+        }
+    },
 
 }

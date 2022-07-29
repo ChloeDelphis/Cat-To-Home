@@ -34,6 +34,8 @@ require_once plugin_dir_path(__FILE__) . './endpoints/sendMail.php';
 require_once plugin_dir_path(__FILE__) . './users/birth.php';
 require_once plugin_dir_path(__FILE__) . './users/phone.php';
 require_once plugin_dir_path(__FILE__) . './users/reset_token.php';
+require_once plugin_dir_path(__FILE__) . './users/exp_date.php';
+require_once plugin_dir_path(__FILE__) . './users/reset_email.php';
 
 
 
