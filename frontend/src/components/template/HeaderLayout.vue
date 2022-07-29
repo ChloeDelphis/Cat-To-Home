@@ -51,7 +51,7 @@
           :to="{ name: 'login' }"
           >Connexion</router-link
         >
-        <a class="header__nav__menu" href="#">Contact</a>
+        <router-link class="header__nav__menu" :to="{ name: 'contact' }">Contact</router-link>
 
         <a
           class="header__nav__menu"
