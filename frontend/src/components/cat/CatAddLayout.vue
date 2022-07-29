@@ -264,8 +264,10 @@ export default {
                     // upload departement dans le backend avec l'id du post
                         const createLocation = await NewCat.uploadLocation(postId, { "name":this.location_input})  
                         console.log(createLocation)   
-                        const locationFindId = await NewCat.findAllLocation()
+                        const locationFindId = await NewCat.find('Paris');
                         console.log(locationFindId)
+                        
+                        
                          // ajout de l'id du departement dans le post créer    
                         if (createLocation.id) {
                           const updatePostLocation = await NewCat.addLocation(postId, {
