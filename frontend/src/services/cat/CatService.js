@@ -58,6 +58,7 @@ export default {
 
     async delete(id){
         try{
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
             const response = await apiClient.delete('/cat/' + id);
             return response.data
         } catch(error) {
@@ -65,9 +66,20 @@ export default {
         }
     },
 
-    async update(id){
+    async update(id, params){
         try{
-            const response = await apiClient.post('/cat/' + id);
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
+            const response = await apiClient.post('/cat/' + id, params);
+            return response.data
+        } catch(error) {
+            return error.response.data
+        }
+    },
+
+    async findByOwnerId(id) {
+        try{
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
+            const response = await apiClient.get('/cat?_embed&author=' + id);
             return response.data
         } catch(error) {
             return error.response.data

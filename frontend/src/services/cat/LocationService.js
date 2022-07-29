@@ -12,7 +12,7 @@ export default {
     async find(params) {
         try {
             const response = await instance.get('?nom=' + params);
-            return response;
+            return response.data;
         } catch (error) {
             return error.response;
         }

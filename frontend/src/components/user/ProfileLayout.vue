@@ -132,10 +132,10 @@
     </section>
 
     <!-- A faire apparaître quand le profil est adoptant et favoris > 0 -->
-    <ProfileFavoritesLayout />
+    <ProfileFavoritesLayout v-if="this.$store.getters.getToken && this.$store.getters.getRole !== 'owner'" />
 
     <!-- A faire apparaître quand le profil est propriétaire et nb annonces > 0   -->
-    <ProfilePublishedSheetsLayout />
+    <ProfilePublishedSheetsLayout v-if="this.$store.getters.getToken && this.$store.getters.getRole !== 'adopter'"/>
   </div>
 </template>
 

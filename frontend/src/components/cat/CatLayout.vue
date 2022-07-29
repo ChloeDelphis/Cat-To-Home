@@ -87,8 +87,8 @@ export default {
         } else {
             this.name = catResponse.title.rendered;
             this.picture = catResponse._embedded['wp:featuredmedia'][0].source_url;
-            this.localisation = catResponse._embedded['wp:term'][2][0].name;
-            this.department = null;
+            this.localisation = catResponse.meta.city;
+            this.department = catResponse._embedded['wp:term'][2][0].name;
             this.sexe = catResponse._embedded['wp:term'][3][0].name;
             this.age = catResponse.meta.birthDate;
             this.vaccinated = catResponse._embedded['wp:term'][4];
