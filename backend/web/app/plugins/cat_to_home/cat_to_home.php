@@ -6,21 +6,6 @@ Author: Team Cat to home
 Version: 1.0
 */
 
-global $wpdb;
-
-// d($wpdb->get_results("SELECT * FROM wp_cat_to_home_user_post"));
-// d(get_posts([
-//     'include' => [7, 8],
-//     'suppress_filters' => true,
-//     'post_type' => 'cat'
-// ]));
-// d(wp_remote_get('http://cat_to_home.local/wp-json/wp/v2/cat/8'));
-// die;
-
-// d(WP_User::get_data_by('id', 1));die;
-// $user = wp_get_current_user();
-// d(get_users());die;
-
 require __DIR__ . '/vendor/autoload.php';
 
 use Migration\User_PostMigration;
@@ -44,6 +29,13 @@ require_once plugin_dir_path(__FILE__) . './endpoints/registration.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/favorite.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/catByAge.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/sendMail.php';
+
+// Customs users meta keys
+require_once plugin_dir_path(__FILE__) . './users/birth.php';
+require_once plugin_dir_path(__FILE__) . './users/phone.php';
+require_once plugin_dir_path(__FILE__) . './users/reset_token.php';
+
+
 
 
 register_activation_hook(__FILE__, 'cat_to_home_create_custom_roles');

@@ -54,5 +54,35 @@ export default {
         } catch(error) {
             return error.response.data
         }    
+    },
+
+    async delete(id){
+        try{
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
+            const response = await apiClient.delete('/cat/' + id);
+            return response.data
+        } catch(error) {
+            return error.response.data
+        }
+    },
+
+    async update(id, params){
+        try{
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
+            const response = await apiClient.post('/cat/' + id, params);
+            return response.data
+        } catch(error) {
+            return error.response.data
+        }
+    },
+
+    async findByOwnerId(id) {
+        try{
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
+            const response = await apiClient.get('/cat?_embed&author=' + id);
+            return response.data
+        } catch(error) {
+            return error.response.data
+        }
     }
 }
