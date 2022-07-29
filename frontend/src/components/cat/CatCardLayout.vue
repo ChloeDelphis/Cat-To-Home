@@ -4,7 +4,7 @@
           <!--Image à ajouter en v-if si le composant est appelé par une page spécifique (profil adoptant) <img class="hearth" src="../../assets/icones/coeur.png" alt="" /> -->
 
           <div class="post__img" v-bind:style="'background-image:url(' + picture + ')'">
-            <FavoritesLayout/>
+            <heart-layout/>
           </div>
           <div class="post__content">
               <span class="post__cat__name" v-html="name"></span>
@@ -17,13 +17,13 @@
 </template>
 
 <script>
-import FavoritesLayout from "@/components/cat/FavoritesLayout.vue";
+import HeartLayout from "@/components/cat/HeartLayout.vue";
 
 export default {
   // components: { FavoritesLayout },
   name: "CatCardLayout",
   components: {
-    FavoritesLayout
+    HeartLayout
   },
   // Definit des propriétés qui sont fournies par le parent
   props: {

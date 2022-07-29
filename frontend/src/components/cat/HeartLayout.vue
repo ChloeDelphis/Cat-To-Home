@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: "FavoritesLayout",
+  name: "HeartLayout",
   // Definit des propriétés qui sont fournies par le parent
   props: {
     id: Number,
