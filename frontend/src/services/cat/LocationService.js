@@ -16,5 +16,5 @@ export default {
         } catch (error) {
             return error.response;
         }
-    }
+    },
 }

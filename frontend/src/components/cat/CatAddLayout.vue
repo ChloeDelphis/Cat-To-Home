@@ -94,7 +94,7 @@
                     </label>
                 <input type="file" id="featured_image" name="featured_image" @change="previewPictureAdd" accept=".png, .jpg, .jpeg">
                 </div>
-                <img class="image__upload__preview" :src="preview_picture" alt="" id="image"  >
+                <img class="image__upload__preview none" :src="preview_picture" alt="" id="image"  >
             </div>
         </section>
 
@@ -121,19 +121,11 @@
                         </div>
                         <div class="input__name__checkbox">
                             <input v-model="permissions2" type="checkbox" id="permission2" name="permission2" value="permission2">
-                            <label for="permission2"> J'ai dit la verité sur les infromations remplis.</label>
-                        </div>
-                        <div class="input__name__checkbox">
-                            <input type="checkbox" id="permission3" name="permission3" value="permission3">
-                            <label for="permission3"> She shook her head, and shook it again</label>
-                        </div>
-                        <div class="input__name__checkbox">
-                            <input type="checkbox" id="permission4" name="permission4" value="permission4">
-                            <label for="permission4"> She shook her head, and shook it again</label>
+                            <label for="permission2"> J'atteste de la validité des informations renseigner.</label>
                         </div>
                     </div>
                         <div class=" button__adoption__add">
-                            <button v-on:click="sendNewCat" type="submit" class="button__orange" > Valider la création de la fiche</button>
+                            <button v-on:click="sendNewCat" type="submit" class="button__orange" id="send"> Valider la création de la fiche</button>
                         </div>
                         <div>
                         <p v-for="error in errors" v-bind:key="error">{{error}}</p>
@@ -199,44 +191,41 @@ export default {
     methods: {
 
         previewPictureAdd(event) {
-        // Revisualisation de l'image
+        // Previsualisation de l'image
             this.picture_file = event.target.files[0];
-            // console.log(event.target.files[0])
-
             this.preview_picture = URL.createObjectURL(this.picture_file);
-
+        // fait apparaitre la balise image en supprimant la class none
+            const image = document.querySelector("#image");
+            image.classList.remove("none");
         },
 
         async sendNewCat() {
              this.errors = [];
              // Validation du contenu du formulaire
              if(!this.title) {
-                 this.errors.push("Title cannot be empty");
+                 this.errors.push("Le nom n'est pas renseigner.");
              }
              if(!this.sex) {
-                 this.errors.push("Sex cannot be empty");
+                 this.errors.push("Le sex n'est pas renseigner.");
+             }
+             if(!this.city) {
+                 this.errors.push("La ville n'est pas renseigner.");
              }
             if(!this.location_input) {
-                this.errors.push("Localisation cannot be empty");
+                this.errors.push("Le département n'est pas renseigner.");
             }
-             if(!this.city) {
-                 this.errors.push("City cannot be empty");
-             }
              if(!this.age) {
-                this.errors.push("Age cannot be empty");
+                this.errors.push("L'âge n'est pas renseigner.");
              }
               if(!this.disease_input) {
-                this.errors.push("Disease cannot be empty");
+                this.errors.push("La maladie n'est pas renseigner.");
               }
              if(!this.content) {
-                 this.errors.push("Content cannot be empty");
+                 this.errors.push("La descritpion est vide.");
              }
-             if(!this.permissions1) {
-                this.errors.push("Permission cannot be empty");
+             if(!this.permissions1, !this.permissions1) {
+                this.errors.push("Vous n'avez pas accepté les termes.");
               }
-             if(!this.permissions2) {
-                 this.errors.push("Permission cannot be empty");
-             }
              if(this.errors.length === 0) {
                  let params = {
                      "title": this.title,
@@ -253,6 +242,9 @@ export default {
                     params.status = "publish"
                     break;
                  }
+                 // Permet de changer le curseur du bouton en mode wait
+                 const boutonSend = document.querySelector("#send");
+                 boutonSend.classList.add("wait");
                  const response = await NewCat.create(params);
                  // Reception de la réponse et affichage
                  if(response.id) {
@@ -268,7 +260,7 @@ export default {
                     })
                     if (updatePostImage){
                     // upload departement dans le backend avec l'id du post
-                    const createLocation = await NewCat.uploadLocation(postId, { "name":this.location_input})     
+                        const createLocation = await NewCat.uploadLocation(postId, { "name":this.location_input})     
                          // ajout de l'id du departement dans le post créer    
                         if (createLocation.id) {
                           const updatePostLocation = await NewCat.addLocation(postId, {
@@ -276,6 +268,7 @@ export default {
                           })
                           if (updatePostLocation) {
                               this.$router.push({name: 'home'});
+                              alert("Post ajouté avec succès");
                           }
                         }
                       }
@@ -314,19 +307,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+@media screen and (min-width: 480px) {
+    .image__upload {
+        &__preview {
+            height: 35rem;
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .image__upload {
+        &__preview {
+            height: 20rem;
+        }
+    }
+}
+
 .adoption__add__picture{
     position: relative;
 }
 
 .image__upload {
+    z-index: 1;
     
-
     input{
         display: none;
      }
     &__preview{
         position: absolute;
         width: 100%;
+        border-radius: 2rem;
         object-fit: cover;
     }
     
@@ -348,4 +359,13 @@ export default {
     margin-bottom: 1rem;
   }
 }
+
+.none{
+    display: none;
+    }
+
+.wait{
+    cursor: wait;
+}
+
 </style>
