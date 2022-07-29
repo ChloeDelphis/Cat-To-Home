@@ -21,7 +21,10 @@
 
       <div id="menu" class="header__nav--desktop">
         <router-link
-          v-if="this.$store.getters.getToken && this.$store.getters.getRole !== 'adopter'"
+          v-if="
+            this.$store.getters.getToken &&
+            this.$store.getters.getRole !== 'adopter'
+          "
           class="header__nav__don button__orange--papate"
           :to="{ name: 'cat_add' }"
           >Je donne un chat</router-link
@@ -51,7 +54,9 @@
           :to="{ name: 'login' }"
           >Connexion</router-link
         >
-        <router-link class="header__nav__menu" :to="{ name: 'contact' }">Contact</router-link>
+        <router-link class="header__nav__menu" :to="{ name: 'contact' }"
+          >Contact</router-link
+        >
 
         <a
           class="header__nav__menu"
@@ -83,8 +88,8 @@ export default {
   methods: {
     disconnect() {
       // On execute la mutation qui va supprimer le token dans le store et dans le sessionStorage
-      this.$store.commit("deleteToken");
-      this.$store.commit('deleteRole');
+      this.$store.dispatch("deleteUser");
+
       // On redirige l'utilisateur
       this.$router.push({ name: "login" });
     },
@@ -109,15 +114,14 @@ export default {
     crossElmnt.addEventListener("click", displayDesktopMenuHandle);
 
     function displayDesktopMenuHandle() {
- 
       menu.classList.remove("header__nav--small");
       menu.classList.add("header__nav--desktop");
       headerElmnt.classList.remove("fixed");
 
-      burgerElmnt.style.display="block";
-      crossElmnt.style.display="none";
-    } 
-  }
+      burgerElmnt.style.display = "block";
+      crossElmnt.style.display = "none";
+    }
+  },
 };
 </script>
 
