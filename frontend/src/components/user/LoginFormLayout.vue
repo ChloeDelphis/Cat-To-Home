@@ -84,6 +84,8 @@ export default {
           // Et le synchroniser avec le store afin de rendre notre store.token & store.userId reactif
           this.$store.commit("setToken", response.data.token);
           this.$store.commit("setUserId", response.data.id);
+          const roles = await UserService.find(response.data.id);
+          this.$store.commit('setRole', roles.roles[0]);
           // On fait une redirection
           this.$router.push({ name: "home" });
         } else {
