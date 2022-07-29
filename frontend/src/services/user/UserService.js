@@ -29,6 +29,7 @@ export default {
     
     async login(params) {
         try {
+            apiClient.defaults.headers.common['Authorization'] = '';
             const response = await apiClient.post('/jwt-auth/v1/token', params);
             return response.data
         } catch (error) {
