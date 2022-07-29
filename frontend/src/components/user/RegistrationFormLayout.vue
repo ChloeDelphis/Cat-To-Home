@@ -207,8 +207,7 @@ export default {
       }
       if (this.lastName === this.firstName) {
         this.firstNameErrors.push(
-          "Le prénom et le nom ne peuvent pas être identiques"
-        );
+          "Le prénom et le nom ne peuvent pas être identiques");
       }
       if (!this.birth) {
         this.birthError = "Merci de renseigner votre date de naissance";
@@ -254,7 +253,7 @@ export default {
         !this.validEmailError &&
         !this.validAgeError &&
         !this.passwordFormatError
-      ) {
+        ) {
         // On envoie la requête vers l'API
         // console.log("envoi requête inscription");
         const response = await UserService.register({
@@ -280,13 +279,13 @@ export default {
         //! A faire plus tard seulement car bug
 
         //     // Requete Ajax pour connexion utilisateur
-        //     const response = await UserService.login({
-        //       username: this.email,
-        //       password: this.password,
-        //     });
+        const responseLogin = await UserService.login({
+          username: this.email,
+          password: this.password,
+        });
 
-        if (response.success === true) {
-          console.log(response);
+        if (responseLogin.success === true) {
+          console.log(responseLogin);
 
           // On remet le formulaire à zéro
           // (this.lastname = null),
@@ -309,19 +308,16 @@ export default {
               getRole.roles[0]
             );
           }
-
-          //       // On redirige vers la page d'accueil
-          //       this.$router.push({ name: "home" });
-          //     } else {
-          //       alert(response.message);
-          //     }
-          //   } else {
-          //     alert(response.message);
-          //   }
-          //   console.log(response);
-          // }
+          // On redirige vers la page d'accueil
+          this.$router.push({ name: "home" });
+        } else {
+          alert(responseLogin.message);
         }
+      } else {
+        alert("Un erreur est survenue");
       }
+      // console.log(response);
+    
     },
 
     validateAge: function (input) {
