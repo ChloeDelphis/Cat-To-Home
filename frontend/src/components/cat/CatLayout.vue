@@ -73,7 +73,9 @@ export default {
             // information about the owner
             authorId: null,
             phoneNumber: null,
-            email: null
+            email: null,
+            allowPhone: null,
+            allowEmail: null,
         }
     },
     async mounted(){
@@ -90,7 +92,7 @@ export default {
             this.localisation = catResponse.meta.city;
             this.department = catResponse._embedded['wp:term'][2][0].name;
             this.sexe = catResponse._embedded['wp:term'][3][0].name;
-            this.age = catResponse.meta.birthDate;
+            this.age = catResponse.meta.age;
             this.vaccinated = catResponse._embedded['wp:term'][4];
             this.diseases = catResponse._embedded['wp:term'][0];
             this.environments = catResponse._embedded['wp:term'][1];
@@ -105,6 +107,8 @@ export default {
             alert(userResponse.message);
         } else {
             this.email = userResponse.email;
+            this.allowPhone = userResponse.meta.allowPhone;
+            this.allowEmail = userResponse.meta.allowEmail;
         }
     },
     methods: {

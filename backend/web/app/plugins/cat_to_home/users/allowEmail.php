@@ -1,6 +1,6 @@
 <?php
 
-// Ajout du postmeta 'allow_email'
+// Ajout du postmeta 'allowEmail'
 
 
 function user_allowEmail()
