@@ -32,6 +32,8 @@ require_once plugin_dir_path(__FILE__) . './users/birth.php';
 require_once plugin_dir_path(__FILE__) . './users/phone.php';
 require_once plugin_dir_path(__FILE__) . './users/reset_token.php';
 
+require_once plugin_dir_path(__FILE__) . './users/allowPhone.php';
+require_once plugin_dir_path(__FILE__) . './users/allowEmail.php';
 
 
 
