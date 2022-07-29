@@ -59,10 +59,9 @@ export default {
       password: null,
     };
   },
-  // mounted() {
-  // if
-  // location.reload(true);
-  // },
+  mounted() {
+    // location.reload(true);
+  },
   methods: {
     async login() {
       this.passwordError = "";

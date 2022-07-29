@@ -118,6 +118,18 @@
               {{ confPasswordError }}
             </p> -->
             <br />
+
+            <div id="checkbox">
+              <span>Je souhaite être contacté par mon :</span>
+              <input type="checkbox" value="yes" v-model="allowEmail" />
+              <label for="mail">email</label>
+              <input type="checkbox" value="yes" v-model="allowPhone" />
+              <label for="phone">télèphone</label>
+              <br />
+              <label> {{ checked }}</label>
+              <br />
+            </div>
+
             <button @click="submit" type="submit" class="button__orange">
               Modifier mes informations
             </button>
@@ -150,6 +162,7 @@ export default {
     ProfileFavoritesLayout,
     ProfilePublishedSheetsLayout,
   },
+
   data() {
     return {
       id: null,
@@ -161,6 +174,9 @@ export default {
       phone: null,
       new_password: null,
       confPassword: null,
+      allowPhone: false,
+      allowEmail: false,
+      cheked: [],
     };
   },
   async mounted() {
@@ -191,17 +207,16 @@ export default {
           phone: this.phone,
           email: this.email,
           password: this.new_password,
+          meta: {
+            allowPhone: this.allowPhone,
+            allowEmail: this.allowEmail,
+          },
         };
         const response = await UserService.update(id, params);
         console.log(response);
         if (response.id) {
           // On écrase le token avec un nouveau token
-          const logUser = await UserService.login({
-            username: this.email,
-            password: this.password,
-          });
 
-          this.$store.commit("setToken", logUser.data.token);
           // On supprime le token
           this.$store.commit("deleteToken");
           this.$route.redirectedFrom = this.$route.path;
