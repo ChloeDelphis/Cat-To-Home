@@ -123,7 +123,7 @@
 import CatService from '@/services/cat/CatService';
 import FindAllService from '@/services/taxonomies/FindAllService';
 import ItemListLocation from '@/components/home/ItemListLocation';
-import LocationService from '@/services/cat/LocationService';
+import LocationGouvService from '@/services/cat/LocationGouvService';
 
 import NewCat from '@/services/cat/NewCat';
 
@@ -370,7 +370,7 @@ export default {
             document.querySelector('#home__form__list').style.height = '0';
 
             if (this.department != '') {
-                const response = await LocationService.find(this.department);
+                const response = await LocationGouvService.find(this.department);
                 console.log(response);
                 document.querySelector('#home__form__list').style.height = '12rem';
                 response.forEach(location => {

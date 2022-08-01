@@ -43,10 +43,9 @@ export default {
             return error.response.data;
         }
     },
-    async uploadLocation(id, params) {
-        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
-
+    async createLocation(id, params) {
         try {
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
             const response = await apiClient.post('/location?post=' + id, params);
             return response.data;
         } catch (error) {
@@ -62,12 +61,4 @@ export default {
             return error.response.data;
         }
     },
-    async find(params) {
-        try {
-            const response = await apiClient.get('?nom=' + params);
-            return response;
-        } catch (error) {
-            return error.response;
-        }
-    }
 }
