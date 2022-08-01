@@ -1,19 +1,28 @@
 <template>
-    <router-link :to="{name: 'cat', params: {id: id}}" >
-      <article class="post">
-          <!--Image à ajouter en v-if si le composant est appelé par une page spécifique (profil adoptant) <img class="hearth" src="../../assets/icones/coeur.png" alt="" /> -->
-
-          <div class="post__img" v-bind:style="'background-image:url(' + picture + ')'">
-            <heart-layout/>
-          </div>
-          <div class="post__content">
-              <span class="post__cat__name" v-html="name"></span>
-              <span class="post__cat__age">8 month</span>
-              <p class="post__cat__localisation"><span class="bold">Localisation - </span><span v-html="localisation"></span></p>
-          </div>  
-      </article>
-    </router-link>
-
+  <router-link :to="{ name: 'cat', params: { id: id } }">
+    <article class="post">
+      <div
+        class="post__img"
+        v-bind:style="'background-image:url(' + picture + ')'"
+      >
+        <!-- On appelle le composant heartlayout seulement si on est connecté en tant qu'adoptant -->
+        <heart-layout
+          v-if="
+            this.$store.getters.getToken &&
+            this.$store.getters.getRole === 'adopter'
+          "
+        />
+      </div>
+      <div class="post__content">
+        <span class="post__cat__name" v-html="name"></span>
+        <span class="post__cat__age">8 month</span>
+        <p class="post__cat__localisation">
+          <span class="bold">Localisation - </span
+          ><span v-html="localisation"></span>
+        </p>
+      </div>
+    </article>
+  </router-link>
 </template>
 
 <script>
@@ -23,7 +32,7 @@ export default {
   // components: { FavoritesLayout },
   name: "CatCardLayout",
   components: {
-    HeartLayout
+    HeartLayout,
   },
   // Definit des propriétés qui sont fournies par le parent
   props: {
