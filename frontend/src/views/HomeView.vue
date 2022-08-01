@@ -19,7 +19,7 @@ export default{
     components: {
         HeaderLayout, 
         HomeLayout,
-        FooterLayout,
+        FooterLayout
     }
 };
 
