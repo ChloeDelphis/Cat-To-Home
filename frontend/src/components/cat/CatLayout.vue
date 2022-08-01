@@ -8,7 +8,7 @@
                 <h2>Coucou ! Mon nom est {{name}} ! Tu veux m’adopter ?</h2>
                 <ul>
                     <li class="icon" id="localisation"><span class="bold">Localisation</span> : {{localisation}}</li>
-                    <li class="icon" id="department"><span class="bold">Département</span> : Côtes d'Armor</li>
+                    <li class="icon" id="department"><span class="bold">Département</span> : {{department}}</li>
                     <li class="icon" id="price"><span class="bold">Prix</span> : {{price}}</li>
                     <li class="icon" id="sex"><span class="bold">Sexe</span> : {{sexe}}</li>
                     <li class="icon" id="age"><span class="bold">Âge</span> : {{age}}</li>

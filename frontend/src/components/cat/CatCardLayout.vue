@@ -8,7 +8,7 @@
           </div>
           <div class="post__content">
               <span class="post__cat__name" v-html="name"></span>
-              <span class="post__cat__age">8 month</span>
+              <span class="post__cat__age" v-html="age"></span>
               <p class="post__cat__localisation"><span class="bold">Localisation - </span><span v-html="localisation"></span></p>
           </div>  
       </article>
