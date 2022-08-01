@@ -47,21 +47,23 @@
           <!-- imput département  -->
           <div class="adoption__form__pair">
             <label class="input__name" for="department">Département</label>
-            <input
-              @keyup="sendLocation"
-              v-model="location_input"
-              type="text"
-              class="input"
-              name="departement"
-              id="department"
-            />
-            <div id="home__form__list">
-              <ItemListLocation
-                v-for="location in locations"
-                :key="location"
-                :name="location"
-                @choiceLocation="selectedLocation"
+            <div class="relative">
+              <input
+                @keyup="sendLocation"
+                v-model="location_input"
+                type="text"
+                class="input"
+                name="departement"
+                id="department"
               />
+              <div id="home__form__list">
+                <ItemListLocation
+                  v-for="location in locations"
+                  :key="location"
+                  :name="location"
+                  @choiceLocation="selectedLocation"
+                />
+              </div>
             </div>
             <p class="inscription__form__fieldset__field__error">
                 {{ errors_location_input }}
@@ -495,12 +497,12 @@ export default {
     // input localisation
     async sendLocation() {
       this.locations = [];
-      document.querySelector("#home__form__list").style.height = "0";
+      document.querySelector("#home__form__list");
 
       if (this.location_input != "") {
         const response = await LocationGouvService.find(this.location_input);
         // console.log(response);
-        document.querySelector("#home__form__list").style.height = "12rem";
+        document.querySelector("#home__form__list");
         response.forEach((location) => {
           if (
             location.nom
@@ -516,7 +518,7 @@ export default {
       const choiceLocation = event.currentTarget.textContent;
       this.location_input = choiceLocation;
       this.locations = [];
-      document.querySelector("#home__form__list").style.height = "0";
+      document.querySelector("#home__form__list");
     },
   },
 };
@@ -560,16 +562,10 @@ export default {
     cursor: pointer;
   }
 }
-
+.input__departement__select{
+  color: #586FCD;
+}
 .adoption__form__pair {
-  #home__form__list {
-    overflow-x: auto;
-  }
-
-  #home__form__list::-webkit-scrollbar {
-    display: none;
-  }
-
   .input {
     margin-bottom: 1rem;
   }
