@@ -116,6 +116,8 @@
 
     .header {
 
+        font-size: 1.5rem;
+
         padding: 2rem 4rem;
 
         &__nav {
@@ -166,11 +168,15 @@
 
 }
 
+
+
 @media (min-width : 1440px) {
 
     // A partir de 1440px
     // on veut décaler le bouton don de chat
     .header {
+
+        font-size: 2rem;
 
         &__nav{
 
