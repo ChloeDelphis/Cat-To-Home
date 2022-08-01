@@ -3,7 +3,7 @@
             <div class="adoption__left__part">
                 <fieldset class="adoption__form">
                     <div class="adoption__form__pair">
-                        <label class="input__name cat__label" for="lastname">Nom</label>
+                        <label class="input__name cat__label pen" for="lastname">Nom</label>
                         <div class="current__value" v-html="title"></div>
                         <input v-model="title"
                             class="input cat__input"
@@ -14,20 +14,20 @@
                         />
                     </div>
                     <div class="adoption__form__pair">
-                        <label class="input__name cat__label" for="sexe">Sexe</label>
+                        <label class="input__name cat__label pen" for="sexe">Sexe</label>
                         <div class="current__value" v-html="sex_name"></div>
                         <select v-model="sex" class="input cat__input" name="sexe" id="sexe">
-                            <option  v-for="sex in sexes" :key="sex.id" :value="sex.id">{{sex.name}}</option>
+                            <option  v-for="catSex in sexes" :key="catSex.id" :value="catSex.id">{{catSex.name}}</option>
                         </select>
                     </div>
                     <div class="adoption__form__pair">
-                        <label class="input__name cat__label" for="localisation">Localisation</label>
+                        <label class="input__name cat__label pen" for="localisation">Localisation</label>
                         <div class="current__value" v-html="localisation"></div>
                         <input  v-model="localisation" class="input cat__input" type="text" id="localisation" name="localisation" placeholder="Paris"/>
                     </div>
 
                     <div class="adoption__form__pair">
-                        <label class="input__name cat__label" for="department">Département</label>
+                        <label class="input__name cat__label pen" for="department">Département</label>
                         <div class="current__value" v-html="department_name"></div>
                         <input @keyup="sendLocation" v-model="department" type="text" class="input cat__input"    name="departement" id="department">
                         <div id="home__form__list">
@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="adoption__form__pair">
-                        <label class="input__name cat__label" for="environment">Environnement</label>
+                        <label class="input__name cat__label pen" for="environment">Environnement</label>
                         <div class="current__value">
                             <ul>
                                 <li v-for="catEnvironment in environment" v-bind:key="catEnvironment.id" v-html="catEnvironment.name"></li>
@@ -50,7 +50,7 @@
                     </div>
 
                     <div class="adoption__form__pair">
-                        <label class="input__name cat__label" for="filter">Age</label>
+                        <label class="input__name cat__label pen" for="filter">Age</label>
                         <div class="current__value" v-html="age"></div>
                         <select v-model="age" class="input cat__input" name="filter" id="filter">
                             <option value="bebe">Bébé</option>
@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="adoption__form__pair">
-                        <label class="input__name cat__label" for="vaccine">Vacciné contre</label>
+                        <label class="input__name cat__label pen" for="vaccine">Vacciné contre</label>
                         <div class="current__value">
                             <ul>
                                 <li v-for="vaccin in checkedVaccins" v-bind:key="vaccin.id" v-html="vaccin.name"></li>
@@ -69,16 +69,16 @@
                         </div>
                         <div class="cat__input">
                             <div v-for="vaccinate in vaccinates" :key="vaccinate.id">
-                                <input  type="checkbox" id="rage" name="rage" :value="vaccinate.id"     v-model="checkedVaccins"/>
-                                <label > {{vaccinate.name}}</label>
+                                <input  type="checkbox" id="vaccin" name="vaccin" :value="vaccinate" v-model="checkedVaccins"/>
+                                <label for="vaccin"> {{vaccinate.name}}</label>
                             </div>
                         </div>
                     </div>
 
                     <fieldset class="adoption__form__pair">
                         <div class="input__name cat__label">
-                            <legend>
-                            Votre chat est-il malade? <br />
+                            <legend class="pen">
+                            Votre chat est-il malade ? <br />
                             <span>(si oui, préciser dans la description)</span>
                             </legend>
                         </div>
@@ -97,7 +97,7 @@
                 </fieldset>
 
                 <div class="adoption__description">
-                    <label class="input__name cat__label" for="description">Description</label>
+                    <label class="input__name cat__label pen" for="description">Description</label>
                     <div class="current__value" v-html="content"></div>
                     <textarea v-model="content" class="input adoption__description__textarea cat__input" id="description" name="description">
                     </textarea>
@@ -124,6 +124,7 @@ import CatService from '@/services/cat/CatService';
 import FindAllService from '@/services/taxonomies/FindAllService';
 import ItemListLocation from '@/components/home/ItemListLocation';
 import LocationService from '@/services/cat/LocationService';
+
 import NewCat from '@/services/cat/NewCat';
 
 export default {
@@ -160,12 +161,12 @@ export default {
             // Feature image
 
             picture_file: null,
-            preview_picture: null,
+            preview_picture: '',
 
             // taxonomies
 
             environments: null,
-            sexes: null,
+            sexes: [],
             vaccinates: [],
             locations: [],
             diseases: []
@@ -209,10 +210,21 @@ export default {
             init: function() {
 
                 const inputLabelArray = document.querySelectorAll(".cat__label");
+                const inputArray = document.querySelectorAll(".cat__input")
 
                 inputLabelArray.forEach(function(inputLabelElmnt) {
 
                     inputLabelElmnt.addEventListener('click', catForm.displayInput);
+                });
+
+                inputArray.forEach(function(inputElmnt) {
+
+                    inputElmnt.addEventListener('blur', catForm.hideInput);
+                });
+
+                inputArray.forEach(function(inputElmnt) {
+
+                    inputElmnt.addEventListener('keydown', catForm.hideInputOnKeyDown);
                 });
                     
             },
@@ -229,6 +241,24 @@ export default {
                 currentValue.style.display="none";
                 input.style.display="block";
         
+            },
+
+            hideInputOnKeyDown: function(event) {
+
+                if(event.code === 'Enter') {
+                    catForm.hideInput(event)
+                }
+            },
+
+            hideInput: function(event) {
+
+                event.preventDefault();
+
+                const input = event.currentTarget;
+                const currentValue = input.previousSibling;
+
+                input.style.display="none";
+                currentValue.style.display="block";
             }
         }
         
@@ -266,44 +296,68 @@ export default {
              }
              if(this.errors.length === 0) {
                 // console.log(this.title)
-                 let params = {
+
+                const idVaccin = [];
+                this.checkedVaccins.forEach(vaccin => {
+
+                    idVaccin.push(vaccin.id);
+                });
+
+                let params = {
                      "title": this.title,
                      "sex": this.sex.id,
                      "location": this.localisation.id,
                      "departement": this.department.id,
-                     "environment": this.environment[0].id,
+                     "environment": this.environment.id,
                      "meta": {"age": this.age, "city": this.localisation},
-                     "vaccinate": this.checkedVaccins.id,
+                     "vaccinate": idVaccin,
                      "diseases": this.diseases.id,
                      "content": this.content,
                      "status": 'publish'
                  }
-                 switch (this.$store.getters.getRole) {
+                switch (this.$store.getters.getRole) {
                   case 'owner':
                     params.status = "publish"
                     break;
                  }
-                 const response = await CatService.update(this.id, params);
+                const response = await CatService.update(this.id, params);
                  // Reception de la réponse et affichage
                 if(response.id) {
-                    // upload image dans le backend avec l'id du post
-                    const updatePicture = await NewCat.uploadPicture(this.id, this.picture_file.name, {headers: {"Content-Type": "image/jpeg"}}, this.picture_file)
-                    // ajout de l'id de l'image dans le post créer
-                    if (updatePicture.id) {
-                    await NewCat.addFeaturedMedia(this.id, {
-                        "featured_media": updatePicture.id
-                    })}
-                    this.$router.push({name: 'profile'});
-                 } else {
-                     alert(response.message);
-                 }
-            }
+
+                    if(this.picture_file !== null) {
+                        // upload image dans le backend avec l'id du post
+                        const updatePicture = await NewCat.uploadPicture(this.id, this.picture_file.name,   {headers: {"Content-Type": "image/jpeg"}}, this.picture_file)
+                        // ajout de l'id de l'image dans le post créer
+                        if (updatePicture.id) {
+                            await NewCat.addFeaturedMedia(this.id, {
+                                "featured_media": updatePicture.id
+                            })
+                        }
+                    }
+                    
+                    // upload departement dans le backend avec l'id du post
+                    const createLocation = await NewCat.uploadLocation(this.id, { "name": this.department}) 
+                    console.log(createLocation);   
+                     // ajout de l'id du departement dans le post créer    
+                    if (createLocation.id) {
+                      const updatePostLocation = await NewCat.addLocation(this.id, {
+                          "location": createLocation.id
+                      });
+                      console.log(updatePostLocation);                      
+                    }
+                    
+                    this.$router.go();
+
+                } else {
+                    alert(response.message);
+                }
+            } 
         },
 
         async deleteCat() {
             const response = await CatService.delete(this.id);
             if(response.id) {
-              this.$router.push({name: 'profile'});
+              this.$router.go();
             } else {
                 alert(response.message);
             }
@@ -340,8 +394,7 @@ export default {
         uploadPicture(event) {
         // Revisualisation de l'image
             this.picture_file = event.target.files[0];
-            console.log(event.target.files[0])
-
+            console.log(this.picture_file);
             this.preview_picture = URL.createObjectURL(this.picture_file);
 
         },
@@ -353,6 +406,11 @@ export default {
 
 .cat__label {
     font-weight: bold;
+}
+
+.pen::before{
+        content: url("../../assets/icones/pen.png");
+        margin-right: 1rem;
 }
 
 .current__value {
