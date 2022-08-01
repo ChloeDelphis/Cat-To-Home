@@ -43,10 +43,9 @@ export default {
             return error.response.data;
         }
     },
-    async uploadLocation(id, params) {
-        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
-
+    async createLocation(id, params) {
         try {
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
             const response = await apiClient.post('/location?post=' + id, params);
             return response.data;
         } catch (error) {
