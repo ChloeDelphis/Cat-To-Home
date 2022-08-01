@@ -16,8 +16,8 @@
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="sexe">Sexe</label>
                         <div class="current__value" v-html="sex_name"></div>
-                        <select v-model="sex" class="input cat__input" name="sexe" id="sexe">
-                            <option  v-for="catSex in sexes" :key="catSex.id" :value="catSex.id">{{catSex.name}}</option>
+                        <select v-model="sex_name" class="input cat__input" name="sexe" id="sexe">
+                            <option  v-for="sex in sexes" :key="sex.id" :value="sex.id">{{sex.name}}</option>
                         </select>
                     </div>
                     <div class="adoption__form__pair">
@@ -89,7 +89,7 @@
                         </div>
                         <div class="cat__input">
                             <div v-for="disease in diseases" :key="disease.id">
-                                <input v-model="diseases" :value="disease.id" type="checkbox" :id="disease.id"    name="sickness"/>
+                                <input v-model="diseases_input" :value="disease.id" type="radio" :id="disease.id"    name="sickness"/>
                                 <label :for="disease.id">{{disease.name}}</label>
                             </div> 
                         </div>
@@ -146,7 +146,6 @@ export default {
             id: this.initialId,
 
             title: null,
-            sex: null,
             sex_name: null,
             localisation: null,
             department: null,
@@ -183,7 +182,6 @@ export default {
             alert(response.message)
         } else {
             this.title = response.title.rendered;
-            this.sex = response._embedded['wp:term'][3][0];
             this.sex_name = response._embedded['wp:term'][3][0].name;
             this.localisation = response.meta.city;
             this.department = response._embedded['wp:term'][2][0];
@@ -240,6 +238,7 @@ export default {
 
                 currentValue.style.display="none";
                 input.style.display="block";
+                input.focus();
         
             },
 
@@ -305,13 +304,16 @@ export default {
 
                 let params = {
                      "title": this.title,
-                     "sex": this.sex.id,
+                     "sex": this.sex_name,
                      "location": this.localisation.id,
                      "departement": this.department.id,
                      "environment": this.environment.id,
                      "meta": {"age": this.age, "city": this.localisation},
                      "vaccinate": idVaccin,
-                     "diseases": this.diseases.id,
+                    //  This modification à faire très certainement pour compléterr avec le mounted plus haut qui récup les bonnes données de la bdd. 
+                    // Il s'agit d'un "autre" formulaire qui doit aussi être auto rempli
+                
+                     "disease": this.diseases_input,
                      "content": this.content,
                      "status": 'publish'
                  }
