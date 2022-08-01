@@ -9,31 +9,31 @@ const routes = [
     meta : {title: 'Accueil'}
   },
   {
-    path: '/cat/add',
+    path: '/chat/ajout',
     name: 'cat_add',
     component: () => import(/* webpackChunkName: "cat_add" */ '../views/CatAddView.vue'),
     meta : {title: 'Creation d\'une fiche d\'adoption'}
   },
   {
-    path: '/cats/:order?/:location?/:age?',
+    path: '/cats/:ordre?/:localisation?/:age?',
     name: 'cats',
     component: () => import(/* webpackChunkName: "cats" */ '../views/CatListView.vue'),
     meta : {title: 'Liste des chats'}
   },
   {
-    path: '/cat/:id?',
+    path: '/chat/:id?',
     name: 'cat',
     component: () => import(/* webpackChunkName: "cat" */ '../views/CatDetailView.vue'),
     meta : {title: 'Détail de la fiche'}
   },
   {
-    path: '/registration',
+    path: '/inscription',
     name: 'registration',
     component: () => import(/* webpackChunkName: "registration" */ '../views/RegistrationView.vue'),
     meta : {title: 'Inscription'}
   },
   {
-    path: '/login',
+    path: '/connexion',
     name: 'login',
     component: () => import(/* webpackChunkName: "login" */ '../views/LoginView.vue'),
     meta : {title: 'Connexion'}
@@ -51,7 +51,7 @@ const routes = [
     meta : {title: 'NotFound'}
   },
   {
-    path: '/legals-mention',
+    path: '/mentions-legales',
     name: 'legals-mention',
     component: () => import(/* webpackChunkName: "login" */ '../views/LegalMentionView.vue'),
     meta : {title: 'MentionsLegales'}
@@ -64,7 +64,7 @@ const routes = [
   },
 
   {
-    path: '/about',
+    path: '/a-propos',
     name: 'about',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -72,7 +72,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/profile/:id?',
+    path: '/profil/:id?',
     name: 'profile',
     // route level code-splitting
     // this generates a separate chunk (profile.[hash].js) for this route

@@ -51,7 +51,7 @@
             <option value="senior">Sénior</option>
           </select>
           <router-link class="button__orange--papate"
-            v-bind:to="{ name: 'cats', params: { order: order, location: location_input, age: age } }">
+            v-bind:to="{ name: 'cats', params: { ordre: order, localisation: location_input, age: age } }">
             Je trouve mon chat</router-link>
         </form>
       </div>
