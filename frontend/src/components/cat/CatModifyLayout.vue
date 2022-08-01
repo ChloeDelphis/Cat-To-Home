@@ -17,7 +17,7 @@
                         <label class="input__name cat__label pen" for="sexe">Sexe</label>
                         <div class="current__value" v-html="sex_name"></div>
                         <select v-model="sex" class="input cat__input" name="sexe" id="sexe">
-                            <option  v-for="sex in sexes" :key="sex.id" :value="sex.id">{{sex.name}}</option>
+                            <option  v-for="catSex in sexes" :key="catSex.id" :value="catSex.id">{{catSex.name}}</option>
                         </select>
                     </div>
                     <div class="adoption__form__pair">
@@ -69,8 +69,8 @@
                         </div>
                         <div class="cat__input">
                             <div v-for="vaccinate in vaccinates" :key="vaccinate.id">
-                                <input  type="checkbox" id="rage" name="rage" :value="vaccinate.id"     v-model="checkedVaccins"/>
-                                <label > {{vaccinate.name}}</label>
+                                <input  type="checkbox" id="vaccin" name="vaccin" :value="vaccinate" v-model="checkedVaccins"/>
+                                <label for="vaccin"> {{vaccinate.name}}</label>
                             </div>
                         </div>
                     </div>
@@ -166,7 +166,7 @@ export default {
             // taxonomies
 
             environments: null,
-            sexes: null,
+            sexes: [],
             vaccinates: [],
             locations: [],
             diseases: []
@@ -296,14 +296,21 @@ export default {
              }
              if(this.errors.length === 0) {
                 // console.log(this.title)
+
+                const idVaccin = [];
+                this.checkedVaccins.forEach(vaccin => {
+
+                    idVaccin.push(vaccin.id);
+                });
+
                 let params = {
                      "title": this.title,
                      "sex": this.sex.id,
                      "location": this.localisation.id,
                      "departement": this.department.id,
-                     "environment": this.environment[0].id,
+                     "environment": this.environment.id,
                      "meta": {"age": this.age, "city": this.localisation},
-                     "vaccinate": this.checkedVaccins.id,
+                     "vaccinate": idVaccin,
                      "diseases": this.diseases.id,
                      "content": this.content,
                      "status": 'publish'
@@ -335,13 +342,12 @@ export default {
                     if (createLocation.id) {
                       const updatePostLocation = await NewCat.addLocation(this.id, {
                           "location": createLocation.id
-                      })
-                      console.log(updatePostLocation);
-                      if(updatePostLocation) {
-                        this.$router.push({name: 'home'});
-                      }
+                      });
+                      console.log(updatePostLocation);                      
                     }
-                        
+                    
+                    this.$router.go();
+
                 } else {
                     alert(response.message);
                 }
@@ -351,7 +357,7 @@ export default {
         async deleteCat() {
             const response = await CatService.delete(this.id);
             if(response.id) {
-              this.$router.push({name: 'profile'});
+              this.$router.go();
             } else {
                 alert(response.message);
             }

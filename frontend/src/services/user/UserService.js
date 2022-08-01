@@ -20,6 +20,7 @@ export default {
     // permet de créer un nouvel utlisateur
     async register(params) {
         try {
+            apiClient.defaults.headers.common['Authorization'] = '';
             const response = await apiClient.post('/wp/v2/users/register', params);
             return response.data
         } catch (error) {

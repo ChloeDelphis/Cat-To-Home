@@ -15,7 +15,6 @@
               type="text"
               id="lastname"
               name="lastname"
-              vue
               placeholder="Doe"
               v-model="lastname"
             />
@@ -176,7 +175,7 @@
     />
 
     <!-- A faire apparaître quand le profil est propriétaire et nb annonces > 0   -->
-    <ProfilePublishedSheetsLayout
+    <ProfilePublishedCatsLayout
       v-if="
         this.$store.getters.getToken &&
         this.$store.getters.getRole !== 'adopter'
@@ -188,13 +187,13 @@
 <script>
 import UserService from "@/services/user/UserService";
 import ProfileFavoritesLayout from "./ProfileFavoritesLayout";
-import ProfilePublishedSheetsLayout from "./ProfilePublishedSheetsLayout.vue";
+import ProfilePublishedCatsLayout from "./ProfilePublishedCatsLayout.vue";
 
 export default {
   name: "ProfileLayout",
   components: {
     ProfileFavoritesLayout,
-    ProfilePublishedSheetsLayout,
+    ProfilePublishedCatsLayout,
   },
 
   data() {
@@ -233,7 +232,7 @@ export default {
       this.id = response.id;
       this.lastname = response.last_name;
       this.firstname = response.first_name;
-      this.pseudo = response.username;
+      this.pseudo = response.nickname;
       this.phone = response.meta.phone;
       this.email = response.email;
       this.confemail = response.email;

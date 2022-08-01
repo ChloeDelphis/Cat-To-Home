@@ -21,7 +21,7 @@ import CatModifyLayout from "@/components/cat/CatModifyLayout";
 import CatService from "@/services/cat/CatService";
 
 export default {
-  name: "ProfilePublishedSheetsLayout",
+  name: "ProfilePublishedCatsLayout",
 
   components: {
     CatModifyLayout,

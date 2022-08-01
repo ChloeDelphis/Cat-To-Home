@@ -39,7 +39,7 @@
                 <button v-if="this.$store.getters.getToken" v-on:click="displayContactInfos" class="button__blue">Contacter le propriétaire</button>
                 <div class="contact__information">
                     <ul>
-                        <li v-if="allowPhone === true">Téléphone : </li>
+                        <li v-if="allowPhone === true">Téléphone : {{phoneNumber}} </li>
                         <li v-if="allowEmail === true">Adresse e-mail : {{email}}</li>
                     </ul>
                 </div>
@@ -101,14 +101,17 @@ export default {
         }
 
         // Récupération of the owner's informations 
-        const userResponse = await UserService.find(this.authorId);
-        console.log(userResponse);
-        if(userResponse.code){
-            alert(userResponse.message);
-        } else {
-            this.email = userResponse.email;
-            this.allowPhone = userResponse.meta.allowPhone;
-            this.allowEmail = userResponse.meta.allowEmail;
+        if(this.$store.getters.getToken !== "") {
+            const userResponse = await UserService.find(this.authorId);
+            console.log(userResponse);
+            if(userResponse.code){
+                alert(userResponse.message);
+            } else {
+                this.phoneNumber = userResponse.meta.phone;
+                this.email = userResponse.email;
+                this.allowPhone = userResponse.meta.allowPhone;
+                this.allowEmail = userResponse.meta.allowEmail;
+            }
         }
     },
     methods: {

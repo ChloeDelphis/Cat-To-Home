@@ -12,7 +12,7 @@ import LoginFormLayout from "@/components/user/LoginFormLayout";
 import HeaderLayout from "@/components/template/HeaderLayout";
 
 export default {
-  name: "ConnexionView",
+  name: "LoginView",
   components: {
     HeaderLayout,
     LoginFormLayout,

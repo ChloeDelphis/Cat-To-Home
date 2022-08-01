@@ -259,7 +259,7 @@ export default {
         const response = await UserService.register({
           lastname: this.lastName,
           firstname: this.firstName,
-          pseudo: this.pseudo,
+          nickname: this.pseudo,
           birth: this.birth,
           email: this.email,
           password: this.password,

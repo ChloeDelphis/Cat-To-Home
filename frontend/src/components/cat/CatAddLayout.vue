@@ -1,6 +1,6 @@
 <template>
     <main>
-        <h2 class="adoption__title">Créé la fiche adoption de ton chat</h2>
+        <h2 class="adoption__title">Crée la fiche adoption de ton chat</h2>
         <section class="adoption">
             <div class="adoption__left__part">
                 <fieldset class="adoption__form">
