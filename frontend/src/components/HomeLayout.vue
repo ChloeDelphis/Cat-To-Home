@@ -29,11 +29,13 @@
         <h2 class="home__title">Trouve ton futur compagnon félin !</h2>
         <form class="home__form" action="/cats">
           <label class="home__form__label" for="department">Localisation</label>
+          <div class="relative">
           <input @keyup="sendLocation" v-model="location_input" type="text" class="input"
             name="departement" id="department">
-          <div id="home__form__list">
-            <ItemListLocation v-for="location in locations" :key="location" :name="location"
-              @choiceLocation="selectedLocation" />
+            <div id="home__form__list">
+              <ItemListLocation v-for="location in locations" :key="location" :name="location"
+                @choiceLocation="selectedLocation" />
+            </div>
           </div>
           <label class="home__form__label" for="filter">Trier</label>
           <select v-model="order" class="input" name="filter" id="filter">
@@ -134,12 +136,12 @@ export default {
   methods: {
     async sendLocation() {
       this.locations = [];
-      document.querySelector('#home__form__list').style.height = '0';
+      document.querySelector('#home__form__list');
 
       if (this.location_input != '') {
         const response = await LocationService.findAll();
 
-        document.querySelector('#home__form__list').style.height = '12rem';
+        document.querySelector('#home__form__list');
         response.forEach(location => {
           if (location.name.toLowerCase().includes(this.location_input.toLowerCase())) {
             this.locations.push(location.name)
@@ -152,25 +154,19 @@ export default {
       const choiceLocation = event.currentTarget.textContent;
       this.location_input = choiceLocation
       this.locations = [];
-      document.querySelector('#home__form__list').style.height = '0';
+      document.querySelector('#home__form__list');
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.home__form {
-  #home__form__list {
-    overflow-x: auto;
-  }
 
-  #home__form__list::-webkit-scrollbar {
-    display: none;
-  }
+
 
   .input {
     margin-bottom: 1rem;
   }
-}
+
 
 </style>
