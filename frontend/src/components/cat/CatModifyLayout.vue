@@ -17,7 +17,7 @@
                         <label class="input__name cat__label pen" for="sexe">Sexe</label>
                         <div class="current__value" v-html="sex_name"></div>
                         <select @change="getIdSex" class="input cat__input" name="sexe" id="sexe">
-                            <option  v-for="sex in sexes" :key="sex.id" :value="sex.id" >{{sex.name}}</option>
+                            <option  v-for="sex in sexes" :key="sex.id" :value="sex.id" :selected="(sex_name == sex.name) ? true : false">{{sex.name}}</option>
                         </select>
                     </div>
                     <div class="adoption__form__pair">
@@ -41,7 +41,7 @@
                         <label class="input__name cat__label pen" for="environment">Environnement</label>
                         <div class="current__value" v-html="environment_name"></div>
                         <select @change="getIdEnvironment" class="input cat__input" name="environment" id="environment">
-                            <option v-for="environment in environments" :key="environment.id" :value="environment.id">{{environment.name}}</option> 
+                            <option v-for="environment in environments" :key="environment.id" :value="environment.id" :selected="(environment_name == environment.name) ? true : false">{{environment.name}}</option> 
                         </select>
                     </div>
 
@@ -81,7 +81,7 @@
                         <div class="current__value" v-html="disease_name"></div>
                         <div class="cat__input">
                             <div v-for="disease in diseases" :key="disease.id">
-                                <input @change="getIdDisease" :value="disease.id" type="radio" :id="disease.id" name="sickness" :checked="(disease.name == disease_name) ? true : false " />
+                                <input @change="getIdDisease" :value="disease.id" type="radio" :id="disease.id" name="sickness" :checked="(disease_name == disease.name) ? true : false" v-model="disease_name"/>
                                 <label :for="disease.id">{{disease.name}}</label>
                             </div> 
                         </div>
@@ -150,7 +150,6 @@ export default {
             environment_name: null,
             environment_id: null,
             age: null,
-            vaccin_selected: [],
             checkedVaccins: [],
             vaccins_id: [],
             disease_id: null,
@@ -162,7 +161,7 @@ export default {
 
             picture_file: null,
             preview_picture: '',
-            emessage: null,
+            message: null,
 
             // taxonomies
 
@@ -174,7 +173,7 @@ export default {
         }
     },
 
-    async mounted() {
+    async created() {
 
         // Récupération des données concernant le chat
         let id = this.id;
@@ -185,14 +184,14 @@ export default {
         } else {
             this.title = response.title.rendered;
             this.sex_name = response._embedded['wp:term'][3][0].name;
-            this.sex_id = response._embedded['wp:term'][3][0].id;
+            this.sex_id = response._embedded['wp:term'][3][0].id.toString();
             this.localisation = response.meta.city;
             this.department_name = response._embedded['wp:term'][2][0].name;
             this.environment_name = response._embedded['wp:term'][1][0].name;
             this.environment_id = response._embedded['wp:term'][1][0].id;
             this.age = response.meta.age;
             this.checkedVaccins = response._embedded['wp:term'][4];
-            this.disease_id = response._embedded['wp:term'][0][0].id;
+            this.disease_id = response._embedded['wp:term'][0][0].id.toString();
             this.disease_name = response._embedded['wp:term'][0][0].name;
             this.content = response.content.rendered.replace(/(<([^>]+)>)/ig, "");
             this.picture = response._embedded['wp:featuredmedia'][0].source_url;
@@ -369,7 +368,7 @@ export default {
                  }
 
                 const updateCat = await CatService.update(this.id, params);
-                
+                console.log(updateCat);
                 if(this.picture_file !== null) {
                     // upload image dans le backend avec l'id du post
                     const updatePicture = await NewCat.uploadPicture(this.id, this.picture_file.name,   {headers: {"Content-Type": "image/jpeg"}}, this.picture_file)
