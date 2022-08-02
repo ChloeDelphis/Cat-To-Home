@@ -106,14 +106,8 @@ export default {
     // Il est remonté jusqu'à CatsLayout où on demande
     // Une mise à jour de userFavoriteCatsId
     // En appelant la fonction favoriteCatsId()
-    async reload() {
-      this.userFavoriteCatsId = [];
-      // On demande la liste des favoris de l'utilisteur
-      this.userFavoriteCats = await FavoriteService.findAll();
-      // Pour chaque entrée des favoris on extrait l'IDet on l'ajoute au tableau userFavoriteCatsId
-      this.userFavoriteCats.forEach((el) =>
-        this.userFavoriteCatsId.push(el["post_info"].ID)
-      );
+    reload() {
+      this.favoriteCatsId()
       console.log(this.userFavoriteCatsId);
     },
 

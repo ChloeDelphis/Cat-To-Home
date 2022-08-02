@@ -9,6 +9,7 @@
         v-bind:name="cat['post_info'].post_title"
         v-bind:localisation="cat['location'][0].name"
         v-bind:picture="cat['source_url']"
+        v-on:update="reload"
         v-bind:userFavoriteCatsId="userFavoriteCatsId"
       />
     </div>
@@ -33,7 +34,7 @@ export default {
   data() {
     return {
       favoriteCats: [],
-      userFavoriteCatsId : []
+      userFavoriteCatsId: [],
     };
   },
 
@@ -43,6 +44,12 @@ export default {
   },
 
   methods: {
+    async reload() {
+      this.favoriteCats = await FavoriteService.findAll();
+      this.favoriteCatsId();
+      console.log(this.userFavoriteCatsId);
+    },
+
     // Récupère un tableau qui contient les id des chats préférés de l'utilisateur connecté
     async favoriteCatsId() {
       this.userFavoriteCatsId = [];
