@@ -8,7 +8,7 @@
                 <h2>Coucou ! Mon nom est {{name}} ! Tu veux m’adopter ?</h2>
                 <ul>
                     <li class="icon" id="localisation"><span class="bold">Localisation</span> : {{localisation}}</li>
-                    <li class="icon" id="department"><span class="bold">Département</span> : Côtes d'Armor</li>
+                    <li class="icon" id="department"><span class="bold">Département</span> : {{department}}</li>
                     <li class="icon" id="price"><span class="bold">Prix</span> : {{price}}</li>
                     <li class="icon" id="sex"><span class="bold">Sexe</span> : {{sexe}}</li>
                     <li class="icon" id="age"><span class="bold">Âge</span> : {{age}}</li>
@@ -50,104 +50,102 @@
 </template>
 
 <script>
-import CatService from '@/services/cat/CatService';
-import UserService from '@/services/user/UserService';
+import CatService from "@/services/cat/CatService";
+import UserService from "@/services/user/UserService";
 export default {
-    name: "CatLayout",
-    data() {
-        return {
+  name: "CatLayout",
+  data() {
+    return {
+      // informations about the cat
+      name: null,
+      picture: null,
+      localisation: null,
+      department: null,
+      price: "Gratuit",
+      sexe: null,
+      age: null,
+      vaccinated: [],
+      diseases: [],
+      environments: [],
+      infos: null,
 
-            // informations about the cat
-            name: null,
-            picture: null,
-            localisation: null,
-            department: null,
-            price: "Gratuit",
-            sexe: null,
-            age: null,
-            vaccinated: [],
-            diseases: [],
-            environments: [],
-            infos: null,
+      // information about the owner
+      authorId: null,
+      phoneNumber: null,
+      email: null,
+      allowPhone: null,
+      allowEmail: null,
+    };
+  },
+  async mounted() {
+    // Récupération of the cat's informations
+    let id = this.$route.params.id;
+    const catResponse = await CatService.find(id);
+    console.log(catResponse);
+    if (catResponse.code) {
+      alert(catResponse.message);
+    } else {
+      this.name = catResponse.title.rendered;
+      this.picture = catResponse._embedded["wp:featuredmedia"][0].source_url;
+      this.localisation = catResponse.meta.city;
+      // department bloque la suite des info récupéré.
+      this.department = catResponse._embedded["wp:term"][2][0].name;
+      this.sexe = catResponse._embedded["wp:term"][3][0].name;
+      this.age = catResponse.meta.age;
+      this.vaccinated = catResponse._embedded["wp:term"][4];
+      this.diseases = catResponse._embedded["wp:term"][0];
+      this.environments = catResponse._embedded["wp:term"][1];
+      this.infos = catResponse.content.rendered;
+      //   Ici on récupère l'id de l'auteur affilié à la fiche du chat
+      this.authorId = catResponse.author;
 
-            // information about the owner
-            authorId: null,
-            phoneNumber: null,
-            email: null,
-            allowPhone: null,
-            allowEmail: null,
-        }
-    },
-    async mounted(){
-
-        // Récupération of the cat's informations
-        let id = this.$route.params.id;
-        const catResponse = await CatService.find(id);
-        console.log(catResponse);
-        if(catResponse.code){
-            alert(catResponse.message);
-        } else {
-            this.name = catResponse.title.rendered;
-            this.picture = catResponse._embedded['wp:featuredmedia'][0].source_url;
-            this.localisation = catResponse.meta.city;
-            this.department = catResponse._embedded['wp:term'][2][0].name;
-            this.sexe = catResponse._embedded['wp:term'][3][0].name;
-            this.age = catResponse.meta.age;
-            this.vaccinated = catResponse._embedded['wp:term'][4];
-            this.diseases = catResponse._embedded['wp:term'][0];
-            this.environments = catResponse._embedded['wp:term'][1];
-            this.infos = catResponse.content.rendered;
-            this.authorId = catResponse.author;
-        }
-
-        // Récupération of the owner's informations 
-        if(this.$store.getters.getToken !== "") {
-            const userResponse = await UserService.find(this.authorId);
-            console.log(userResponse);
-            if(userResponse.code){
-                alert(userResponse.message);
-            } else {
-                this.phoneNumber = userResponse.meta.phone;
-                this.email = userResponse.email;
-                this.allowPhone = userResponse.meta.allowPhone;
-                this.allowEmail = userResponse.meta.allowEmail;
-            }
-        }
-    },
-    methods: {
-        async displayContactInfos() {
-            const contactInfosElmnt = document.querySelector(".contact__information");
-            contactInfosElmnt.style.display = "block";
-        }
+      //   Il est maintenant nécessaire de reprendre cette info en effectuant une requête de users:Role qui va permettre d'accéder à email et à meta.phone
     }
-}
+
+    // Récupération of the owner's informations
+    if (this.$store.getters.getToken !== "") {
+      const userResponse = await UserService.find(this.authorId);
+      // console.log(userResponse);
+      if (userResponse.code) {
+        alert(userResponse.message);
+      } else {
+        this.phoneNumber = userResponse.meta.phone;
+        this.email = userResponse.email;
+        this.allowPhone = userResponse.meta.allowPhone;
+        this.allowEmail = userResponse.meta.allowEmail;
+      }
+    }
+  },
+  methods: {
+    async displayContactInfos() {
+      const contactInfosElmnt = document.querySelector(".contact__information");
+      contactInfosElmnt.style.display = "block";
+    },
+  },
+};
 </script>
 
 <style lang="scss">
+.cat__details__infos1 {
+  li {
+    text-transform: capitalize;
 
-    .cat__details__infos1 {
-
-        li{
-            text-transform: capitalize;
-
-            .result {
-                margin-right: 1rem;
-            }
-        }
-
+    .result {
+      margin-right: 1rem;
     }
+  }
+}
 
-    .contact__information {
-        width: auto;
-        display: none;
-        margin-bottom: 5rem;
+.contact__information {
+  width: auto;
+  display: none;
+  margin-bottom: 5rem;
 
-        ul{
-            li{
-                float: inline-block;
-                width: 32rem;
-            }
-        }
-
+  ul {
+    li {
+      float: inline-block;
+      width: 32rem;
     }
+  }
+}
 </style>
