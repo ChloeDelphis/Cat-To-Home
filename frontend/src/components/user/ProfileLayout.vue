@@ -343,12 +343,22 @@ export default {
         }
         // console.log(params);
 
+        const response = await UserService.update(this.id, params);
+        console.log(response);
+        if (response.id) {
+          // this.$route.redirectedFrom = this.$route.path;
+          this.$router.push({ name: "profile", params: { id: this.id } });
+        } else {
+          alert("ça marche pô !!!");
+        }
+
         // si pas d'erreur pour le mot de passe on le modifie
         if (!this.confPasswordError && !this.passwordError) {
           // On prépare le tableau avec le remplacement du password
           let params = {
             password: this.new_password,
           };
+          console.log(this.new_password);
 
           // On envoie la requête à l'API
           const response = await UserService.update(this.id, params);
