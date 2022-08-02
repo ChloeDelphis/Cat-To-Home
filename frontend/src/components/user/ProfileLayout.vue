@@ -12,6 +12,7 @@
           <fieldset class="left">
             <label for="lastname">Nom</label><br />
             <input
+              class="input"
               type="text"
               id="lastname"
               name="lastname"
@@ -25,6 +26,7 @@
 
             <label for="firstname">Prénom</label><br />
             <input
+              class="input"
               type="text"
               id="firstname"
               name="firstname"
@@ -38,6 +40,7 @@
 
             <label for="pseudo">Pseudo</label><br />
             <input
+              class="input"
               type="text"
               id="pseudo"
               name="pseudo"
@@ -72,6 +75,7 @@
                 this.$store.getters.getToken &&
                 this.$store.getters.getRole !== 'adopter'
               "
+              class="input"
               type="phone"
               id="phone"
               name="phone"
@@ -90,6 +94,7 @@
 
             <label for="email">Adresse e-mail</label><br />
             <input
+              class="input"
               type="email"
               id="email"
               name="email"
@@ -104,6 +109,7 @@
           <fieldset class="right">
             <label for="confirmEmail">Confirmer adresse e-mail</label><br />
             <input
+              class="input"
               type="email"
               id="confirmEmail"
               name="confirmEmail"
@@ -117,6 +123,7 @@
 
             <label for="new_password">Mot de passe</label><br />
             <input
+              class="input"
               type="password"
               id="new_password"
               name="new_password"
@@ -129,6 +136,7 @@
 
             <label for="confirmPassword">Confirmer mot de passe</label><br />
             <input
+              class="input"
               type="password"
               id="confirmPassword"
               name="confirmpPassword"
