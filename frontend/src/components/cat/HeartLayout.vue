@@ -26,7 +26,8 @@ export default {
         // On enpêche que le clic entraîne un changement de page (car l'image dans laquelle est contenu l'icône coeur est un lien)
         event.preventDefault();
         // On sélectionne les 2 éléments qui ont la classe coeur
-        const imgElmts = document.querySelectorAll(".heart");
+        let cible = event.currentTarget;
+        let imgElmts = cible.querySelectorAll(".heart");
         // Pour chaucn d'entre eux on toggle la classe hidden
         imgElmts.forEach( el =>{
             el.classList.toggle("hidden");
