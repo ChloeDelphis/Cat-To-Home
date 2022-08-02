@@ -231,17 +231,18 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #F3F2E7 100%);
   cursor: pointer;
   z-index: 8;
 }
 
 .pre-btn {
   left: 0rem;
+   background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, #F3F2E7 100%);
 }
 
 .nxt-btn {
   right: 0;
+   background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #F3F2E7 100%);
 }
 
 .pre-btn img,
