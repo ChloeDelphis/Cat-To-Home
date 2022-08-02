@@ -15,8 +15,8 @@
               placeholder="Doe"
             />
             <p class="inscription__form__fieldset__field__error">
-                {{ errors_title }}
-              </p>
+              {{ errors_title }}
+            </p>
           </div>
           <div class="adoption__form__pair">
             <label class="input__name" for="sexe">Sexe</label>
@@ -26,8 +26,8 @@
               </option>
             </select>
             <p class="inscription__form__fieldset__field__error">
-                {{ errors_sex }}
-              </p>
+              {{ errors_sex }}
+            </p>
           </div>
 
           <div class="adoption__form__pair">
@@ -40,8 +40,8 @@
               name="city"
             />
             <p class="inscription__form__fieldset__field__error">
-                {{ errors_city }}
-              </p>
+              {{ errors_city }}
+            </p>
           </div>
 
           <!-- imput département  -->
@@ -66,8 +66,8 @@
               </div>
             </div>
             <p class="inscription__form__fieldset__field__error">
-                {{ errors_location_input }}
-              </p>
+              {{ errors_location_input }}
+            </p>
           </div>
 
           <div class="adoption__form__pair">
@@ -87,8 +87,8 @@
               </option>
             </select>
             <p class="inscription__form__fieldset__field__error">
-                {{ errors_environment }}
-              </p>
+              {{ errors_environment }}
+            </p>
           </div>
 
           <div class="adoption__form__pair">
@@ -100,8 +100,8 @@
               <option value="senior">Sénior</option>
             </select>
             <p class="inscription__form__fieldset__field__error">
-                {{ errors_age }}
-              </p>
+              {{ errors_age }}
+            </p>
           </div>
 
           <fieldset class="adoption__form__pair">
@@ -122,8 +122,8 @@
               <label :for="disease.id">{{ disease.name }}</label>
             </div>
             <p class="inscription__form__fieldset__field__error">
-                {{ errors_disease_input }}
-              </p>
+              {{ errors_disease_input }}
+            </p>
           </fieldset>
 
           <div class="adoption__form__pair">
@@ -151,13 +151,15 @@
           >
           </textarea>
           <p class="inscription__form__fieldset__field__error">
-                {{ errors_content }}
-              </p>
+            {{ errors_content }}
+          </p>
         </div>
 
-         <div class="profil__adoption__buttons">
-          <button @click="goToValidate" class="button__orange">Validation</button>
-         </div>
+        <div class="profil__adoption__buttons">
+          <button @click="goToValidate" class="button__orange">
+            Validation
+          </button>
+        </div>
       </div>
 
       <!-- Bouton pour ajouter une photo -->
@@ -175,9 +177,10 @@
             name="featured_image"
             @change="previewPictureAdd"
             accept=".png, .jpg, .jpeg"
-          /> <p class="inscription__form__fieldset__field__error">
-                {{ errors_picture_file }}
-              </p>
+          />
+          <p class="inscription__form__fieldset__field__error">
+            {{ errors_picture_file }}
+          </p>
         </div>
         <img
           class="image__upload__preview none"
@@ -185,10 +188,8 @@
           alt=""
           id="image"
         />
-
       </div>
-      </section>
-          
+    </section>
 
     <section v-if="this.$route.name === 'cat_add'" class="information">
       <div class="information__content" id="information">
@@ -257,8 +258,8 @@
               >
             </div>
             <p class="inscription__form__fieldset__field__error">
-                {{ errors_permissions }}
-              </p>
+              {{ errors_permissions }}
+            </p>
           </div>
           <div class="button__adoption__add">
             <button
@@ -270,8 +271,8 @@
               Valider la création de la fiche
             </button>
             <p class="inscription__form__fieldset__field__error">
-                {{ errors_creation }}
-              </p>
+              {{ errors_creation }}
+            </p>
           </div>
         </div>
         <img
@@ -313,7 +314,7 @@ export default {
       errors_creation: null,
 
       // Recuperation des valeurs mise dans la fiche
-      
+
       title: null,
       sex: null,
       city: null,
@@ -334,7 +335,6 @@ export default {
 
       picture_file: null,
       preview_picture: "",
-
     };
   },
   async mounted() {
@@ -347,8 +347,14 @@ export default {
 
   methods: {
     goToValidate() {
-      const el = document.querySelector('#information')
-      el ? el.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" }) : null;
+      const el = document.querySelector("#information");
+      el
+        ? el.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "nearest",
+          })
+        : null;
     },
     previewPictureAdd(event) {
       // Previsualisation de l'image
@@ -376,7 +382,7 @@ export default {
       // Validation du contenu du formulaire
       if (!this.title) {
         this.errors++;
-        this.errors_title =  "Le nom n'est pas renseigner.";
+        this.errors_title = "Le nom n'est pas renseigner.";
       }
       if (!this.sex) {
         this.errors++;
@@ -423,6 +429,7 @@ export default {
           vaccinate: this.checkedVaccins,
           disease: this.disease_input,
           content: this.content,
+          "status": "publish"
         };
 
         // Permet de changer le curseur du bouton en mode wait
@@ -486,11 +493,18 @@ export default {
             }
           }
         } else {
-          this.errors_creation = "Une erreur s'est produite, merci de recommencer ultérieurement."
+          this.errors_creation =
+            "Une erreur s'est produite, merci de recommencer ultérieurement.";
         }
       } else {
-            const el = document.querySelector('#adoption')
-            el ? el.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" }) : null;
+        const el = document.querySelector("#adoption");
+        el
+          ? el.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+              inline: "nearest",
+            })
+          : null;
       }
     },
 
@@ -562,8 +576,8 @@ export default {
     cursor: pointer;
   }
 }
-.input__departement__select{
-  color: #586FCD;
+.input__departement__select {
+  color: #586fcd;
 }
 .adoption__form__pair {
   .input {
@@ -578,6 +592,4 @@ export default {
 .wait {
   cursor: wait;
 }
-
-
 </style>
