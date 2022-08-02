@@ -118,13 +118,6 @@ function cat_to_home_rest_remove_favorite_handler($request)
 
   $user_id = wp_get_current_user()->ID;
 
-  // On récupère l'info de l'id de la fiche du chat
-  // Il faudra que la bouton "retirer des favoris"
-  // Déclenche l'envoi d'une requête sous ce format :
-  // const response = await FavoriteService.addToFavorites({
-  // cat_id: l'id du chat});
-  // 
-
   $parameters = $request->get_json_params();
   $cat_id = $parameters['cat_id'];
 

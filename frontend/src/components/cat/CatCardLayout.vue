@@ -11,6 +11,9 @@
             this.$store.getters.getToken &&
             this.$store.getters.getRole === 'adopter'
           "
+          v-bind:id="id"
+          v-bind="$attrs"
+          v-bind:favorite="isFavorite"
         />
       </div>
       <div class="post__content">
@@ -34,6 +37,7 @@ export default {
   components: {
     HeartLayout,
   },
+
   // Definit des propriétés qui sont fournies par le parent
   props: {
     name: String,
@@ -41,7 +45,20 @@ export default {
     picture: String,
     id: Number,
     localisation: String,
+    userFavoriteCatsId: Array,
   },
+
+  computed: {
+    isFavorite() {
+      for (const el of this.userFavoriteCatsId) {
+        if (el === this.id) {
+          return true;
+        }
+      }
+      return false;
+    },
+  },
+
 };
 </script>
 

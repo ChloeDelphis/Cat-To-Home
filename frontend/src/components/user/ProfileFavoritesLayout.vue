@@ -7,9 +7,9 @@
         v-bind:key="cat['post_info'].post_title"
         v-bind:id="cat['post_info'].ID"
         v-bind:name="cat['post_info'].post_title"
-        v-bind:localisation="cat['taxonomies_info'][4].name"
+        v-bind:localisation="cat['location'][0].name"
         v-bind:picture="cat['source_url']"
-        v-bind:userFavorites="favoriteCats"
+        v-bind:userFavoriteCatsId="userFavoriteCatsId"
       />
     </div>
 
@@ -33,11 +33,25 @@ export default {
   data() {
     return {
       favoriteCats: [],
+      userFavoriteCatsId : []
     };
   },
 
   async mounted() {
     this.favoriteCats = await FavoriteService.findAll();
+    this.favoriteCatsId();
+  },
+
+  methods: {
+    // Récupère un tableau qui contient les id des chats préférés de l'utilisateur connecté
+    async favoriteCatsId() {
+      this.userFavoriteCatsId = [];
+      // Pour chaque entrée des favoris on extrait l'IDet on l'ajoute au tableau userFavoriteCatsId
+      this.favoriteCats.forEach((el) =>
+        this.userFavoriteCatsId.push(el["post_info"].ID)
+      );
+      console.log(this.userFavoriteCatsId);
+    },
   },
 };
 </script>

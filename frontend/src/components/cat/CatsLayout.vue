@@ -67,6 +67,8 @@
           v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url"
           v-for="cat in cats"
           v-bind:key="cat.title"
+          v-on:update="reload"
+          v-bind:userFavoriteCatsId="userFavoriteCatsId"
         />
       </div>
 
@@ -83,6 +85,7 @@ import LocationService from "@/services/taxonomies/LocationService";
 import ItemListLocation from "@/components/home/ItemListLocation";
 import CatCardLayout from "@/components/cat/CatCardLayout";
 import CatService from "@/services/cat/CatService";
+import FavoriteService from "@/services/favorite/FavoriteService";
 
 export default {
   name: "CatsLayout",
@@ -92,8 +95,40 @@ export default {
   },
   async mounted() {
     this.searchCats();
+    this.favoriteCatsId();
   },
+
+  computed: {},
+
   methods: {
+    // Le $emit est parti de HeartLayout
+    // Il est passé par CatCardLayout (grâce à v-bind="$attrs" )
+    // Il est remonté jusqu'à CatsLayout où on demande
+    // Une mise à jour de userFavoriteCatsId
+    // En appelant la fonction favoriteCatsId()
+    async reload() {
+      this.userFavoriteCatsId = [];
+      // On demande la liste des favoris de l'utilisteur
+      this.userFavoriteCats = await FavoriteService.findAll();
+      // Pour chaque entrée des favoris on extrait l'IDet on l'ajoute au tableau userFavoriteCatsId
+      this.userFavoriteCats.forEach((el) =>
+        this.userFavoriteCatsId.push(el["post_info"].ID)
+      );
+      console.log(this.userFavoriteCatsId);
+    },
+
+    // Récupère un tableau qui contient les id des chats préférés de l'utilisateur connecté
+    async favoriteCatsId() {
+      this.userFavoriteCatsId = [];
+      // On demande la liste des favoris de l'utilisteur
+      this.userFavoriteCats = await FavoriteService.findAll();
+      // Pour chaque entrée des favoris on extrait l'IDet on l'ajoute au tableau userFavoriteCatsId
+      this.userFavoriteCats.forEach((el) =>
+        this.userFavoriteCatsId.push(el["post_info"].ID)
+      );
+      console.log(this.userFavoriteCatsId);
+    },
+
     // Récupere la liste des départements en fonction de se qu'il est tapé dans l'input
     async sendLocation() {
       this.locations = [];
@@ -179,6 +214,7 @@ export default {
       location_selected: this.$route.params.location || "",
       order: this.$route.params.order || "",
       age: this.$route.params.age || "",
+      userFavoriteCatsId: [],
     };
   },
 };
