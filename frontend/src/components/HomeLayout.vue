@@ -60,18 +60,15 @@
     </section>
 
     <!-- Carrousel -->
-    <section>
-      <h2 class="home__title home__title__carrousel">
-        Il attendent un foyer depuis longtemps...!
-      </h2>
-      <div class="home">
-        <a href=""><img class="arrow" src="../assets/icones/fleche_gauche.png" alt="" /></a>
-
-        <!-- composant cards -->
-        <CatCardLayout />
-
-        <a href=""><img class="arrow" src="../assets/icones/fleche_droite.png" alt="" /></a>
-      </div>
+    <section class="product">
+      <h2 class="home__title home__title__carrousel">Il attendent un foyer depuis longtemps...!</h2>
+      <a class="pre-btn" ><img class="arrow" src="../assets/icones/fleche_gauche.png" alt="" /></a>
+      <a class="nxt-btn" ><img class="arrow" src="../assets/icones/fleche_droite.png" alt="" /></a>
+        <div class="product-container">
+          
+          <CatCardLayout v-bind:localisation="cat._embedded['wp:term'][2][0].name" v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url" v-bind:id="cat.id" v-bind:name="cat.title.rendered" v-bind:age="cat.meta.age" v-for="cat in cats" v-bind:key="cat.id" />
+          
+        </div>
     </section>
 
     <section class="home home__response bg__blue">
@@ -118,6 +115,7 @@
 
 <script>
 import LocationService from '@/services/taxonomies/LocationService';
+import CatService from '@/services/cat/CatService';
 import CatCardLayout from '@/components/cat/CatCardLayout';
 import ItemListLocation from '@/components/home/ItemListLocation';
 export default {
@@ -130,9 +128,32 @@ export default {
       location_input: null,
       locations: [],
       order: null,
-      age: null
+      age: null,
+      cats:[],
+
     }
   },
+  async mounted() {
+      this.cats = await CatService.findAllForHomepage();
+
+
+      // carousel
+      const productContainers = [...document.querySelectorAll('.product-container')];
+      const nxtBtn = [...document.querySelectorAll('.nxt-btn')];
+      const preBtn = [...document.querySelectorAll('.pre-btn')];
+
+      productContainers.forEach((item, i) => {
+
+          nxtBtn[i].addEventListener('click', () => {
+              item.scrollLeft += 350;
+          })
+
+          preBtn[i].addEventListener('click', () => {
+              item.scrollLeft -= 350;
+          })
+      })
+    },
+
   methods: {
     async sendLocation() {
       this.locations = [];
@@ -162,11 +183,80 @@ export default {
 
 <style lang="scss" scoped>
 
-
-
-  .input {
-    margin-bottom: 1rem;
+ @media screen and (max-width: 480px) {
+  .product-container {
+    padding: 0 8vw;
   }
+.arrow{
+  width: 5vh;
+}
+ }
+
+   @media screen and (min-width: 480px) {
+.product-container {
+    padding: 0 10vw;
+    }
+    .arrow{
+        width: 8vh;
+      }
+  }
+
+
+
+.product {
+  position: relative;
+  overflow: hidden;
+
+
+  h2{
+    margin-bottom: 10rem;
+  }
+}
+.product-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.product-container::-webkit-scrollbar {
+  display: none;
+}
+
+.pre-btn,
+.nxt-btn {
+  border: none;
+  width: 10vw;
+  height: 45rem;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #F3F2E7 100%);
+  cursor: pointer;
+  z-index: 8;
+}
+
+.pre-btn {
+  left: 0rem;
+}
+
+.nxt-btn {
+  right: 0;
+}
+
+.pre-btn img,
+.nxt-btn img {
+  opacity: 0.2;
+}
+
+.pre-btn:hover img,
+.nxt-btn:hover img {
+  opacity: 1;
+}
+
+.input {
+  margin-bottom: 1rem;
+}
 
 
 </style>

@@ -20,6 +20,7 @@
             Ajouter la classe fixed à l'élément header  -->
 
       <div id="menu" class="header__nav--desktop">
+
         <router-link
           v-if="
             this.$store.getters.getToken &&
@@ -29,6 +30,7 @@
           :to="{ name: 'cat_add' }"
           >Je donne un chat</router-link
         >
+        
         <router-link
           v-if="!this.$store.getters.getToken"
           class="header__nav__don button__orange--papate"
@@ -126,6 +128,29 @@ export default {
 </script>
 
 <style lang="scss">
+
+.header__nav__menu{
+  position: relative;
+}
+
+.header__nav__menu::after{
+    content: "";
+    position: absolute;
+    background: #E16441 ;
+    height: 2px;
+    width: 0%;
+    left: 0;
+    bottom: -0.3rem;
+    transform-origin: right;
+    transition: .3s cubic-bezier(.65,.05,.36,1);
+}
+
+.header__nav__menu:hover::after {
+    width: 100%;
+    transform: scale(1);
+}
+
+
 #cross {
   display: none;
   font-size: 4rem;
