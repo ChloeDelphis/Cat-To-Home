@@ -16,7 +16,7 @@
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="sexe">Sexe</label>
                         <div class="current__value" v-html="sex_name"></div>
-                        <select v-model="sex_name" @change="getIdSex" class="input cat__input" name="sexe" id="sexe">
+                        <select @change="getIdSex" class="input cat__input" name="sexe" id="sexe">
                             <option  v-for="sex in sexes" :key="sex.id" :value="sex.id">{{sex.name}}</option>
                         </select>
                     </div>
@@ -39,12 +39,8 @@
 
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="environment">Environnement</label>
-                        <div class="current__value">
-                            <ul>
-                                <li v-for="catEnvironment in environment" v-bind:key="catEnvironment.id" v-html="catEnvironment.name"></li>
-                            </ul>
-                        </div>
-                        <select v-model="environment" class="input cat__input" name="environment" id="environment">
+                        <div class="current__value" v-html="environment_name"></div>
+                        <select @change="getIdEnvironment" class="input cat__input" name="environment" id="environment">
                             <option v-for="environment in environments" :key="environment.id" :value="environment.id">{{environment.name}}</option> 
                         </select>
                     </div>
@@ -149,7 +145,8 @@ export default {
             departments: null,
             department_name: null,
             department_id: null,
-            environment: null,
+            environment_name: null,
+            environment_id: null,
             age: null,
             checkedVaccins: [],
             disease_id: null,
@@ -186,7 +183,8 @@ export default {
             this.sex_id = response._embedded['wp:term'][3][0].id;
             this.localisation = response.meta.city;
             this.department_name = response._embedded['wp:term'][2][0].name;
-            this.environment = response._embedded['wp:term'][1];
+            this.environment_name = response._embedded['wp:term'][1][0].name;
+            this.environment_id = response._embedded['wp:term'][1][0].id;
             this.age = response.meta.age;
             this.checkedVaccins = response._embedded['wp:term'][4];
             this.disease_id = response._embedded['wp:term'][0][0].id;
@@ -220,6 +218,11 @@ export default {
                 inputArray.forEach(function(inputElmnt) {
 
                     inputElmnt.addEventListener('blur', catForm.hideInput);
+                });
+
+                inputArray.forEach(function(inputElmnt) {
+
+                    inputElmnt.addEventListener('change', catForm.hideInput);
                 });
 
                 inputArray.forEach(function(inputElmnt) {
@@ -272,8 +275,15 @@ export default {
             const element = event.currentTarget;
             this.sex_name = element.options[element.selectedIndex].text;
             this.sex_id = element.value;
-            
         },
+
+        getIdEnvironment(event) {
+            const element = event.currentTarget;
+            this.environment_name = element.options[element.selectedIndex].text;
+            this.environment_id = element.value;
+        },
+
+    
         async updateCat() {
              this.errors = [];
              // Validation du contenu du formulaire
