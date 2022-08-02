@@ -423,6 +423,7 @@ export default {
           vaccinate: this.checkedVaccins,
           disease: this.disease_input,
           content: this.content,
+          "status": "publish"
         };
 
         // Permet de changer le curseur du bouton en mode wait

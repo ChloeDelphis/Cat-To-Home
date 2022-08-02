@@ -84,5 +84,14 @@ export default {
         } catch(error) {
             return error.response.data
         }
-    }
+    },
+
+    async findAllForHomepage() {
+        try {
+            const response = await apiClient.get('/cat?_embed&per_page=6&orderby=date&order=asc');
+            return response.data;
+        } catch (error) {
+            return error.response;
+        }
+    },
 }
