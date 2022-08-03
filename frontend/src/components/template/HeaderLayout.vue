@@ -34,7 +34,7 @@
         <router-link
           v-if="!this.$store.getters.getToken"
           class="header__nav__don button__orange--papate"
-          :to="{ name: 'registration' }"
+          :to="{ name: 'login' }"
           >Je donne un chat</router-link
         >
 
@@ -44,22 +44,16 @@
         <router-link class="header__nav__menu" :to="{ name: 'cats' }"
           >Les chats</router-link
         >
-        <router-link
-          v-if="!this.$store.getters.getToken"
-          class="header__nav__menu"
-          :to="{ name: 'registration' }"
-          >Inscription</router-link
-        >
-        <router-link
-          v-if="!this.$store.getters.getToken"
-          class="header__nav__menu"
-          :to="{ name: 'login' }"
-          >Connexion</router-link
-        >
         <router-link class="header__nav__menu" :to="{ name: 'contact' }"
           >Contact</router-link
         >
 
+        <router-link
+          v-if="!this.$store.getters.getToken"
+          class="header__nav__menu"
+          :to="{ name: 'login' }"
+          >Mon Espace</router-link
+        >
         <router-link :to="{ name: 'login' }"
           class="header__nav__menu"
           v-if="this.$store.getters.getToken"
