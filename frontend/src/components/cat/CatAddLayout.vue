@@ -1,7 +1,7 @@
 <template>
   <main>
     <h2 class="adoption__title">Crée la fiche adoption de ton chat</h2>
-    <section class="adoption">
+    <section class="adoption" id="adoption">
       <div class="adoption__left__part">
         <fieldset class="adoption__form">
           <div class="adoption__form__pair">
@@ -14,6 +14,9 @@
               name="lastname"
               placeholder="Doe"
             />
+            <p class="inscription__form__fieldset__field__error">
+              {{ errors_title }}
+            </p>
           </div>
           <div class="adoption__form__pair">
             <label class="input__name" for="sexe">Sexe</label>
@@ -22,6 +25,9 @@
                 {{ sex.name }}
               </option>
             </select>
+            <p class="inscription__form__fieldset__field__error">
+              {{ errors_sex }}
+            </p>
           </div>
 
           <div class="adoption__form__pair">
@@ -33,27 +39,35 @@
               id="city"
               name="city"
             />
+            <p class="inscription__form__fieldset__field__error">
+              {{ errors_city }}
+            </p>
           </div>
 
           <!-- imput département  -->
           <div class="adoption__form__pair">
             <label class="input__name" for="department">Département</label>
-            <input
-              @keyup="sendLocation"
-              v-model="location_input"
-              type="text"
-              class="input"
-              name="departement"
-              id="department"
-            />
-            <div id="home__form__list">
-              <ItemListLocation
-                v-for="location in locations"
-                :key="location"
-                :name="location"
-                @choiceLocation="selectedLocation"
+            <div class="relative">
+              <input
+                @keyup="sendLocation"
+                v-model="location_input"
+                type="text"
+                class="input"
+                name="departement"
+                id="department"
               />
+              <div id="home__form__list">
+                <ItemListLocation
+                  v-for="location in locations"
+                  :key="location"
+                  :name="location"
+                  @choiceLocation="selectedLocation"
+                />
+              </div>
             </div>
+            <p class="inscription__form__fieldset__field__error">
+              {{ errors_location_input }}
+            </p>
           </div>
 
           <div class="adoption__form__pair">
@@ -72,6 +86,9 @@
                 {{ environment.name }}
               </option>
             </select>
+            <p class="inscription__form__fieldset__field__error">
+              {{ errors_environment }}
+            </p>
           </div>
 
           <div class="adoption__form__pair">
@@ -82,6 +99,9 @@
               <option value="adulte">Adulte</option>
               <option value="senior">Sénior</option>
             </select>
+            <p class="inscription__form__fieldset__field__error">
+              {{ errors_age }}
+            </p>
           </div>
 
           <fieldset class="adoption__form__pair">
@@ -101,6 +121,9 @@
               />
               <label :for="disease.id">{{ disease.name }}</label>
             </div>
+            <p class="inscription__form__fieldset__field__error">
+              {{ errors_disease_input }}
+            </p>
           </fieldset>
 
           <div class="adoption__form__pair">
@@ -127,18 +150,14 @@
             name="description"
           >
           </textarea>
+          <p class="inscription__form__fieldset__field__error">
+            {{ errors_content }}
+          </p>
         </div>
 
-        <!-- Boutons à ne faire apparaître que quand le composant est appelé par ProfilePublishedSheetsLayout  -->
-        <div
-          v-if="this.$route.name === 'profile'"
-          class="profil__adoption__buttons"
-        >
-          <button class="button__orange" type="submit">
-            Valider les modification
-          </button>
-          <button class="button__orange" type="submit">
-            Supprimer la fiche
+        <div class="profil__adoption__buttons">
+          <button @click="goToValidate" class="button__orange">
+            Validation
           </button>
         </div>
       </div>
@@ -159,6 +178,9 @@
             @change="previewPictureAdd"
             accept=".png, .jpg, .jpeg"
           />
+          <p class="inscription__form__fieldset__field__error">
+            {{ errors_picture_file }}
+          </p>
         </div>
         <img
           class="image__upload__preview none"
@@ -170,7 +192,7 @@
     </section>
 
     <section v-if="this.$route.name === 'cat_add'" class="information">
-      <div class="information__content">
+      <div class="information__content" id="information">
         <h2 class="information__content__title">Adoption Responsable</h2>
         <div class="information__content__paragraphe">
           <p>
@@ -223,6 +245,21 @@
                 J'atteste de la validité des informations renseigner.</label
               >
             </div>
+            <div class="input__name__checkbox">
+              <input
+                v-model="permissions3"
+                type="checkbox"
+                id="permission3"
+                name="permission3"
+                value="permission3"
+              />
+              <label for="permission3">
+                J'atteste que l'animal que je donne est bien identifié.</label
+              >
+            </div>
+            <p class="inscription__form__fieldset__field__error">
+              {{ errors_permissions }}
+            </p>
           </div>
           <div class="button__adoption__add">
             <button
@@ -233,9 +270,9 @@
             >
               Valider la création de la fiche
             </button>
-          </div>
-          <div>
-            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+            <p class="inscription__form__fieldset__field__error">
+              {{ errors_creation }}
+            </p>
           </div>
         </div>
         <img
@@ -250,7 +287,8 @@
 
 <script>
 import NewCat from "@/services/cat/NewCat";
-import LocationService from "@/services/cat/LocationService";
+import LocationGouvService from "@/services/cat/LocationGouvService";
+import LocationService from "@/services/taxonomies/LocationService";
 import FindAllService from "@/services/taxonomies/FindAllService";
 import ItemListLocation from "@/components/home/ItemListLocation";
 
@@ -262,8 +300,21 @@ export default {
 
   data() {
     return {
+      errors: 0,
+      errors_title: null,
+      errors_sex: null,
+      errors_city: null,
+      errors_location_input: null,
+      errors_environment: null,
+      errors_age: null,
+      errors_disease_input: null,
+      errors_picture_file: null,
+      errors_content: null,
+      errors_permissions: null,
+      errors_creation: null,
+
       // Recuperation des valeurs mise dans la fiche
-      errors: [],
+
       title: null,
       sex: null,
       city: null,
@@ -280,13 +331,10 @@ export default {
       sexes: [],
       locations: [],
       diseases: [],
+      locationsList: [],
 
       picture_file: null,
       preview_picture: "",
-
-      // Permission d'adoption
-      permissions1: null,
-      permissions2: null,
     };
   },
   async mounted() {
@@ -294,9 +342,20 @@ export default {
     this.sexes = await FindAllService.findAllSex();
     this.vaccinates = await FindAllService.findAllVaccinate();
     this.diseases = await FindAllService.findAllDisease();
+    this.locationsList = await LocationService.findAll();
   },
 
   methods: {
+    goToValidate() {
+      const el = document.querySelector("#information");
+      el
+        ? el.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "nearest",
+          })
+        : null;
+    },
     previewPictureAdd(event) {
       // Previsualisation de l'image
       this.picture_file = event.target.files[0];
@@ -307,33 +366,61 @@ export default {
     },
 
     async sendNewCat() {
-      this.errors = [];
+      // On vide les messages d'erreurs
+      this.errors_title = null;
+      this.errors_sex = null;
+      this.errors_city = null;
+      this.errors_location_input = null;
+      this.errors_environment = null;
+      this.errors_age = null;
+      this.errors_disease_input = null;
+      this.errors_picture_file = null;
+      this.errors_content = null;
+      this.errors_permissions = null;
+      this.errors_creation = null;
+
       // Validation du contenu du formulaire
       if (!this.title) {
-        this.errors.push("Le nom n'est pas renseigner.");
+        this.errors++;
+        this.errors_title = "Le nom n'est pas renseigner.";
       }
       if (!this.sex) {
-        this.errors.push("Le sexe n'est pas renseigner.");
+        this.errors++;
+        this.errors_sex = "Le sex n'est pas renseigner.";
       }
       if (!this.city) {
-        this.errors.push("La ville n'est pas renseigner.");
+        this.errors++;
+        this.errors_city = "La ville n'est pas renseigner.";
       }
       if (!this.location_input) {
-        this.errors.push("Le département n'est pas renseigner.");
+        this.errors++;
+        this.errors_location_input = "Le département n'est pas renseigner.";
       }
       if (!this.age) {
-        this.errors.push("L'âge n'est pas renseigner.");
+        this.errors++;
+        this.errors_age = "L'âge n'est pas renseigner.";
+      }
+      if (!this.environment) {
+        this.errors++;
+        this.errors_environment = "L'environement n'est pas renseigner.";
       }
       if (!this.disease_input) {
-        this.errors.push("La maladie n'est pas renseigner.");
+        this.errors++;
+        this.errors_disease_input = "La maladie n'est pas renseigner.";
       }
       if (!this.content) {
-        this.errors.push("La descritpion est vide.");
+        this.errors++;
+        this.errors_content = "La descritpion est vide.";
       }
-      if ((!this.permissions1, !this.permissions1)) {
-        this.errors.push("Vous n'avez pas accepté les termes.");
+      if (!this.picture_file) {
+        this.errors++;
+        this.errors_picture_file = "L'image est vide.";
       }
-      if (this.errors.length === 0) {
+      if (!this.permissions1 || !this.permissions2 || !this.permissions3) {
+        this.errors++;
+        this.errors_permissions = "Vous n'avez pas accepté les termes.";
+      }
+      if (this.errors === 0) {
         let params = {
           title: this.title,
           sex: this.sex,
@@ -342,16 +429,13 @@ export default {
           vaccinate: this.checkedVaccins,
           disease: this.disease_input,
           content: this.content,
-          status: "publish",
+          "status": "publish"
         };
-        switch (this.$store.getters.getRole) {
-          case "owner":
-            params.status = "publish";
-            break;
-        }
+
         // Permet de changer le curseur du bouton en mode wait
         const boutonSend = document.querySelector("#send");
         boutonSend.classList.add("wait");
+
         const response = await NewCat.create(params);
         // Reception de la réponse et affichage
         if (response.id) {
@@ -370,38 +454,69 @@ export default {
             const updatePostImage = await NewCat.addFeaturedMedia(postId, {
               featured_media: createPicture.id,
             });
-            if (updatePostImage) {
-              // upload departement dans le backend avec l'id du post
-              const createLocation = await NewCat.uploadLocation(postId, {
-                name: this.location_input,
+            if (updatePostImage.id) {
+              let verifLocation = false;
+              let locationId = "";
+              this.locationsList.forEach((location) => {
+                if (location.name === this.location_input) {
+                  verifLocation = true;
+                  locationId = location.id;
+                }
               });
-              // ajout de l'id du departement dans le post créer
-              if (createLocation.id) {
-                const updatePostLocation = await NewCat.addLocation(postId, {
-                  location: createLocation.id,
+              // Si la localisation n'est pas dans le backend, on la crée
+              if (!verifLocation) {
+                // upload departement dans le backend avec l'id du post
+                const createLocation = await NewCat.createLocation(postId, {
+                  name: this.location_input,
                 });
-                if (updatePostLocation) {
-                  this.$router.push({ name: "home" });
-                  alert("Post ajouté avec succès");
+                if (createLocation.id) {
+                  locationId = createLocation.id;
+                }
+                // Sinon on la récupere dans le backend
+              } else {
+                const retrieveLocation = await LocationService.find(locationId);
+                if (retrieveLocation.id) {
+                  locationId = retrieveLocation.id;
+                }
+              }
+              // Et ensuite, on lie l'id à la fiche créée
+              if (locationId) {
+                // ajout de l'id du departement dans le post créer
+                const updatePostLocation = await NewCat.addLocation(postId, {
+                  location: locationId,
+                });
+                if (updatePostLocation.id) {
+                  // Permet de retirer le curseur du bouton en mode wait
+                  boutonSend.classList.remove("wait");
                 }
               }
             }
           }
         } else {
-          alert(response.message);
+          this.errors_creation =
+            "Une erreur s'est produite, merci de recommencer ultérieurement.";
         }
+      } else {
+        const el = document.querySelector("#adoption");
+        el
+          ? el.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+              inline: "nearest",
+            })
+          : null;
       }
     },
 
     // input localisation
     async sendLocation() {
       this.locations = [];
-      document.querySelector("#home__form__list").style.height = "0";
+      document.querySelector("#home__form__list");
 
       if (this.location_input != "") {
-        const response = await LocationService.find(this.location_input);
+        const response = await LocationGouvService.find(this.location_input);
         // console.log(response);
-        document.querySelector("#home__form__list").style.height = "12rem";
+        document.querySelector("#home__form__list");
         response.forEach((location) => {
           if (
             location.nom
@@ -417,7 +532,7 @@ export default {
       const choiceLocation = event.currentTarget.textContent;
       this.location_input = choiceLocation;
       this.locations = [];
-      document.querySelector("#home__form__list").style.height = "0";
+      document.querySelector("#home__form__list");
     },
   },
 };
@@ -461,16 +576,10 @@ export default {
     cursor: pointer;
   }
 }
-
+.input__departement__select {
+  color: #586fcd;
+}
 .adoption__form__pair {
-  #home__form__list {
-    overflow-x: auto;
-  }
-
-  #home__form__list::-webkit-scrollbar {
-    display: none;
-  }
-
   .input {
     margin-bottom: 1rem;
   }

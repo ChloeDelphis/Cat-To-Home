@@ -13,6 +13,17 @@
         content: url(../icones/papate.png);
         margin-right: 1rem;
     }
+
+    &:hover {
+        border: 3px solid colors.$color-orange;
+        background-color: rgba(255, 255, 255, 0.60);
+        color: colors.$color-orange;
+        padding: 0.7rem 0.7rem;
+
+        &:before {
+            content: url(../icones/papate-orange.png)
+        }
+    }
 }
 
 @media (min-width : 768px) {
@@ -33,6 +44,17 @@
         content: url(../icones/papate.png);
         margin-right: 1rem;
     }
+
+    &:hover {
+        border: 3px solid colors.$color-blue;
+        background-color: rgba(255, 255, 255, 0.60);
+        color: colors.$color-blue;
+        padding: 0.7rem 0.7rem;
+
+        &:before {
+            content: url(../icones/papate-bleue.png)
+        }
+    }
 }
 
 .button__orange{
@@ -42,6 +64,13 @@
     border: none;
     border-radius: 1rem;
     color: white;
+
+    &:hover {
+        border: 3px solid colors.$color-orange;
+        background-color: rgba(255, 255, 255, 0.60);
+        color: colors.$color-orange;
+        padding: 0.7rem 0.7rem;
+    }
 
 }
 
@@ -53,4 +82,10 @@
     border-radius: 1rem;
     color: white;
 
+    &:hover {
+        border: 3px solid colors.$color-blue;
+        background-color: rgba(255, 255, 255, 0.60);
+        color: colors.$color-blue;
+        padding: 0.7rem 0.7rem;
+    }
 }

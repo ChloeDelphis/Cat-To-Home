@@ -17,10 +17,10 @@ export default {
 
     async find(params) {
         try {
-            const response = await instance.get('?nom=' + params);
-            return response;
+            const response = await instance.get('location/' + params);
+            return response.data;
         } catch (error) {
-            return error.response;
+            return error.response.data;
         }
     }
 }
