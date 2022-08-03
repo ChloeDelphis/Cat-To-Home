@@ -19,7 +19,8 @@
       <div class="error__bloc">
         <h2 class="error__bloc__title">
           Oups ! <br />
-          Vous êtes sur une page 404
+          Cette page n'existe pas, ou alors elle n'existe plus. <br />
+          Vous êtes sur une page 404<br />
         </h2>
       </div>
     </section>

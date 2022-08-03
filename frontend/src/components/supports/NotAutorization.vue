@@ -19,7 +19,10 @@
       <div class="error__bloc">
         <h2 class="error__bloc__title">
           You shall not pass !!! <br />
-          Vous êtes sur une page 403
+          <br />
+          Vous êtes sur une page 403 <br />
+          <br />
+          Vous n'avez pas les droits d'accès à cette page <br />
         </h2>
       </div>
     </section>

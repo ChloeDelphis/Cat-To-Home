@@ -20,7 +20,6 @@
             Ajouter la classe fixed à l'élément header  -->
 
       <div id="menu" class="header__nav--desktop">
-
         <router-link
           v-if="
             this.$store.getters.getToken &&
@@ -30,7 +29,7 @@
           :to="{ name: 'cat_add' }"
           >Je donne un chat</router-link
         >
-        
+
         <router-link
           v-if="!this.$store.getters.getToken"
           class="header__nav__don button__orange--papate"
@@ -60,7 +59,8 @@
           >Contact</router-link
         >
 
-        <router-link :to="{ name: 'login' }"
+        <router-link
+          :to="{ name: 'login' }"
           class="header__nav__menu"
           v-if="this.$store.getters.getToken"
           v-on:click="disconnect"
@@ -91,7 +91,7 @@ export default {
     disconnect() {
       // On execute la mutation qui va supprimer le token dans le store et dans le sessionStorage
       this.$store.dispatch("deleteUser");
-    }
+    },
   },
   mounted() {
     const headerElmnt = document.querySelector("#header");
@@ -125,28 +125,26 @@ export default {
 </script>
 
 <style lang="scss">
-
-.header__nav__menu{
+.header__nav__menu {
   position: relative;
 }
 
-.header__nav__menu::after{
-    content: "";
-    position: absolute;
-    background: #E16441 ;
-    height: 2px;
-    width: 0%;
-    left: 0;
-    bottom: -0.3rem;
-    transform-origin: right;
-    transition: .3s cubic-bezier(.65,.05,.36,1);
+.header__nav__menu::after {
+  content: "";
+  position: absolute;
+  background: #e16441;
+  height: 2px;
+  width: 0%;
+  left: 0;
+  bottom: -0.3rem;
+  transform-origin: right;
+  transition: 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
 }
 
 .header__nav__menu:hover::after {
-    width: 100%;
-    transform: scale(1);
+  width: 100%;
+  transform: scale(1);
 }
-
 
 #cross {
   display: none;

@@ -119,9 +119,7 @@ router.beforeEach((to, from, next) => {
     // console.log('ici')
     router.push({ name: "403" });
   }
- 
-  
- 
+    
 });
 
 
