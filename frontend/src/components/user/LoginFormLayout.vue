@@ -5,6 +5,7 @@
         alt="chat devant un portail de voyage spatio-temporel" />
 
       <div v-on:keyup.enter="login" class="connexion__form">
+         <p v-if="message" class="message__autorisation__connexion"> {{message}}</p>
         <h2 class="connexion__form__title">Connexion</h2>
 
         <fieldset class="connexion__form__fieldset">
@@ -56,7 +57,15 @@ export default {
       emailError: null,
       email: null,
       password: null,
-      emailReinitPass: null
+      emailReinitPass: null,
+      message: null,
+    }
+  },
+  mounted(){
+    if(this.$store.getters.getMessage !== null){
+      this.message = this.$store.getters.getMessage;
+      this.$store.commit('deleteMessage')
+
     }
   },
   methods: {
@@ -121,6 +130,11 @@ export default {
 
 <style lang="scss" scoped>
 @use '../../assets/scss/abstracts/variables/colors';
+
+.message__autorisation__connexion{
+  text-align: center;
+  margin-bottom: 2rem;
+}
 
 .btn--reinit__pass {
   border: none;

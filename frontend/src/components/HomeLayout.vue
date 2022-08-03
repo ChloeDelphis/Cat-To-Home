@@ -13,7 +13,7 @@
           en adopter.
         </p>
         <router-link class="button__orange--papate" v-bind:to="{ name: 'cat_add' }" v-if="this.$store.getters.getToken && this.$store.getters.getRole !== 'adopter'">Je donne un chat</router-link>
-        <router-link class="button__orange--papate" v-bind:to="{ name: 'login' }" v-if="!this.$store.getters.getToken">Je donne un chat</router-link>
+        <router-link v-on:click="sendMessage" class="button__orange--papate" v-bind:to="{ name: 'login' }" v-if="!this.$store.getters.getToken">Je donne un chat</router-link>
       </div>
       <div class="home__img">
         <img class="cat__one" src="../assets/img/IMG_CAT1.png" alt="" />
@@ -156,6 +156,10 @@ export default {
     },
 
   methods: {
+    async sendMessage(){
+      this.$store.commit('setMessage', 'Vous devez être connecté pour pouvoir ajouter un chat.');
+    },
+
     async sendLocation() {
       this.locations = [];
       document.querySelector('#home__form__list');

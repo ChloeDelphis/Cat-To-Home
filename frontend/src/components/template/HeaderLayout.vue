@@ -31,6 +31,7 @@
         >
 
         <router-link
+          v-on:click="sendMessage"
           v-if="!this.$store.getters.getToken"
           class="header__nav__don button__orange--papate"
           :to="{ name: 'login' }"
@@ -81,6 +82,10 @@
 export default {
   name: "HeaderLayout",
   methods: {
+    async sendMessage(){
+      this.$store.commit('setMessage', 'Vous devez être connecté pour pouvoir ajouter un chat.');
+    },
+
     disconnect() {
       // On execute la mutation qui va supprimer le token dans le store et dans le sessionStorage
       this.$store.dispatch("deleteUser");

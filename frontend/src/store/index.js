@@ -4,7 +4,8 @@ export default createStore({
   state: {
     token: null,
     userId: null,
-    role: null
+    role: null,
+    messageConnexion: null,
   },
   getters: {
     getToken: (state) => {
@@ -30,6 +31,12 @@ export default createStore({
         state.role = sessionStorage.getItem('role');
       }
       return state.role;
+    },
+    getMessage: (state) => {
+      if(state.messageConnexion === null) {
+        state.messageConnexion ;
+      }
+      return state.messageConnexion;
     }
   },
   mutations: {
@@ -62,7 +69,13 @@ export default createStore({
     setRole: (state, newRole) => {
       sessionStorage.setItem('role', newRole);
       state.role = sessionStorage.getItem('role');
-    }
+    },
+    setMessage: (state, message) => {
+      state.messageConnexion = message;
+    },
+    deleteMessage: (state) => {
+      state.messageConnexion = null;
+    },
   },
   actions: {
     deleteUser({commit}) {
