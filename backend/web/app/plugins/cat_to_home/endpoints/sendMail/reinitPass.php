@@ -43,7 +43,7 @@ function cat_to_home_rest_send_mail_handler($request)
         update_user_meta($user->ID, 'exp_date', $expDate);
         update_user_meta($user->ID, 'reset_email', $email);
 
-        $link = "<a href='http://localhost:8081/reinitialisation-mot-de-passe?key=".$user->ID."&token=".$token."&email=".$email."'>Reset password</a>";
+        $link = "<a href='http://localhost:8081/reinitialisation-mot-de-passe?key=".$user->ID."&token=".$token.">Reset password</a>";
         
         $subject = 'reset mot de passe';
 
@@ -61,33 +61,4 @@ function cat_to_home_rest_send_mail_handler($request)
         $response = 'Aucun utilisateur ne correspond à cette adresse mail.';
     }
     return new WP_REST_Response($response, 200);
-    
-    // $phpmailer->SMTPDebug = SMTP::DEBUG_SERVER;
-    // $phpmailer->isSMTP();
-    // $phpmailer->Host       = 'smtp.gmail.com';
-    // $phpmailer->Port       = '465';
-    // $phpmailer->SMTPSecure = 'tls';
-    // $phpmailer->SMTPAuth   = true;
-    // $phpmailer->Username   = 'd.laitani@gmail.com';
-    // $phpmailer->Password   = 'unDdciment1';
-    // $phpmailer->From = 'd.laitani@gmail.com';
-    // // $phpmailer->setFrom('d.laitani@gmail.com');
-    // $phpmailer->FromName = 'test';
-    // $phpmailer->addReplyTo('d.laitani@gmail.com', 'Information');
-
-    // $phpmailer->addAddress($email);
-
-    // //Content
-    // $phpmailer->isHTML(true);                                  //Set email format to HTML
-    // $phpmailer->Subject = 'Here is the subject';
-    // $phpmailer->Body    = 'http://localhost:8081/reinitialisation-mot-de-passe';
-    // $phpmailer->AltBody = 'This is the body in plain text for non-HTML mail clients';
-    
-    // if ($phpmailer->send()) {
-    //     $response = true;
-    // } else {
-    //     $response = 'error : ' . $phpmailer->ErrorInfo;
-    // }
-
-
 }
