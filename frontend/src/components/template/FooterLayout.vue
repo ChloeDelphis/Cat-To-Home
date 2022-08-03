@@ -38,10 +38,16 @@
         <router-link class="footer__nav__item" v-bind:to="{ name: 'cats' }"
           >Les chats</router-link
         >
-        <router-link  v-if="!this.$store.getters.getToken" class="footer__nav__item" :to="{ name: 'registration' }"
+        <router-link
+          v-if="!this.$store.getters.getToken"
+          class="footer__nav__item"
+          :to="{ name: 'registration' }"
           >Inscription</router-link
         >
-        <router-link  v-if="!this.$store.getters.getToken" class="footer__nav__item" :to="{ name: 'login' }"
+        <router-link
+          v-if="!this.$store.getters.getToken"
+          class="footer__nav__item"
+          :to="{ name: 'login' }"
           >Connexion</router-link
         >
         <!-- <a class="footer__nav__item" href="#">Déconnexion</a> -->
@@ -50,6 +56,17 @@
         >
       </div>
     </nav>
+    <div class="footer__mention">
+      <p>
+        Ce site a été réalisé grâce à Antoine et sa meuf. Nous avons utilisés
+        les images de
+        <a
+          style="text-decorations: none; color: inherit"
+          href="https://www.icones8.fr"
+          >icones8.</a
+        >
+      </p>
+    </div>
   </footer>
 </template>
 
