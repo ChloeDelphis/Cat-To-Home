@@ -66,7 +66,8 @@
       <a class="nxt-btn" ><img class="arrow" src="../assets/icones/fleche_droite.png" alt="" /></a>
         <div class="product-container">
           
-          <CatCardLayout v-bind:localisation="cat._embedded['wp:term'][2][0].name" v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url" v-bind:id="cat.id" v-bind:name="cat.title.rendered" v-bind:age="cat.meta.age" v-for="cat in cats" v-bind:key="cat.id" />
+          <CatCardLayout v-bind:localisation="cat._embedded['wp:term'][2][0].name" v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url" 
+          v-bind:id="cat.id" v-bind:name="cat.title.rendered" v-bind:age="cat.meta.age" v-for="cat in cats" v-bind:key="cat.id" />
           
         </div>
     </section>

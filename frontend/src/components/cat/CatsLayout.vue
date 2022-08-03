@@ -12,8 +12,9 @@
 
     <section class="research">
       <div class="search__cat__form">
-        <div>
+        <div class="relative">
           <label for="department">Localisation</label>
+          
           <input
             @keyup="sendLocation"
             v-model="location_input"
@@ -98,12 +99,12 @@ export default {
     // Récupere la liste des départements en fonction de se qu'il est tapé dans l'input
     async sendLocation() {
       this.locations = [];
-      document.querySelector("#home__form__list").style.height = "0";
+      document.querySelector("#home__form__list");
 
       if (this.location_input != "") {
         const response = await LocationService.findAll();
         if (response.length != 0) {
-          document.querySelector("#home__form__list").style.height = "12rem";
+          document.querySelector("#home__form__list");
           response.forEach((location) => {
             if (
               location.name
@@ -122,7 +123,7 @@ export default {
       console.log(choiceLocation);
       this.location_input = choiceLocation;
       this.location_selected = choiceLocation;
-      document.querySelector("#home__form__list").style.height = "0";
+      document.querySelector("#home__form__list");
     },
     // Permet de lancer la recherche en fonction des filtres selectionnés
     async searchCats() {
@@ -187,13 +188,7 @@ export default {
 
 <style lang="scss" scoped>
 .research {
-  #home__form__list {
-    width: auto;
-    position: relative;
-    z-index: 999;
-    bottom: 22px;
-    overflow: scroll;
-  }
+  margin-bottom: 6rem;
 
   #home__form__list::-webkit-scrollbar {
     display: none;
@@ -202,5 +197,9 @@ export default {
   .search__cat__form div {
     margin-right: 1rem;
   }
+}
+
+#home__form__list {
+  top:7rem;
 }
 </style>
