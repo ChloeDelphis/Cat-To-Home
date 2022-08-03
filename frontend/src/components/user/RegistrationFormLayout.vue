@@ -13,8 +13,9 @@
         <fieldset class="inscription__form__fieldset">
           <div class="left">
             <div class="inscription__form__fieldset__field">
-              <label>Nom *</label><br />
+              <label for="lastname">Nom *</label><br />
               <input
+                id="lastname"
                 class="inscription__form__fieldset__field__input input"
                 type="text"
                 v-model="lastName"
@@ -24,8 +25,9 @@
               </p>
             </div>
             <div class="inscription__form__fieldset__field">
-              <label>Prénom *</label><br />
+              <label for="firstname">Prénom *</label><br />
               <input
+                id="firstname"
                 class="inscription__form__fieldset__field__input input"
                 type="text"
                 v-model="firstName"
@@ -39,6 +41,7 @@
             <div class="inscription__form__fieldset__field">
               <label for="pseudo">Pseudo</label><br />
               <input
+                id="pseudo"
                 class="inscription__form__fieldset__field__input input"
                 type="text"
                 v-model="pseudo"
@@ -47,6 +50,7 @@
             <div class="inscription__form__fieldset__field">
               <label for="birth">Date de naissance *</label><br />
               <input
+                id="birth"
                 class="inscription__form__fieldset__field__input input"
                 type="date"
                 v-model="birth"
@@ -58,6 +62,7 @@
             <div class="inscription__form__fieldset__field">
               <label for="email">Adresse e-mail *</label><br />
               <input
+                id="email"
                 class="inscription__form__fieldset__field__input input"
                 type="text"
                 v-model="email"
@@ -70,8 +75,9 @@
 
           <div class="right">
             <div class="inscription__form__fieldset__field">
-              <label for="email">Confirmer adresse e-mail *</label><br />
+              <label for="confemail">Confirmer adresse e-mail *</label><br />
               <input
+              id="confemail"
                 class="inscription__form__fieldset__field__input input"
                 type="text"
                 v-model="confEmail"
@@ -83,6 +89,7 @@
             <div class="inscription__form__fieldset__field">
               <label for="password">Mot de passe *</label><br />
               <input
+                id="password"
                 class="inscription__form__fieldset__field__input input"
                 type="password"
                 v-model="password"
@@ -92,8 +99,9 @@
               </p>
             </div>
             <div class="inscription__form__fieldset__field">
-              <label for="password">Confirmer mot de passe *</label><br />
+              <label for="confpassword">Confirmer mot de passe *</label><br />
               <input
+                id="confpassword"
                 class="inscription__form__fieldset__field__input input"
                 type="password"
                 v-model="confPassword"
@@ -104,33 +112,20 @@
             </div>
             <div class="inscription__form__fieldset__field">
               <div>
-                <input type="radio" name="role" value="owner" v-model="role" />
-                <label for="owner"
-                  >Je souhaite <span>donner</span> un chat</label
-                >
+                <input id="owner" type="radio" name="role" value="owner" v-model="role" />
+                <label for="owner">Je souhaite <span>donner</span> un chat</label>
               </div>
 
               <div>
-                <input
-                  type="radio"
-                  name="role"
-                  value="adopter"
-                  v-model="role"
-                />
-
-                <label for="adopter"
-                  >Je souhaite <span class="bold">adopter</span> un chat</label
-                >
+                <input id="adopter" type="radio" name="role" value="adopter" v-model="role" />
+                <label for="adopter">Je souhaite <span class="bold">adopter</span> un chat</label>
               </div>
               <p class="inscription__form__fieldset__field__error">
                 {{ roleError }}
               </p>
             </div>
 
-            <button
-              v-on:click="sendForm"
-              class="inscription__form__button button__orange"
-            >
+            <button v-on:click="sendForm" class="inscription__form__button button__orange">
               Je valide mon inscription
             </button>
             <div class="inscription__form__fieldset__mention">

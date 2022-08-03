@@ -10,7 +10,7 @@
 
                 Ah.. On me dit dans l'oreillette que je ne suis pas sur un site de cuisine ! RAssurez-vous donc Damien ni aucun membre de l'équipe ne va manger vos chatons ! Les bébés dans le congélateur ok, mais manger des chats c'est pas ok ! OK ??
             </p>
-            <img src="@/assets/img/purr-9.png" alt="illustration de 2 chats et un aquarium">
+            <img class="img__about" src="@/assets/img/purr-9.png" alt="illustration de 2 chats et un aquarium">
 
         </section>
 
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="dev pair">
-                <div class="dev__photo" v-bind:style="{'backgroundImage': 'url(' + require('../../assets/img/Steph-Pongo.jpg') + ')', 'backgroundSize': 'cover', 'backgroundPosition': 'center'}">
+                <div class="dev__photo img__steph" v-bind:style="{'backgroundImage': 'url(' + require('../../assets/img/Steph-Pongo.jpg') + ')', 'backgroundSize': 'cover'}">
                 </div>
                 <div class="dev__presentation">
                     <h3>Stéphane, le Lead Dev Back</h3>
@@ -77,6 +77,32 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+
+   @media screen and (max-width: 480px) {
+  .img__about{
+        width: 80vw;
+    }
+  }
+@media screen and (max-width: 769px) {
+  .img__steph{
+    background-position: center center;
+    }
+}
+ @media screen and (min-width: 767px) and (max-width: 900px){
+    .img__steph{
+        background-position: -40rem;
+        }
+  }
+   @media screen and (min-width: 901px) and (max-width: 1100px){
+    .img__steph{
+        background-position: -25rem;
+        }
+  }
+  @media screen and (min-width: 1101px){
+    .img__steph{
+        background-position: center center;
+    }
+  }
 
 </style>

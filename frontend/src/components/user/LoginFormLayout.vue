@@ -16,7 +16,9 @@
             <label for="password">Mot de passe</label><br />
             <input v-model="password" class="connexion__form__fieldset__field__input input" type="password" />
           </div>
-          <div>
+          <div class="center__text">
+            <router-link :to="{ name: 'registration' }" class="btn--reinit__pass">Inscription</router-link> 
+            <p class="inline"> / </p>
             <button @click="ShowFormChangePass" class="btn--reinit__pass">Réinitialiser son mot de passe</button>
           </div>
           <div class="form__reinit__pass">
@@ -118,11 +120,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '../../assets/scss/abstracts/variables/colors';
+
 .btn--reinit__pass {
   border: none;
-  background-color: #E3B8AA;
+  background-color: colors.$color-bg2;
+  color: colors.$color-blue;
   font-size: 1.6rem;
   cursor: pointer;
+  padding: 0;
 }
 
 .btn--reinit__pass:hover {
@@ -141,8 +147,11 @@ export default {
   margin-top: 1rem;
 }
 
-.reinit__pass {
+.center__text {
   text-align: center;
-  margin-top: 2rem;
+} 
+.inline{
+  display: inline;
+  color: colors.$color-blue;
 }
 </style>
