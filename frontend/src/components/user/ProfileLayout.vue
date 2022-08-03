@@ -357,7 +357,9 @@ export default {
           // this.$route.redirectedFrom = this.$route.path;
           this.$router.push({ name: "profile", params: { id: this.id } });
         } else {
-          alert("ça marche pô !!!");
+          alert(
+            "Modification impossible, veuillez contacter l'administrateur par le biais de l'onglet contact"
+          );
         }
 
         // si pas d'erreur pour le mot de passe on le modifie
@@ -377,7 +379,9 @@ export default {
             // this.$route.redirectedFrom = this.$route.path;
             this.$router.push({ name: "Connexion" });
           } else {
-            alert("ça marche pas !!!");
+            alert(
+              "Erreuyr dans la modification du mot de passe, veuillez contacter l'administrateur par le biais de l'onglet contact"
+            );
           }
         }
       }
