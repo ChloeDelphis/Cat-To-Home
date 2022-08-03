@@ -81,7 +81,6 @@ export default {
     // Récupération of the cat's informations
     let id = this.$route.params.id;
     const catResponse = await CatService.find(id);
-    console.log(catResponse);
     if (catResponse.code) {
       alert(catResponse.message);
     } else {
@@ -103,7 +102,7 @@ export default {
     }
 
     // Récupération of the owner's informations
-    if (this.$store.getters.getToken !== "") {
+    if (this.$store.getters.getToken !== null) {
       const userResponse = await UserService.find(this.authorId);
       // console.log(userResponse);
       if (userResponse.code) {
