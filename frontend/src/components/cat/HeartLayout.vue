@@ -40,19 +40,19 @@ export default {
 
       // Si le chat fait partie des favoris
       if (this.favorite) {
-        console.log("le chat " + this.id + " fait partie des favoris ");
+        console.log("le chat " + this.name + " fait partie des favoris ");
 
         const response = await FavoriteService.removeFromFavorites({
           cat_id: this.id,
         });
         if (response.code === 200) {
-          console.log("le chat " + this.id + " a bien été retiré des favoris");
+          console.log("le chat " + this.name + " a bien été retiré des favoris");
           // On fait apparaître le message sur l'interface utilisateur
           this.displayMessage(event);
-          // On le fait disparaître au bout de 2 secondes
-          setTimeout(this.displayMessage, 2000);
-          const msgEmlt = event.currentTarget.querySelector("#message");
-          msgEmlt.innerHTML = this.name + " a été retiré de vos favoris";
+          // // On le fait disparaître au bout de 2 secondes
+          // setTimeout(this.displayMessage, 2000);
+          // const msgEmlt = event.currentTarget.querySelector("#message");
+          // msgEmlt.innerHTML = this.name + " a été retiré de vos favoris";
           this.$emit("update");
         } else {
           console.log("le chat n'a pas pu être retiré des favoris");
@@ -60,21 +60,21 @@ export default {
 
         // Si le chat ne fait pas partie des favoris
       } else {
-        console.log("le chat" + this.id + " ne fait pas partie des favoris ");
+        console.log("le chat " + this.name + " ne fait pas partie des favoris ");
         const response = await FavoriteService.addToFavorites({
           cat_id: this.id,
         });
         // En cas de réussite
         if (response.code === 200) {
           console.log(
-            "le chat avec l'id " + this.id + " a bien été ajouté aux favoris"
+            "le chat " + this.name + " a bien été ajouté aux favoris"
           );
           // On fait apparaître le message sur l'interface utilisateur
           this.displayMessage(event);
-          // On le fait disparaître au bout de 2 secondes
-          setTimeout(this.displayMessage, 2000);
-          const msgEmlt = event.currentTarget.querySelector("#message");
-          msgEmlt.innerHTML = this.name + " a bien été ajouté à vos favoris";
+          // // On le fait disparaître au bout de 2 secondes
+          // setTimeout(this.displayMessage, 2000);
+          // const msgEmlt = event.currentTarget.querySelector("#message");
+          // msgEmlt.innerHTML = this.name + " a bien été ajouté à vos favoris";
 
           this.$emit("update");
         } else {
@@ -83,20 +83,16 @@ export default {
       }
     },
 
-    displayMessage(event) {
-      const msgEmlt = event.currentTarget.querySelector("#message");
+    displayMessage() {
+
+      const msgEmlt = document.querySelector("#message");
       msgEmlt.classList.toggle("hidden");
-      // setTimeout(document.querySelector("#message").classList.toggle("hidden"), 2000);
+      setTimeout(document.querySelector("#message").classList.toggle("hidden"), 2000);
     },
   },
 };
 </script>
 
 <style scoped lang="scss" >
-            .hearth {
-                position: absolute;
-                z-index: 5;
-                top: 1rem;
-                right: 1rem;
-            }
+
 </style>

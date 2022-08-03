@@ -1,13 +1,10 @@
-.cat__details__photo{
-    .heart__container{
-        position: absolute;
-    }
-}
-
 #message{
     position: absolute;
     left: 0;
-    width: 80%;
+    top : 0;
+    margin-top : 1rem;
+    margin-left: 1rem;
+    width: 70%;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 2rem;

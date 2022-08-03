@@ -11,7 +11,7 @@
                   "
                   v-bind:name="this.name"
                   v-bind:id="id"
-                  v-bind="$attrs"
+                  v-on:update="reload"
                   v-bind:favorite="isFavorite"
                 />
             </div>
@@ -64,6 +64,8 @@
 import CatService from "@/services/cat/CatService";
 import UserService from "@/services/user/UserService";
 import HeartLayout from "@/components/cat/HeartLayout.vue";
+import FavoriteService from "@/services/favorite/FavoriteService";
+
 export default {
   components: { HeartLayout },
   name: "CatLayout",
@@ -81,6 +83,7 @@ export default {
       diseases: [],
       environments: [],
       infos: null,
+      id: parseInt(this.$route.params.id),
 
       // information about the owner
       authorId: null,
@@ -88,10 +91,31 @@ export default {
       email: null,
       allowPhone: null,
       allowEmail: null,
+
+      // favorite infos
+      userFavoriteCatsId: [],
     };
   },
+
   async mounted() {
+    this.favoriteCatsId();
+    this.getInfo();    
+  },
+
+  computed: {
+    isFavorite() {
+      for (const el of this.userFavoriteCatsId) {
+        if (el === this.id) {
+          return true;
+        }
+      }
+      return false;
+    },
+  },
+
+  methods: {
     // Récupération of the cat's informations
+    async getInfo(){
     let id = this.$route.params.id;
     const catResponse = await CatService.find(id);
     if (catResponse.code) {
@@ -112,6 +136,7 @@ export default {
       this.authorId = catResponse.author;
 
       //   Il est maintenant nécessaire de reprendre cette info en effectuant une requête de users:Role qui va permettre d'accéder à email et à meta.phone
+
     }
 
     // Récupération of the owner's informations
@@ -127,13 +152,32 @@ export default {
         this.allowEmail = userResponse.meta.allowEmail;
       }
     }
-  },
-  methods: {
+    },
+
     async displayContactInfos() {
       const contactInfosElmnt = document.querySelector(".contact__information");
       contactInfosElmnt.style.display = "block";
     },
-  },
+
+    // Récupère un tableau qui contient les id des
+    // chats préférés de l'utilisateur connecté
+    async favoriteCatsId() {
+      this.userFavoriteCatsId = [];
+      // On demande la liste des favoris de l'utilisteur
+      this.userFavoriteCats = await FavoriteService.findAll();
+      // Pour chaque entrée des favoris on extrait l'IDet on l'ajoute au tableau userFavoriteCatsId
+      this.userFavoriteCats.forEach((el) =>
+        this.userFavoriteCatsId.push(el["post_info"].ID)
+      );
+      console.log(this.userFavoriteCatsId);
+    },
+
+    // Recharger la recherche des favoris
+    reload(){
+      this.favoriteCatsId()
+      console.log(this.userFavoriteCatsId);
+    }
+  }
 };
 </script>
 
