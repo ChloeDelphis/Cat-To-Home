@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import store from '../store/index.js'
 
 const routes = [
   {
@@ -48,7 +49,13 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: '404',
     component: () => import(/* webpackChunkName: "404" */ '../views/Error404View.vue'),
-    meta : {title: 'NotFound'}
+    meta : {title: 'Non trouvé'}
+  },
+  {
+    path: '/403',
+    name: '403',
+    component: () => import(/* webpackChunkName: "403" */ '../views/Error403View.vue'),
+    meta : {title: 'Non autorisé'}
   },
   {
     path: '/legals-mention',
@@ -92,6 +99,24 @@ const DEFAULT_TITLE = 'Cat to home';
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title ?? DEFAULT_TITLE;
   next();
+  // En tant que non connecté je n'accède pas à un profile spécifique
+  if(to.name === 'profile' && store.getters.getToken == null ) {
+    // console.log('ici')
+    router.push({ name: "403" });
+  }
+  // En tant que connecté je n'accède pas à un profile autre que le mien
+  if(to.name === 'profile' && to.params.id !== store.getters.getUserId ) {
+    // console.log('ici')
+    router.push({ name: "403" });
+  }
+   // En tant que non connecté je n'accède pas à un profile spécifique
+  if(to.name === 'cat_add' && store.getters.getToken == null ) {
+    // console.log('ici')
+    router.push({ name: "403" });
+  }
+ 
+  
+ 
 });
 
 

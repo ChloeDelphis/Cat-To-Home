@@ -12,47 +12,45 @@
           <fieldset class="left">
             <label for="lastname">Nom</label><br />
             <input
+              class="input"
               type="text"
               id="lastname"
               name="lastname"
               placeholder="Doe"
               v-model="lastname"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
-              {{ lastNameError }}
-            </p> -->
+            <p class="inscription__form__fieldset__field__error">
+              {{ lastNameError }} {{ nameError }}
+            </p>
             <br />
 
             <label for="firstname">Prénom</label><br />
             <input
+              class="input"
               type="text"
               id="firstname"
               name="firstname"
               placeholder="John"
               v-model="firstname"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
+            <p class="inscription__form__fieldset__field__error">
               {{ firstNameError }}
-            </p> -->
+            </p>
             <br />
 
             <label for="pseudo">Pseudo</label><br />
             <input
+              class="input"
               type="text"
               id="pseudo"
               name="pseudo"
               placeholder="jadoreleschaton2022"
               v-model="pseudo"
-            /><br />
-            <!-- 
-            <label for="birth">Date de naissance</label><br />
-            <input
-              type="text"
-              id="birth"
-              name="birth"
-              placeholder="JJ/MM/AAA"
-              v-model="birth"
-            /><br /> -->
+            />
+            <p class="inscription__form__fieldset__field__error">
+              {{ nickNameError }}
+            </p>
+            <br />
 
             <label
               v-if="
@@ -61,7 +59,9 @@
               "
               for="phone"
               >Numéro de télèphone</label
-            ><br
+            >
+
+            <br
               v-if="
                 this.$store.getters.getToken &&
                 this.$store.getters.getRole !== 'adopter'
@@ -72,15 +72,16 @@
                 this.$store.getters.getToken &&
                 this.$store.getters.getRole !== 'adopter'
               "
+              class="input"
               type="phone"
               id="phone"
               name="phone"
               placeholder="06 XX XX XX XX"
               v-model="phone"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
+            <p class="inscription__form__fieldset__field__error">
               {{ phoneError }}
-            </p> -->
+            </p>
             <br
               v-if="
                 this.$store.getters.getToken &&
@@ -90,53 +91,57 @@
 
             <label for="email">Adresse e-mail</label><br />
             <input
+              class="input"
               type="email"
               id="email"
               name="email"
               placeholder="johndoe@gmal.bzh"
               v-model="email"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
+            <p class="inscription__form__fieldset__field__error">
               {{ emailError }}{{ validEmailError }}
-            </p> -->
+            </p>
             <br />
           </fieldset>
           <fieldset class="right">
             <label for="confirmEmail">Confirmer adresse e-mail</label><br />
             <input
+              class="input"
               type="email"
               id="confirmEmail"
               name="confirmEmail"
               placeholder="johndoe@gmal.bzh"
               v-model="confemail"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
+            <p class="inscription__form__fieldset__field__error">
               {{ confEmailError }}
-            </p> -->
+            </p>
             <br />
 
             <label for="new_password">Mot de passe</label><br />
             <input
+              class="input"
               type="password"
               id="new_password"
               name="new_password"
               v-model="new_password"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
+            <p class="inscription__form__fieldset__field__error">
               {{ passwordError }}
-            </p> -->
+            </p>
             <br />
 
             <label for="confirmPassword">Confirmer mot de passe</label><br />
             <input
+              class="input"
               type="password"
               id="confirmPassword"
               name="confirmpPassword"
               v-model="confPassword"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
+            <p class="inscription__form__fieldset__field__error">
               {{ confPasswordError }}
-            </p> -->
+            </p>
             <br />
 
             <div
@@ -147,10 +152,23 @@
               "
             >
               <label>Je souhaite être contacté par mon : </label>
-              <input class="box" type="checkbox" v-model="allowEmail" />
-              <label class="box_response" for="mail">email </label>
-              <input class="box" type="checkbox" v-model="allowPhone" />
-              <label class="box_response" for="phone">téléphone</label>
+              <input
+                class="box"
+                id="checkmail"
+                type="checkbox"
+                v-model="allowEmail"
+              />
+              <label class="box_response" for="checkmail">email </label>
+              <input
+                class="box"
+                id="checkphone"
+                type="checkbox"
+                v-model="allowPhone"
+              />
+              <label class="box_response" for="checkphone">téléphone</label>
+              <p class="inscription__form__fieldset__field__error">
+                {{ allowContactError }}
+              </p>
               <br />
             </div>
 
@@ -343,12 +361,24 @@ export default {
         }
         // console.log(params);
 
+        const response = await UserService.update(this.id, params);
+        console.log(response);
+        if (response.id) {
+          // this.$route.redirectedFrom = this.$route.path;
+          this.$router.push({ name: "profile", params: { id: this.id } });
+        } else {
+          alert(
+            "Modification impossible, veuillez contacter l'administrateur par le biais de l'onglet contact"
+          );
+        }
+
         // si pas d'erreur pour le mot de passe on le modifie
         if (!this.confPasswordError && !this.passwordError) {
           // On prépare le tableau avec le remplacement du password
           let params = {
             password: this.new_password,
           };
+          console.log(this.new_password);
 
           // On envoie la requête à l'API
           const response = await UserService.update(this.id, params);
@@ -359,7 +389,9 @@ export default {
             // this.$route.redirectedFrom = this.$route.path;
             this.$router.push({ name: "Connexion" });
           } else {
-            alert("ça marche pas !!!");
+            alert(
+              "Erreuyr dans la modification du mot de passe, veuillez contacter l'administrateur par le biais de l'onglet contact"
+            );
           }
         }
       }

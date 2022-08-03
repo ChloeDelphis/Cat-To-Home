@@ -1,7 +1,15 @@
 <template>
   <div>
     <div id="give">
-      <a class="button__orange--papate" href="#">Je donne un chat</a>
+      <router-link
+        v-if="
+          this.$store.getters.getToken &&
+          this.$store.getters.getRole !== 'adopter'
+        "
+        class="button__orange--papate"
+        :to="{ name: 'cat_add' }"
+        >Je donne un chat</router-link
+      >
     </div>
 
     <section class="section__profil__adoption">
