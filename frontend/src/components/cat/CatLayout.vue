@@ -2,10 +2,21 @@
   <main class="cat__details">
         <section class="cat__details__container">
             <div class="cat__details__photo">
-                <img v-bind:src="picture" alt="Photo de chat">
+              <!-- On appelle le composant heartlayout seulement si on est connecté en tant qu'adoptant -->
+                <img class="cat__details__photo__cat-photo" v-bind:src="picture" alt="Photo de chat">
+                <heart-layout
+                  v-if="
+                    this.$store.getters.getToken &&
+                    this.$store.getters.getRole === 'adopter'
+                  "
+                  v-bind:name="this.name"
+                  v-bind:id="id"
+                  v-bind="$attrs"
+                  v-bind:favorite="isFavorite"
+                />
             </div>
             <div class="cat__details__infos1">
-                <h2>Coucou ! Mon nom est {{name}} ! Tu veux m’adopter ?</h2>
+                <h2 class="cat__details__infos1__title">Coucou ! Mon nom est {{name}} ! Tu veux m’adopter ?</h2>
                 <ul>
                     <li class="icon" id="localisation"><span class="bold">Localisation</span> : {{localisation}}</li>
                     <li class="icon" id="department"><span class="bold">Département</span> : {{department}}</li>
@@ -18,7 +29,7 @@
                 </ul>
             </div>
             <div class="cat__details__illustration">
-                <img src="@/assets/img/purr-making-a-photo.png" alt="Illustration d'un chat que l'on prend en photo">
+                <img class="cat__details__illustration-illu" src="@/assets/img/purr-making-a-photo.png" alt="Illustration d'un chat que l'on prend en photo">
             </div>
             <div class="cat__details__infos2">
                 <p>
@@ -52,7 +63,9 @@
 <script>
 import CatService from "@/services/cat/CatService";
 import UserService from "@/services/user/UserService";
+import HeartLayout from "@/components/cat/HeartLayout.vue";
 export default {
+  components: { HeartLayout },
   name: "CatLayout",
   data() {
     return {

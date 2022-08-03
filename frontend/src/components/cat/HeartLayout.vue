@@ -48,11 +48,11 @@ export default {
         if (response.code === 200) {
           console.log("le chat " + this.id + " a bien été retiré des favoris");
           // On fait apparaître le message sur l'interface utilisateur
-          this.displayMessage();
+          this.displayMessage(event);
           // On le fait disparaître au bout de 2 secondes
           setTimeout(this.displayMessage, 2000);
-          const msgEmlt = document.querySelector("#message");
-          msgEmlt.innerHTML = this.name + " a bien été retiré de vos favoris";
+          const msgEmlt = event.currentTarget.querySelector("#message");
+          msgEmlt.innerHTML = this.name + " a été retiré de vos favoris";
           this.$emit("update");
         } else {
           console.log("le chat n'a pas pu être retiré des favoris");
@@ -69,11 +69,11 @@ export default {
           console.log(
             "le chat avec l'id " + this.id + " a bien été ajouté aux favoris"
           );
-                    // On fait apparaître le message sur l'interface utilisateur
-          this.displayMessage();
+          // On fait apparaître le message sur l'interface utilisateur
+          this.displayMessage(event);
           // On le fait disparaître au bout de 2 secondes
           setTimeout(this.displayMessage, 2000);
-          const msgEmlt = document.querySelector("#message");
+          const msgEmlt = event.currentTarget.querySelector("#message");
           msgEmlt.innerHTML = this.name + " a bien été ajouté à vos favoris";
 
           this.$emit("update");
@@ -83,8 +83,8 @@ export default {
       }
     },
 
-    displayMessage() {
-      const msgEmlt = document.querySelector("#message");
+    displayMessage(event) {
+      const msgEmlt = event.currentTarget.querySelector("#message");
       msgEmlt.classList.toggle("hidden");
       // setTimeout(document.querySelector("#message").classList.toggle("hidden"), 2000);
     },
@@ -93,4 +93,10 @@ export default {
 </script>
 
 <style scoped lang="scss" >
+            .hearth {
+                position: absolute;
+                z-index: 5;
+                top: 1rem;
+                right: 1rem;
+            }
 </style>
