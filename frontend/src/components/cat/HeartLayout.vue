@@ -1,4 +1,5 @@
 <template>
+  <div id="message" class="hidden"></div>
   <div class="heart__container" v-on:click="favoriteAddRemove">
     <img
       v-if="favorite"
@@ -27,6 +28,7 @@ export default {
 
   // Definit des propriétés qui sont fournies par le parent
   props: {
+    name: String,
     favorite: Boolean,
     id: Number,
   },
@@ -38,23 +40,27 @@ export default {
 
       // Si le chat fait partie des favoris
       if (this.favorite) {
-        console.log("le chat " + this.id +" fait partie des favoris ");
+        console.log("le chat " + this.id + " fait partie des favoris ");
 
         const response = await FavoriteService.removeFromFavorites({
           cat_id: this.id,
         });
         if (response.code === 200) {
-          console.log(
-            "le chat "+ this.id + " a bien été retiré des favoris"
-          );
-          this.$emit('update');
+          console.log("le chat " + this.id + " a bien été retiré des favoris");
+          // On fait apparaître le message sur l'interface utilisateur
+          this.displayMessage();
+          // On le fait disparaître au bout de 2 secondes
+          setTimeout(this.displayMessage, 2000);
+          const msgEmlt = document.querySelector("#message");
+          msgEmlt.innerHTML = this.name + " a bien été retiré de vos favoris";
+          this.$emit("update");
         } else {
           console.log("le chat n'a pas pu être retiré des favoris");
         }
 
         // Si le chat ne fait pas partie des favoris
       } else {
-        console.log("le chat"  + this.id +" ne fait pas partie des favoris ");
+        console.log("le chat" + this.id + " ne fait pas partie des favoris ");
         const response = await FavoriteService.addToFavorites({
           cat_id: this.id,
         });
@@ -63,11 +69,24 @@ export default {
           console.log(
             "le chat avec l'id " + this.id + " a bien été ajouté aux favoris"
           );
-          this.$emit('update');
+                    // On fait apparaître le message sur l'interface utilisateur
+          this.displayMessage();
+          // On le fait disparaître au bout de 2 secondes
+          setTimeout(this.displayMessage, 2000);
+          const msgEmlt = document.querySelector("#message");
+          msgEmlt.innerHTML = this.name + " a bien été ajouté à vos favoris";
+
+          this.$emit("update");
         } else {
           console.log("le chat n'a pas pu être ajouté aux favoris");
         }
       }
+    },
+
+    displayMessage() {
+      const msgEmlt = document.querySelector("#message");
+      msgEmlt.classList.toggle("hidden");
+      // setTimeout(document.querySelector("#message").classList.toggle("hidden"), 2000);
     },
   },
 };

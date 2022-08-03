@@ -175,7 +175,7 @@
       </div>
     </section>
 
-    <!-- A faire apparaître quand le profil est adoptant et favoris > 0 -->
+    <!-- A faire apparaître quand le profil est adoptant -->
     <ProfileFavoritesLayout
       v-if="
         this.$store.getters.getToken && this.$store.getters.getRole !== 'owner'

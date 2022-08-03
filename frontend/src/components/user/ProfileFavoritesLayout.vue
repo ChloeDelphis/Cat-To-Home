@@ -2,7 +2,10 @@
   <section class="post__list">
     <h2>Mes coups de coeur</h2>
     <div class="post__list__container">
-      <p>Ajoutez des chats à vos favoris pour les voir apparaître ici </p>
+      <!-- On fait apparaître le message ci-dessous si l'utilisateur n'a pas de chats favoris -->
+      <p v-if="!this.favoriteCats.length" class="post__list__container__info">
+        Ajoutez des chats à vos favoris pour les voir apparaître ici
+      </p>
       <cat-card-layout
         v-for="cat in favoriteCats"
         v-bind:key="cat['post_info'].post_title"

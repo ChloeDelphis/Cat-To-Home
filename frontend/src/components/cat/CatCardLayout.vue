@@ -11,6 +11,7 @@
             this.$store.getters.getToken &&
             this.$store.getters.getRole === 'adopter'
           "
+          v-bind:name="this.name"
           v-bind:id="id"
           v-bind="$attrs"
           v-bind:favorite="isFavorite"
@@ -18,7 +19,7 @@
       </div>
       <div class="post__content">
         <span class="post__cat__name" v-html="name"></span>
-        <span class="post__cat__age">v-html="age"</span>
+        <span class="post__cat__age" v-html="age"></span>
         <p class="post__cat__localisation">
           <span class="bold">Localisation - </span
           ><span v-html="localisation"></span>
