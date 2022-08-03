@@ -60,11 +60,11 @@
           >Contact</router-link
         >
 
-        <a
+        <router-link :to="{ name: 'login' }"
           class="header__nav__menu"
           v-if="this.$store.getters.getToken"
           v-on:click="disconnect"
-          >Déconnexion</a
+          >Déconnexion</router-link
         >
         <router-link
           class="header__nav__profile"
@@ -91,10 +91,7 @@ export default {
     disconnect() {
       // On execute la mutation qui va supprimer le token dans le store et dans le sessionStorage
       this.$store.dispatch("deleteUser");
-
-      // On redirige l'utilisateur
-      this.$router.push({ name: "login" });
-    },
+    }
   },
   mounted() {
     const headerElmnt = document.querySelector("#header");

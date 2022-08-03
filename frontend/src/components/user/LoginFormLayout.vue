@@ -118,9 +118,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '../../assets/scss/abstracts/variables/colors';
+
 .btn--reinit__pass {
   border: none;
-  background-color: #E3B8AA;
+  background-color: colors.$color-bg2;
+  color: colors.$color-blue;
   font-size: 1.6rem;
   cursor: pointer;
 }

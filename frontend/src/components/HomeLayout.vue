@@ -44,8 +44,8 @@
             </option>
             <option value="asc">Du plus récent au plus anciens</option>
           </select>
-          <label class="home__form__label" for="filter">Filtre par age</label>
-          <select v-model="age" class="input" name="filter" id="filter">
+          <label class="home__form__label" for="age">Filtre par age</label>
+          <select v-model="age" class="input" name="filter" id="age">
             <option value="tout_age">Tout âge</option>
             <option value="bebe">Bébé</option>
             <option value="junior">Junior</option>
