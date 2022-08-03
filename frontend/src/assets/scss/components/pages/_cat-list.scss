@@ -36,7 +36,6 @@
             div {
                 // margin-bottom: 2rem;
                 width: 28rem;
-                overflow: hidden;
                 
                 label {
                     color: colors.$color-orange;
@@ -122,7 +121,7 @@
             width: 80vw;
             margin: 0 auto 5rem auto;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
         }
     }
 }

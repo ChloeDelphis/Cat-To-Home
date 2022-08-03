@@ -12,15 +12,17 @@
     <section class="error">
       <img
         class="error__img"
-        src="../../assets/img/illu_cat_door.png"
+        src="../../assets/img/purr-sign-in.png"
         alt="chat devant un portail de voyage spatio-temporel"
       />
 
       <div class="error__bloc">
         <h2 class="error__bloc__title">
-          Oups ! <br />
-          Cette page n'existe pas, ou alors elle n'existe plus. <br />
-          Vous êtes sur une page 404<br />
+          You shall not pass !!! <br />
+          <br />
+          Vous êtes sur une page 403 <br />
+          <br />
+          Vous n'avez pas les droits d'accès à cette page <br />
         </h2>
       </div>
     </section>

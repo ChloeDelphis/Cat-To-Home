@@ -20,7 +20,6 @@
             Ajouter la classe fixed à l'élément header  -->
 
       <div id="menu" class="header__nav--desktop">
-
         <router-link
           v-if="
             this.$store.getters.getToken &&
@@ -30,11 +29,12 @@
           :to="{ name: 'cat_add' }"
           >Je donne un chat</router-link
         >
-        
+
         <router-link
+          v-on:click="sendMessage"
           v-if="!this.$store.getters.getToken"
           class="header__nav__don button__orange--papate"
-          :to="{ name: 'registration' }"
+          :to="{ name: 'login' }"
           >Je donne un chat</router-link
         >
 
@@ -44,27 +44,21 @@
         <router-link class="header__nav__menu" :to="{ name: 'cats' }"
           >Les chats</router-link
         >
-        <router-link
-          v-if="!this.$store.getters.getToken"
-          class="header__nav__menu"
-          :to="{ name: 'registration' }"
-          >Inscription</router-link
-        >
-        <router-link
-          v-if="!this.$store.getters.getToken"
-          class="header__nav__menu"
-          :to="{ name: 'login' }"
-          >Connexion</router-link
-        >
         <router-link class="header__nav__menu" :to="{ name: 'contact' }"
           >Contact</router-link
         >
 
-        <a
+        <router-link
+          v-if="!this.$store.getters.getToken"
+          class="header__nav__menu"
+          :to="{ name: 'login' }"
+          >Mon Espace</router-link
+        >
+        <router-link :to="{ name: 'login' }"
           class="header__nav__menu"
           v-if="this.$store.getters.getToken"
           v-on:click="disconnect"
-          >Déconnexion</a
+          >Déconnexion</router-link
         >
         <router-link
           class="header__nav__profile"
@@ -88,12 +82,13 @@
 export default {
   name: "HeaderLayout",
   methods: {
+    async sendMessage(){
+      this.$store.commit('setMessage', 'Vous devez être connecté pour pouvoir ajouter un chat.');
+    },
+
     disconnect() {
       // On execute la mutation qui va supprimer le token dans le store et dans le sessionStorage
       this.$store.dispatch("deleteUser");
-
-      // On redirige l'utilisateur
-      this.$router.push({ name: "login" });
     },
   },
   mounted() {
@@ -128,28 +123,26 @@ export default {
 </script>
 
 <style lang="scss">
-
-.header__nav__menu{
+.header__nav__menu {
   position: relative;
 }
 
-.header__nav__menu::after{
-    content: "";
-    position: absolute;
-    background: #E16441 ;
-    height: 2px;
-    width: 0%;
-    left: 0;
-    bottom: -0.3rem;
-    transform-origin: right;
-    transition: .3s cubic-bezier(.65,.05,.36,1);
+.header__nav__menu::after {
+  content: "";
+  position: absolute;
+  background: #e16441;
+  height: 2px;
+  width: 0%;
+  left: 0;
+  bottom: -0.3rem;
+  transform-origin: right;
+  transition: 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
 }
 
 .header__nav__menu:hover::after {
-    width: 100%;
-    transform: scale(1);
+  width: 100%;
+  transform: scale(1);
 }
-
 
 #cross {
   display: none;

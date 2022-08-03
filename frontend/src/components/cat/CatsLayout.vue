@@ -12,8 +12,9 @@
 
     <section class="research">
       <div class="search__cat__form">
-        <div>
+        <div class="relative">
           <label for="department">Localisation</label>
+          
           <input
             @keyup="sendLocation"
             v-model="location_input"
@@ -66,15 +67,17 @@
           v-bind:name="cat.title.rendered"
           v-bind:age="cat.meta.age"
           v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url"
-          v-for="cat in cats"
+          v-for="cat in visibleCats"
           v-bind:key="cat.title"
         />
       </div>
 
-      <div class="post__list__navigation">
-        <a class="button__blue" href="">Précédent</a>
-        <a class="button__blue" href="">Suivant</a>
-      </div>
+      <pagination-layout 
+      v-bind:cats="cats"
+        v-on:page:update="updatePage"
+        v-bind:currentPage="currentPage"
+        v-bind:pageSize="pageSize" />
+
     </section>
   </main>
 </template>
@@ -84,26 +87,69 @@ import LocationService from "@/services/taxonomies/LocationService";
 import ItemListLocation from "@/components/home/ItemListLocation";
 import CatCardLayout from "@/components/cat/CatCardLayout";
 import CatService from "@/services/cat/CatService";
+import PaginationLayout from '@/components/PaginationLayout.vue';
 
 export default {
   name: "CatsLayout",
+  
   components: {
     CatCardLayout,
     ItemListLocation,
+    PaginationLayout
   },
+
+  
   async mounted() {
+
     this.searchCats();
   },
+
+  data() {
+    return {
+      // PAGINATION
+      cats: [],
+      visibleCats: [],
+      currentPage : 0,
+      pageSize : 3,
+
+      location_input: this.$route.params.location || "",
+      locations: [],
+      location_selected: this.$route.params.location || "",
+      order: this.$route.params.order || "",
+      age: this.$route.params.age || "",
+    };
+  },
+
   methods: {
+
+    // PAGINATION
+  
+
+    updatePage(pageNumber) {
+      this.currentPage = pageNumber;
+      this.updateVisibleCats();
+    },
+
+    updateVisibleCats() {
+      this.visibleCats = this.cats.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize);
+
+      // if we have 0 visible todos, go back a page
+      if (this.visibleCats.length == 0 && this.currentPage > 0) {
+        this.updatePage(this.currentPage -1);
+      }
+    },
+
+    // FILTERS
+
     // Récupere la liste des départements en fonction de se qu'il est tapé dans l'input
     async sendLocation() {
       this.locations = [];
-      document.querySelector("#home__form__list").style.height = "0";
+      document.querySelector("#home__form__list");
 
       if (this.location_input != "") {
         const response = await LocationService.findAll();
         if (response.length != 0) {
-          document.querySelector("#home__form__list").style.height = "12rem";
+          document.querySelector("#home__form__list");
           response.forEach((location) => {
             if (
               location.name
@@ -122,7 +168,8 @@ export default {
       console.log(choiceLocation);
       this.location_input = choiceLocation;
       this.location_selected = choiceLocation;
-      document.querySelector("#home__form__list").style.height = "0";
+      this.locations = [];
+      document.querySelector("#home__form__list");
     },
     // Permet de lancer la recherche en fonction des filtres selectionnés
     async searchCats() {
@@ -133,6 +180,7 @@ export default {
           : (this.cats = await CatService.findAll());
       this.location_selected = this.location_input;
       this.cats = this.catsList();
+      this.updateVisibleCats();
     },
     // filtre le tableau cats en fonction des filtres sélectionnés
     catsList() {
@@ -171,36 +219,24 @@ export default {
         }
       });
     },
-  },
-  data() {
-    return {
-      cats: [],
-      location_input: this.$route.params.location || "",
-      locations: [],
-      location_selected: this.$route.params.location || "",
-      order: this.$route.params.order || "",
-      age: this.$route.params.age || "",
-    };
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .research {
-  #home__form__list {
-    width: auto;
-    position: relative;
-    z-index: 999;
-    bottom: 22px;
-    overflow: scroll;
-  }
+  margin-bottom: 6rem;
 
-  #home__form__list::-webkit-scrollbar {
-    display: none;
-  }
+  // #home__form__list::-webkit-scrollbar {
+  //   display: none;
+  // }
 
   .search__cat__form div {
     margin-right: 1rem;
   }
+}
+
+#home__form__list {
+  top:7rem;
 }
 </style>

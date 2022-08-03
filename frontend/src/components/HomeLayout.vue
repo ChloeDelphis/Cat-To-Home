@@ -13,7 +13,7 @@
           en adopter.
         </p>
         <router-link class="button__orange--papate" v-bind:to="{ name: 'cat_add' }" v-if="this.$store.getters.getToken && this.$store.getters.getRole !== 'adopter'">Je donne un chat</router-link>
-        <router-link class="button__orange--papate" v-bind:to="{ name: 'cat_add' }" v-if="!this.$store.getters.getToken">Je donne un chat</router-link>
+        <router-link v-on:click="sendMessage" class="button__orange--papate" v-bind:to="{ name: 'login' }" v-if="!this.$store.getters.getToken">Je donne un chat</router-link>
       </div>
       <div class="home__img">
         <img class="cat__one" src="../assets/img/IMG_CAT1.png" alt="" />
@@ -44,8 +44,8 @@
             </option>
             <option value="asc">Du plus récent au plus anciens</option>
           </select>
-          <label class="home__form__label" for="filter">Filtre par age</label>
-          <select v-model="age" class="input" name="filter" id="filter">
+          <label class="home__form__label" for="age">Filtre par age</label>
+          <select v-model="age" class="input" name="filter" id="age">
             <option value="tout_age">Tout âge</option>
             <option value="bebe">Bébé</option>
             <option value="junior">Junior</option>
@@ -66,7 +66,8 @@
       <a class="nxt-btn" ><img class="arrow" src="../assets/icones/fleche_droite.png" alt="" /></a>
         <div class="product-container">
           
-          <CatCardLayout v-bind:localisation="cat._embedded['wp:term'][2][0].name" v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url" v-bind:id="cat.id" v-bind:name="cat.title.rendered" v-bind:age="cat.meta.age" v-for="cat in cats" v-bind:key="cat.id" />
+          <CatCardLayout v-bind:localisation="cat._embedded['wp:term'][2][0].name" v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url" 
+          v-bind:id="cat.id" v-bind:name="cat.title.rendered" v-bind:age="cat.meta.age" v-for="cat in cats" v-bind:key="cat.id" />
           
         </div>
     </section>
@@ -155,6 +156,10 @@ export default {
     },
 
   methods: {
+    async sendMessage(){
+      this.$store.commit('setMessage', 'Vous devez être connecté pour pouvoir ajouter un chat.');
+    },
+
     async sendLocation() {
       this.locations = [];
       document.querySelector('#home__form__list');

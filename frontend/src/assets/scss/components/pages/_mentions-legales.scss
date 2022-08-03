@@ -64,15 +64,19 @@
     .mentions {
 
         flex-direction: row;
+        justify-content: end;
 
         &__img {
-            width: 30%;
+            position: fixed;
+            top: 11rem;
+            left: 0;
+            width: 25%;
             padding: 2rem;
         }
 
 
         &__bloc {
-
+            width: 70%;
             padding: 5rem 3rem;
 
         }
@@ -89,7 +93,7 @@
         margin-top: 5rem;
 
         &__img {
-            width: 40%;
+            width: 25%;
         }
 
         &__bloc {
@@ -107,7 +111,7 @@
 
         &__img {
             margin: 0 6rem;
-            width: 60%;
+            width: 25%;
         }
 
         &__bloc {

@@ -70,6 +70,7 @@ function cat_to_home_rest_user_register_handler($request)
     }
     if ($lastname === $firstname) {
         $error->add(404, __("Le prénom et le nom ne doivent pas être les mêmes", 'wp-rest-user'), array('status' => 400));
+        return $error;
     }
     if (empty($birth)) {
         $error->add(404, __("La date de naissance est obligatoire.", 'wp-rest-user'), array('status' => 400));
@@ -77,6 +78,7 @@ function cat_to_home_rest_user_register_handler($request)
     }
     if (empty($nickname)) {
         $nickname === $email;
+        return $error;
     }
 
     // Verification qu'un utilisateur avec le même mail n'existe pas.

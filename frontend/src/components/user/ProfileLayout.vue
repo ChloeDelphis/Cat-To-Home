@@ -19,9 +19,9 @@
               placeholder="Doe"
               v-model="lastname"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
-              {{ lastNameError }}
-            </p> -->
+            <p class="inscription__form__fieldset__field__error">
+              {{ lastNameError }} {{ nameError }}
+            </p>
             <br />
 
             <label for="firstname">Prénom</label><br />
@@ -33,9 +33,9 @@
               placeholder="John"
               v-model="firstname"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
+            <p class="inscription__form__fieldset__field__error">
               {{ firstNameError }}
-            </p> -->
+            </p>
             <br />
 
             <label for="pseudo">Pseudo</label><br />
@@ -46,16 +46,11 @@
               name="pseudo"
               placeholder="jadoreleschaton2022"
               v-model="pseudo"
-            /><br />
-            <!-- 
-            <label for="birth">Date de naissance</label><br />
-            <input
-              type="text"
-              id="birth"
-              name="birth"
-              placeholder="JJ/MM/AAA"
-              v-model="birth"
-            /><br /> -->
+            />
+            <p class="inscription__form__fieldset__field__error">
+              {{ nickNameError }}
+            </p>
+            <br />
 
             <label
               v-if="
@@ -64,7 +59,9 @@
               "
               for="phone"
               >Numéro de télèphone</label
-            ><br
+            >
+
+            <br
               v-if="
                 this.$store.getters.getToken &&
                 this.$store.getters.getRole !== 'adopter'
@@ -82,9 +79,9 @@
               placeholder="06 XX XX XX XX"
               v-model="phone"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
+            <p class="inscription__form__fieldset__field__error">
               {{ phoneError }}
-            </p> -->
+            </p>
             <br
               v-if="
                 this.$store.getters.getToken &&
@@ -101,9 +98,9 @@
               placeholder="johndoe@gmal.bzh"
               v-model="email"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
+            <p class="inscription__form__fieldset__field__error">
               {{ emailError }}{{ validEmailError }}
-            </p> -->
+            </p>
             <br />
           </fieldset>
           <fieldset class="right">
@@ -116,9 +113,9 @@
               placeholder="johndoe@gmal.bzh"
               v-model="confemail"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
+            <p class="inscription__form__fieldset__field__error">
               {{ confEmailError }}
-            </p> -->
+            </p>
             <br />
 
             <label for="new_password">Mot de passe</label><br />
@@ -129,9 +126,9 @@
               name="new_password"
               v-model="new_password"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
+            <p class="inscription__form__fieldset__field__error">
               {{ passwordError }}
-            </p> -->
+            </p>
             <br />
 
             <label for="confirmPassword">Confirmer mot de passe</label><br />
@@ -142,9 +139,9 @@
               name="confirmpPassword"
               v-model="confPassword"
             />
-            <!-- <p class="inscription__form__fieldset__field__error">
+            <p class="inscription__form__fieldset__field__error">
               {{ confPasswordError }}
-            </p> -->
+            </p>
             <br />
 
             <div
@@ -155,10 +152,23 @@
               "
             >
               <label>Je souhaite être contacté par mon : </label>
-              <input class="box" type="checkbox" v-model="allowEmail" />
-              <label class="box_response" for="mail">email </label>
-              <input class="box" type="checkbox" v-model="allowPhone" />
-              <label class="box_response" for="phone">téléphone</label>
+              <input
+                class="box"
+                id="checkmail"
+                type="checkbox"
+                v-model="allowEmail"
+              />
+              <label class="box_response" for="checkmail">email </label>
+              <input
+                class="box"
+                id="checkphone"
+                type="checkbox"
+                v-model="allowPhone"
+              />
+              <label class="box_response" for="checkphone">téléphone</label>
+              <p class="inscription__form__fieldset__field__error">
+                {{ allowContactError }}
+              </p>
               <br />
             </div>
 
