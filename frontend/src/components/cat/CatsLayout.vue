@@ -64,6 +64,7 @@
           v-bind:id="cat.id"
           v-bind:localisation="cat._embedded['wp:term'][2][0].name"
           v-bind:name="cat.title.rendered"
+          v-bind:age="cat.meta.age"
           v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url"
           v-for="cat in cats"
           v-bind:key="cat.title"
