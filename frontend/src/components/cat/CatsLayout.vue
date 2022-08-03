@@ -66,15 +66,21 @@
           v-bind:name="cat.title.rendered"
           v-bind:age="cat.meta.age"
           v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url"
-          v-for="cat in cats"
+          v-for="cat in visibleCats"
           v-bind:key="cat.title"
         />
       </div>
 
-      <div class="post__list__navigation">
+      <pagination-layout 
+      v-bind:cats="cats"
+        v-on:page:update="updatePage"
+        v-bind:currentPage="currentPage"
+        v-bind:pageSize="pageSize" />
+
+      <!-- <div class="post__list__navigation">
         <a class="button__blue" href="">Précédent</a>
         <a class="button__blue" href="">Suivant</a>
-      </div>
+      </div> -->
     </section>
   </main>
 </template>
@@ -84,17 +90,58 @@ import LocationService from "@/services/taxonomies/LocationService";
 import ItemListLocation from "@/components/home/ItemListLocation";
 import CatCardLayout from "@/components/cat/CatCardLayout";
 import CatService from "@/services/cat/CatService";
+import PaginationLayout from '@/components/PaginationLayout.vue';
 
 export default {
   name: "CatsLayout",
+  
   components: {
     CatCardLayout,
     ItemListLocation,
+    PaginationLayout
   },
+
   async mounted() {
     this.searchCats();
   },
+
+  data() {
+    return {
+      // PAGINATION
+      cats: [],
+      visibleCats: [],
+      nextCat: this.cats.length +1,
+      currentPage : 0,
+      pageSize : 3,
+
+      location_input: this.$route.params.location || "",
+      locations: [],
+      location_selected: this.$route.params.location || "",
+      order: this.$route.params.order || "",
+      age: this.$route.params.age || "",
+    };
+  },
+
   methods: {
+
+    // PAGINATION
+
+    updatePage(pageNumber) {
+      this.currentPage = pageNumber;
+      this.updateVisibleCats();
+    },
+
+    updateVisibleCats() {
+      this.visibleCats = this.cats.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize);
+
+      // if we have 0 visible todos, go back a page
+      if (this.visibleTodos.length == 0 && this.currentPage > 0) {
+        this.updatePage(this.currentPage -1);
+      }
+    },
+
+    // FILTERS
+
     // Récupere la liste des départements en fonction de se qu'il est tapé dans l'input
     async sendLocation() {
       this.locations = [];
@@ -171,17 +218,7 @@ export default {
         }
       });
     },
-  },
-  data() {
-    return {
-      cats: [],
-      location_input: this.$route.params.location || "",
-      locations: [],
-      location_selected: this.$route.params.location || "",
-      order: this.$route.params.order || "",
-      age: this.$route.params.age || "",
-    };
-  },
+  }
 };
 </script>
 
