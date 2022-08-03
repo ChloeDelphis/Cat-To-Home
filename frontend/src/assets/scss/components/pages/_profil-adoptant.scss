@@ -85,6 +85,12 @@
         justify-content: space-around;
         width: 80vw;
         margin: auto;
+        margin-bottom: 10rem;
+
+        &__info{
+            color: colors.$color-blue;
+            text-align: center;
+        }
         
         .post {
             width: 43rem;

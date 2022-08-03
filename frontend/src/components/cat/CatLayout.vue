@@ -2,10 +2,21 @@
   <main class="cat__details">
         <section class="cat__details__container">
             <div class="cat__details__photo">
-                <img v-bind:src="picture" alt="Photo de chat">
+              <!-- On appelle le composant heartlayout seulement si on est connecté en tant qu'adoptant -->
+                <img class="cat__details__photo__cat-photo" v-bind:src="picture" alt="Photo de chat">
+                <heart-layout
+                  v-if="
+                    this.$store.getters.getToken &&
+                    this.$store.getters.getRole === 'adopter'
+                  "
+                  v-bind:name="this.name"
+                  v-bind:id="id"
+                  v-on:update="reload"
+                  v-bind:favorite="isFavorite"
+                />
             </div>
             <div class="cat__details__infos1">
-                <h2>Coucou ! Mon nom est {{name}} ! Tu veux m’adopter ?</h2>
+                <h2 class="cat__details__infos1__title">Coucou ! Mon nom est {{name}} ! Tu veux m’adopter ?</h2>
                 <ul>
                     <li class="icon" id="localisation"><span class="bold">Localisation</span> : {{localisation}}</li>
                     <li class="icon" id="department"><span class="bold">Département</span> : {{department}}</li>
@@ -18,7 +29,7 @@
                 </ul>
             </div>
             <div class="cat__details__illustration">
-                <img src="@/assets/img/purr-making-a-photo.png" alt="Illustration d'un chat que l'on prend en photo">
+                <img class="cat__details__illustration-illu" src="@/assets/img/purr-making-a-photo.png" alt="Illustration d'un chat que l'on prend en photo">
             </div>
             <div class="cat__details__infos2">
                 <p>
@@ -52,7 +63,11 @@
 <script>
 import CatService from "@/services/cat/CatService";
 import UserService from "@/services/user/UserService";
+import HeartLayout from "@/components/cat/HeartLayout.vue";
+import FavoriteService from "@/services/favorite/FavoriteService";
+
 export default {
+  components: { HeartLayout },
   name: "CatLayout",
   data() {
     return {
@@ -68,6 +83,7 @@ export default {
       diseases: [],
       environments: [],
       infos: null,
+      id: parseInt(this.$route.params.id),
 
       // information about the owner
       authorId: null,
@@ -75,10 +91,31 @@ export default {
       email: null,
       allowPhone: null,
       allowEmail: null,
+
+      // favorite infos
+      userFavoriteCatsId: [],
     };
   },
+
   async mounted() {
+    this.favoriteCatsId();
+    this.getInfo();    
+  },
+
+  computed: {
+    isFavorite() {
+      for (const el of this.userFavoriteCatsId) {
+        if (el === this.id) {
+          return true;
+        }
+      }
+      return false;
+    },
+  },
+
+  methods: {
     // Récupération of the cat's informations
+    async getInfo(){
     let id = this.$route.params.id;
     const catResponse = await CatService.find(id);
     if (catResponse.code) {
@@ -99,6 +136,7 @@ export default {
       this.authorId = catResponse.author;
 
       //   Il est maintenant nécessaire de reprendre cette info en effectuant une requête de users:Role qui va permettre d'accéder à email et à meta.phone
+
     }
 
     // Récupération of the owner's informations
@@ -114,13 +152,32 @@ export default {
         this.allowEmail = userResponse.meta.allowEmail;
       }
     }
-  },
-  methods: {
+    },
+
     async displayContactInfos() {
       const contactInfosElmnt = document.querySelector(".contact__information");
       contactInfosElmnt.style.display = "block";
     },
-  },
+
+    // Récupère un tableau qui contient les id des
+    // chats préférés de l'utilisateur connecté
+    async favoriteCatsId() {
+      this.userFavoriteCatsId = [];
+      // On demande la liste des favoris de l'utilisteur
+      this.userFavoriteCats = await FavoriteService.findAll();
+      // Pour chaque entrée des favoris on extrait l'IDet on l'ajoute au tableau userFavoriteCatsId
+      this.userFavoriteCats.forEach((el) =>
+        this.userFavoriteCatsId.push(el["post_info"].ID)
+      );
+      console.log(this.userFavoriteCatsId);
+    },
+
+    // Recharger la recherche des favoris
+    reload(){
+      this.favoriteCatsId()
+      console.log(this.userFavoriteCatsId);
+    }
+  }
 };
 </script>
 
