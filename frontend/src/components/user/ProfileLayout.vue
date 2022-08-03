@@ -12,6 +12,7 @@
           <fieldset class="left">
             <label for="lastname">Nom</label><br />
             <input
+              class="input"
               type="text"
               id="lastname"
               name="lastname"
@@ -25,6 +26,7 @@
 
             <label for="firstname">Prénom</label><br />
             <input
+              class="input"
               type="text"
               id="firstname"
               name="firstname"
@@ -38,6 +40,7 @@
 
             <label for="pseudo">Pseudo</label><br />
             <input
+              class="input"
               type="text"
               id="pseudo"
               name="pseudo"
@@ -72,6 +75,7 @@
                 this.$store.getters.getToken &&
                 this.$store.getters.getRole !== 'adopter'
               "
+              class="input"
               type="phone"
               id="phone"
               name="phone"
@@ -90,6 +94,7 @@
 
             <label for="email">Adresse e-mail</label><br />
             <input
+              class="input"
               type="email"
               id="email"
               name="email"
@@ -104,6 +109,7 @@
           <fieldset class="right">
             <label for="confirmEmail">Confirmer adresse e-mail</label><br />
             <input
+              class="input"
               type="email"
               id="confirmEmail"
               name="confirmEmail"
@@ -117,6 +123,7 @@
 
             <label for="new_password">Mot de passe</label><br />
             <input
+              class="input"
               type="password"
               id="new_password"
               name="new_password"
@@ -129,6 +136,7 @@
 
             <label for="confirmPassword">Confirmer mot de passe</label><br />
             <input
+              class="input"
               type="password"
               id="confirmPassword"
               name="confirmpPassword"
@@ -154,7 +162,7 @@
               <br />
             </div>
 
-            <button v-on:click="submit" type="submit" class="button__orange">
+            <button v-on:click="submit" class="button__orange">
               Modifier mes informations
             </button>
           </fieldset>
@@ -198,27 +206,28 @@ export default {
 
   data() {
     return {
-      id: null,
-      lastname: null,
-      firstname: null,
-      pseudo: null,
-      email: null,
-      confemail: null,
-      phone: null,
-      new_password: null,
-      confPassword: null,
-      allowPhone: null,
-      allowEmail: null,
-      nameError: null,
-      lastNameError: null,
-      firstNameError: null,
-      phoneError: null,
-      emailError: null,
-      confEmailError: null,
-      passwordError: null,
-      confPasswordError: null,
-      validEmailError: null,
       allowContactError: null,
+      allowEmail: null,
+      allowPhone: null,
+      confEmailError: null,
+      confPassword: null,
+      confPasswordError: null,
+      confemail: null,
+      email: null,
+      emailError: null,
+      firstNameError: null,
+      firstname: null,
+      id: null,
+      lastNameError: null,
+      lastname: null,
+      nameError: null,
+      new_password: null,
+      nickNameError: null,
+      passwordError: null,
+      phone: null,
+      pseudo: null,
+      phoneError: null,
+      validEmailError: null,
     };
   },
   async mounted() {
@@ -246,6 +255,7 @@ export default {
       this.nameError = null;
       this.lastNameError = null;
       this.firstNameError = null;
+      this.nickNameError = null;
       this.phoneError = null;
       this.emailError = null;
       this.confEmailError = null;
@@ -264,18 +274,18 @@ export default {
       if (!this.firstname) {
         this.firstNameError = "Merci de renseigner votre prénom";
       }
+      if (!this.pseudo) {
+        this.nickNameError = "Merci de renseigner votre pseudo";
+      }
       if (this.firstname.length < 2) {
         this.firstNameError = "Le prénom ne fait qu'un seul caractère";
       }
       if (this.lastname === this.firstname) {
         this.nameError = "Le prénom et le nom ne peuvent pas être identiques";
       }
-      if (!this.phone) {
-        this.phoneError = "Merci de renseigner votre numéro de télèphone ";
-      }
-      if (!this.validatePhoneNumber(this.phone)) {
-        this.phoneError = "Merci de renseigner un numéro de télèphone valide ";
-      }
+      // if (!this.phone) {
+      //   this.phoneError = "Merci de renseigner votre numéro de télèphone ";
+      // }
       if (!this.email || !this.confemail) {
         this.emailError = "Merci de renseigner et confirmer votre email";
       }
@@ -296,8 +306,14 @@ export default {
         this.allowContactError =
           "Vous devez communiquer votre mail ou votre téléphone";
       }
+      if (this.allowPhone && !this.validatePhoneNumber(this.phone)) {
+        this.allowContactError =
+          "Merci de renseigner un numéro de téléphone valide";
+      }
+      // if (!this.validatePhoneNumber(this.phone)) {
+      //   this.phoneError = "Merci de renseigner un numéro de télèphone valide ";
+      // }
 
-      // Si on n'a aucune erreur
       const verifData = await UserService.find(this.id);
       if (verifData.id) {
         let params = {};
@@ -307,8 +323,8 @@ export default {
         if (!this.firstError && verifData.first_name !== this.firstname) {
           params["first_name"] = this.firstname;
         }
-        if (!this.allowContactError && verifData.username !== this.pseudo) {
-          params["username"] = this.pseudo;
+        if (!this.nickNameError && verifData.nickname !== this.pseudo) {
+          params["nickname"] = this.pseudo;
         }
         if (!this.allowContactError && verifData.meta.phone !== this.phone) {
           params["meta"] = { phone: this.phone };
@@ -333,7 +349,7 @@ export default {
         ) {
           params["meta"] = { allowEmail: this.allowEmail };
         }
-        console.log(params);
+        // console.log(params);
 
         const response = await UserService.update(this.id, params);
         console.log(response);
@@ -341,7 +357,9 @@ export default {
           // this.$route.redirectedFrom = this.$route.path;
           this.$router.push({ name: "profile", params: { id: this.id } });
         } else {
-          alert("ça marche pas !!!");
+          alert(
+            "Modification impossible, veuillez contacter l'administrateur par le biais de l'onglet contact"
+          );
         }
 
         // si pas d'erreur pour le mot de passe on le modifie
@@ -350,6 +368,7 @@ export default {
           let params = {
             password: this.new_password,
           };
+          console.log(this.new_password);
 
           // On envoie la requête à l'API
           const response = await UserService.update(this.id, params);
@@ -358,9 +377,11 @@ export default {
             // On supprime le token
             this.$store.dispatch("deleteUser");
             // this.$route.redirectedFrom = this.$route.path;
-            this.$router.push({ name: "login" });
+            this.$router.push({ name: "Connexion" });
           } else {
-            alert("ça marche pas !!!");
+            alert(
+              "Erreuyr dans la modification du mot de passe, veuillez contacter l'administrateur par le biais de l'onglet contact"
+            );
           }
         }
       }

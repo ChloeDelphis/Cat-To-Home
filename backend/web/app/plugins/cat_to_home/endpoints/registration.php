@@ -35,6 +35,7 @@ function cat_to_home_rest_user_register_handler($request)
     $role = sanitize_text_field($parameters['role']);
     $firstname = sanitize_text_field($parameters['firstname']);
     $lastname = sanitize_text_field($parameters['lastname']);
+    $nickname = sanitize_text_field($parameters['nickname']);
     $birth = $parameters['birth'];
 
 
@@ -74,6 +75,9 @@ function cat_to_home_rest_user_register_handler($request)
         $error->add(404, __("La date de naissance est obligatoire.", 'wp-rest-user'), array('status' => 400));
         return $error;
     }
+    if (empty($nickname)) {
+        $nickname === $email;
+    }
 
     // Verification qu'un utilisateur avec le même mail n'existe pas.
     if (!email_exists($email)) {
@@ -83,6 +87,7 @@ function cat_to_home_rest_user_register_handler($request)
             'user_email' => $email,
             'first_name' => $firstname,
             'last_name' => $lastname,
+            'nickname' => $nickname,
             'birth' => $birth
         ]);
         // Si la création du nouvel utilisateur est bonne

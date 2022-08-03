@@ -16,8 +16,8 @@
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="sexe">Sexe</label>
                         <div class="current__value" v-html="sex_name"></div>
-                        <select v-model="sex" class="input cat__input" name="sexe" id="sexe">
-                            <option  v-for="catSex in sexes" :key="catSex.id" :value="catSex.id">{{catSex.name}}</option>
+                        <select @change="getIdSex" class="input cat__input" name="sexe" id="sexe">
+                            <option  v-for="sex in sexes" :key="sex.id" :value="sex.id" :selected="(sex_name == sex.name) ? true : false">{{sex.name}}</option>
                         </select>
                     </div>
                     <div class="adoption__form__pair">
@@ -29,9 +29,9 @@
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="department">Département</label>
                         <div class="current__value" v-html="department_name"></div>
-                        <input @keyup="sendLocation" v-model="department" type="text" class="input cat__input"    name="departement" id="department">
+                        <input @keyup="sendLocation" v-model="department_name" type="text" class="input cat__input" id="department">
                         <div id="home__form__list">
-                            <ItemListLocation v-for="location in locations" :key="location" :name="location"    :value="location.id"
+                            <ItemListLocation v-for="location in locations" :key="location.id" :name="location" :value="location.id"
                             @choiceLocation="selectedLocation" />
                         </div>
                         
@@ -39,13 +39,9 @@
 
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="environment">Environnement</label>
-                        <div class="current__value">
-                            <ul>
-                                <li v-for="catEnvironment in environment" v-bind:key="catEnvironment.id" v-html="catEnvironment.name"></li>
-                            </ul>
-                        </div>
-                        <select v-model="environment" class="input cat__input" name="environment" id="environment">
-                            <option v-for="environment in environments" :key="environment.id" :value="environment.id">{{environment.name}}</option> 
+                        <div class="current__value" v-html="environment_name"></div>
+                        <select @change="getIdEnvironment" class="input cat__input" name="environment" id="environment">
+                            <option v-for="environment in environments" :key="environment.id" :value="environment.id" :selected="(environment_name == environment.name) ? true : false">{{environment.name}}</option> 
                         </select>
                     </div>
 
@@ -64,13 +60,13 @@
                         <label class="input__name cat__label pen" for="vaccine">Vacciné contre</label>
                         <div class="current__value">
                             <ul>
-                                <li v-for="vaccin in checkedVaccins" v-bind:key="vaccin.id" v-html="vaccin.name"></li>
+                                <li v-for="vaccin in vaccinates" v-bind:key="vaccin" ><span v-if="vaccins_id.includes(vaccin.id)"    v-html="vaccin.name"></span></li>
                             </ul>
                         </div>
                         <div class="cat__input">
                             <div v-for="vaccinate in vaccinates" :key="vaccinate.id">
-                                <input  type="checkbox" id="vaccin" name="vaccin" :value="vaccinate" v-model="checkedVaccins"/>
-                                <label for="vaccin"> {{vaccinate.name}}</label>
+                                <input type="checkbox" id="vaccin" name="vaccin" :value="vaccinate.id" :checked="(vaccins_id.includes(vaccinate.id))" v-model="vaccins_id" /> 
+                                <label for="vaccin"> {{vaccinate.name}} </label>
                             </div>
                         </div>
                     </div>
@@ -82,14 +78,10 @@
                             <span>(si oui, préciser dans la description)</span>
                             </legend>
                         </div>
-                        <div class="current__value">
-                            <ul>
-                                <li v-for="disease in diseases_input" :key="disease.id" v-html="disease.name"></li>
-                            </ul>
-                        </div>
+                        <div class="current__value" v-html="disease_name"></div>
                         <div class="cat__input">
                             <div v-for="disease in diseases" :key="disease.id">
-                                <input v-model="diseases" :value="disease.id" type="checkbox" :id="disease.id"    name="sickness"/>
+                                <input @change="getIdDisease" :value="disease.id" type="radio" :id="disease.id" name="sickness" :checked="(disease_name == disease.name) ? true : false" v-model="disease_name"/>
                                 <label :for="disease.id">{{disease.name}}</label>
                             </div> 
                         </div>
@@ -118,12 +110,15 @@
         </div>
 </template>
 
+
+
 <script>
 
 import CatService from '@/services/cat/CatService';
 import FindAllService from '@/services/taxonomies/FindAllService';
 import ItemListLocation from '@/components/home/ItemListLocation';
-import LocationService from '@/services/cat/LocationService';
+import LocationGouvService from '@/services/cat/LocationGouvService';
+import LocationService from '@/services/taxonomies/LocationService';
 
 import NewCat from '@/services/cat/NewCat';
 
@@ -146,15 +141,19 @@ export default {
             id: this.initialId,
 
             title: null,
-            sex: null,
             sex_name: null,
+            sex_id: null,
             localisation: null,
-            department: null,
-            departement_name: null,
-            environment: null,
+            departments: null,
+            department_name: null,
+            department_id: null,
+            environment_name: null,
+            environment_id: null,
             age: null,
             checkedVaccins: [],
-            diseases_input: null,
+            vaccins_id: [],
+            disease_id: null,
+            disease_name: null,
             content: null,
             picture: null,
 
@@ -162,6 +161,7 @@ export default {
 
             picture_file: null,
             preview_picture: '',
+            message: null,
 
             // taxonomies
 
@@ -173,7 +173,7 @@ export default {
         }
     },
 
-    async mounted() {
+    async created() {
 
         // Récupération des données concernant le chat
         let id = this.id;
@@ -183,28 +183,32 @@ export default {
             alert(response.message)
         } else {
             this.title = response.title.rendered;
-            this.sex = response._embedded['wp:term'][3][0];
             this.sex_name = response._embedded['wp:term'][3][0].name;
+            this.sex_id = response._embedded['wp:term'][3][0].id.toString();
             this.localisation = response.meta.city;
-            this.department = response._embedded['wp:term'][2][0];
             this.department_name = response._embedded['wp:term'][2][0].name;
-            this.environment = response._embedded['wp:term'][1];
+            this.environment_name = response._embedded['wp:term'][1][0].name;
+            this.environment_id = response._embedded['wp:term'][1][0].id;
             this.age = response.meta.age;
             this.checkedVaccins = response._embedded['wp:term'][4];
-            this.diseases_input = response._embedded['wp:term'][0];
+            this.disease_id = response._embedded['wp:term'][0][0].id.toString();
+            this.disease_name = response._embedded['wp:term'][0][0].name;
             this.content = response.content.rendered.replace(/(<([^>]+)>)/ig, "");
             this.picture = response._embedded['wp:featuredmedia'][0].source_url;
+            
+            this.checkedVaccins.forEach(vaccin => {
+                this.vaccins_id.push(vaccin.id)
+            });
         }
 
         // Récupération des taxonomies
-
         this.environments = await FindAllService.findAllEnvironment();
         this.sexes = await FindAllService.findAllSex();
         this.vaccinates = await FindAllService.findAllVaccinate();
         this.diseases = await FindAllService.findAllDisease();
+        this.departments = await LocationService.findAll();
         
         // Objet Javascript pour dynamiser le formulaire 
-
         const catForm = {
 
             init: function() {
@@ -220,6 +224,11 @@ export default {
                 inputArray.forEach(function(inputElmnt) {
 
                     inputElmnt.addEventListener('blur', catForm.hideInput);
+                });
+
+                inputArray.forEach(function(inputElmnt) {
+
+                    inputElmnt.addEventListener('change', catForm.hideInput);
                 });
 
                 inputArray.forEach(function(inputElmnt) {
@@ -240,6 +249,7 @@ export default {
 
                 currentValue.style.display="none";
                 input.style.display="block";
+                input.focus();
         
             },
 
@@ -267,93 +277,125 @@ export default {
     },
     
     methods: {
+        getIdSex(event) {
+            const element = event.currentTarget;
+            this.sex_name = element.options[element.selectedIndex].text;
+            this.sex_id = element.value;
+        },
+
+        getIdEnvironment(event) {
+            const element = event.currentTarget;
+            this.environment_name = element.options[element.selectedIndex].text;
+            this.environment_id = element.value;
+        },
+
+        getIdDisease(event) {
+            const element = event.currentTarget;
+            const label = element.nextSibling;
+            this.disease_name = label.textContent;
+            this.disease_id = element.value;
+        },
+    
         async updateCat() {
              this.errors = [];
              // Validation du contenu du formulaire
              if(!this.title) {
                  this.errors.push("Title cannot be empty");
              }
-             if(!this.sex) {
+             if(!this.sex_name) {
                  this.errors.push("Sex cannot be empty");
              }
              if(!this.localisation) {
                  this.errors.push("Localisation cannot be empty");
              }
-             if(!this.department) {
+             if(!this.department_name) {
                  this.errors.push("Department cannot be empty");
              }
-             if(!this.environment) {
+             if(!this.environment_name) {
                  this.errors.push("Environment cannot be empty");
              }
              if(!this.age) {
                  this.errors.push("Date cannot be empty");
              }
-             if(!this.diseases) {
+             if(!this.disease_name) {
                  this.errors.push("Diseases cannot be empty");
              }
              if(!this.content) {
                  this.errors.push("Content cannot be empty");
              }
              if(this.errors.length === 0) {
-                // console.log(this.title)
+
+                if (this.department_name !== "") {
+                    let verifLocation = false;
+                    let departmentId = "";
+                    this.departments.forEach((department) => {
+                        if (department.name === this.department_name) {
+                            verifLocation = true;
+                            departmentId = department.id;
+                        }
+                    });
+                    // Si la localisation n'est pas dans le backend, on la crée
+                    if (!verifLocation) {
+
+                        // upload departement dans le backend avec l'id du post
+                        const createLocation = await NewCat.createLocation(this.id, {
+                            name: this.department_name,
+                        });
+                        if (createLocation.id) {
+                            departmentId = createLocation.id;
+                        }
+                    }
+                    // Et ensuite, on lie l'id à la fiche 
+                    if (departmentId) {  
+                        this.department_id = departmentId;
+                    }
+                }
 
                 const idVaccin = [];
-                this.checkedVaccins.forEach(vaccin => {
-
-                    idVaccin.push(vaccin.id);
+                this.vaccins_id.forEach(vaccin => {
+                    idVaccin.push(vaccin);
                 });
 
                 let params = {
                      "title": this.title,
-                     "sex": this.sex.id,
-                     "location": this.localisation.id,
-                     "departement": this.department.id,
-                     "environment": this.environment.id,
+                     "sex": this.sex_id,
+                     "location": this.department_id,
+                     "environment": this.environment_id,
                      "meta": {"age": this.age, "city": this.localisation},
                      "vaccinate": idVaccin,
-                     "diseases": this.diseases.id,
+                     "disease": this.disease_id,
                      "content": this.content,
-                     "status": 'publish'
                  }
-                switch (this.$store.getters.getRole) {
-                  case 'owner':
-                    params.status = "publish"
-                    break;
-                 }
-                const response = await CatService.update(this.id, params);
-                 // Reception de la réponse et affichage
-                if(response.id) {
 
-                    if(this.picture_file !== null) {
-                        // upload image dans le backend avec l'id du post
-                        const updatePicture = await NewCat.uploadPicture(this.id, this.picture_file.name,   {headers: {"Content-Type": "image/jpeg"}}, this.picture_file)
-                        // ajout de l'id de l'image dans le post créer
-                        if (updatePicture.id) {
-                            await NewCat.addFeaturedMedia(this.id, {
-                                "featured_media": updatePicture.id
-                            })
+                const updateCat = await CatService.update(this.id, params);
+                console.log(updateCat);
+                if(this.picture_file !== null) {
+                    // upload image dans le backend avec l'id du post
+                    const updatePicture = await NewCat.uploadPicture(this.id, this.picture_file.name,   {headers: {"Content-Type": "image/jpeg"}}, this.picture_file)
+                    // ajout de l'id de l'image dans le post créer
+                    if (updatePicture.id) {
+                        const addPicturedMedia = await NewCat.addFeaturedMedia(this.id, {
+                            "featured_media": updatePicture.id
+                        })
+                        if (addPicturedMedia.id) {
+                            this.message = "L'image a bien été enregistrée"
                         }
                     }
-                    
-                    // upload departement dans le backend avec l'id du post
-                    const createLocation = await NewCat.uploadLocation(this.id, { "name": this.department}) 
-                    console.log(createLocation);   
-                     // ajout de l'id du departement dans le post créer    
-                    if (createLocation.id) {
-                      const updatePostLocation = await NewCat.addLocation(this.id, {
-                          "location": createLocation.id
-                      });
-                      console.log(updatePostLocation);                      
-                    }
-                    
-                    this.$router.go();
-
-                } else {
-                    alert(response.message);
                 }
+                // Reception de la réponse et affichage
+                if(updateCat.id || this.message !== '') {
+                    this.$router.go();
+                } 
+                else {
+                    alert(updateCat.message);
+                }
+
             } 
         },
 
+        /**
+         * Fontion pour supprimer une fiche adotpion
+         */
         async deleteCat() {
             const response = await CatService.delete(this.id);
             if(response.id) {
@@ -364,17 +406,16 @@ export default {
         },
 
         // input departement
-
         async sendLocation() {
             this.locations = [];
             document.querySelector('#home__form__list').style.height = '0';
 
-            if (this.department != '') {
-                const response = await LocationService.find(this.department);
-                console.log(response);
+            if (this.department_name != '') {
+                const response = await LocationGouvService.find(this.department_name);
+        
                 document.querySelector('#home__form__list').style.height = '12rem';
                 response.forEach(location => {
-                    if (location.nom.toLowerCase().includes(this.department.toLowerCase())) {
+                    if (location.nom.toLowerCase().includes(this.department_name.toLowerCase())) {
                         this.locations.push(location.nom)
                     }
                 });
@@ -384,23 +425,22 @@ export default {
 
         selectedLocation(event) {
             const choiceLocation = event.currentTarget.textContent;
-            this.department = choiceLocation
+            this.department_name = choiceLocation;
             this.locations = [];
             document.querySelector('#home__form__list').style.height = '0';
         },
 
         // Changement de la feature image
-
         uploadPicture(event) {
-        // Revisualisation de l'image
+            // Revisualisation de l'image
             this.picture_file = event.target.files[0];
-            console.log(this.picture_file);
             this.preview_picture = URL.createObjectURL(this.picture_file);
-
         },
     },
 }
 </script>
+
+
 
 <style lang="scss" scoped>
 
@@ -425,9 +465,24 @@ export default {
 }
 
 .adoption__form__pair {
+
+    position: relative;
+
     #home__form__list {
-    overflow-x: auto;
-  }
+
+        background-color: white;
+        border-bottom-right-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+        position: absolute ;
+        width:90%;
+        top: 9rem;
+        max-height: 15rem;
+        overflow: auto;
+        box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
+        z-index: 1;
+    
+    }
+    
 
   #home__form__list::-webkit-scrollbar {
     display: none;
@@ -436,6 +491,9 @@ export default {
   .input {
     margin-bottom: 1rem;
   }
+  .input__departement__select{
+        color: #586FCD;
+    }
 }
 
 </style>
