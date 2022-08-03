@@ -1,7 +1,7 @@
 <template>
     <div v-if="totalPages() > 0" class="post__list__navigation">
-        <span v-if="showPreviousLink()" class="button__blue" v-on:click="updatePage(currentPage - 1)">Précédent</span>
-        <span v-if="showNextLink()" class="button__blue" v-on:click="updatePage(currentPage + 1)">Suivant</span>
+        <a href="#" v-if="showPreviousLink()" class="button__blue" v-on:click="updatePage(currentPage - 1)">Précédent</a>
+        <a href="#" v-if="showNextLink()" class="button__blue" v-on:click="updatePage(currentPage + 1)">Suivant</a>
     </div>
 </template>
 

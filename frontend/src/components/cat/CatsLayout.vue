@@ -78,10 +78,6 @@
         v-bind:currentPage="currentPage"
         v-bind:pageSize="pageSize" />
 
-      <!-- <div class="post__list__navigation">
-        <a class="button__blue" href="">Précédent</a>
-        <a class="button__blue" href="">Suivant</a>
-      </div> -->
     </section>
   </main>
 </template>
@@ -102,7 +98,9 @@ export default {
     PaginationLayout
   },
 
+  
   async mounted() {
+
     this.searchCats();
   },
 
@@ -111,7 +109,6 @@ export default {
       // PAGINATION
       cats: [],
       visibleCats: [],
-      nextCat: this.cats.length +1,
       currentPage : 0,
       pageSize : 3,
 
@@ -126,6 +123,7 @@ export default {
   methods: {
 
     // PAGINATION
+  
 
     updatePage(pageNumber) {
       this.currentPage = pageNumber;
@@ -136,7 +134,7 @@ export default {
       this.visibleCats = this.cats.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize);
 
       // if we have 0 visible todos, go back a page
-      if (this.visibleTodos.length == 0 && this.currentPage > 0) {
+      if (this.visibleCats.length == 0 && this.currentPage > 0) {
         this.updatePage(this.currentPage -1);
       }
     },
@@ -181,6 +179,7 @@ export default {
           : (this.cats = await CatService.findAll());
       this.location_selected = this.location_input;
       this.cats = this.catsList();
+      this.updateVisibleCats();
     },
     // filtre le tableau cats en fonction des filtres sélectionnés
     catsList() {
