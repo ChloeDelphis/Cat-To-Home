@@ -87,7 +87,10 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  scrollBehavior () {
+    return {top: null, behavior: 'smooth' }
+  }
 })
 
 const DEFAULT_TITLE = 'Cat to home';
