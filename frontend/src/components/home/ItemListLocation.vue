@@ -27,6 +27,7 @@ export default {
     cursor: pointer;
     .input__departement__select {
         padding: 0.5rem;
+        color: #586FCD;
     }
 }
 

@@ -168,6 +168,7 @@ export default {
       console.log(choiceLocation);
       this.location_input = choiceLocation;
       this.location_selected = choiceLocation;
+      this.locations = [];
       document.querySelector("#home__form__list");
     },
     // Permet de lancer la recherche en fonction des filtres selectionnés
@@ -226,9 +227,9 @@ export default {
 .research {
   margin-bottom: 6rem;
 
-  #home__form__list::-webkit-scrollbar {
-    display: none;
-  }
+  // #home__form__list::-webkit-scrollbar {
+  //   display: none;
+  // }
 
   .search__cat__form div {
     margin-right: 1rem;
