@@ -193,7 +193,7 @@ export default {
             this.checkedVaccins = response._embedded['wp:term'][4];
             this.disease_id = response._embedded['wp:term'][0][0].id.toString();
             this.disease_name = response._embedded['wp:term'][0][0].name;
-            this.content = response.content.rendered.replace(/(<([^>]+)>)/ig, "").replace(/&rsquo;/gm, "'");
+            this.content = response.content.rendered.replace(/(<([^>]+)>)/ig, "").replace(/&rsquo;/gm, "'").replace(/&nbsp;/gm, " ");
             this.picture = response._embedded['wp:featuredmedia'][0].source_url;
             
             this.checkedVaccins.forEach(vaccin => {
