@@ -159,15 +159,15 @@ export default {
       passwordFormatError: null,
 
       // Testing area enables inputs auto-filling for testing purposes
-      // lastName: "titi",
-      // firstName: "t",
-      // pseudo: "titi",
-      // birth: "2020-07-05",
-      // email: "titi@y.com",
-      // confEmail: "titi@y.com",
-      // password: "titi",
-      // confPassword: "",
-      // role: "owner",
+      lastName: "titi",
+      firstName: "t",
+      pseudo: "titi",
+      birth: "2020-07-05",
+      email: "titi@y.com",
+      confEmail: "titi@y.com",
+      password: "titi",
+      confPassword: "",
+      role: "owner",
     };
   },
 
@@ -255,11 +255,13 @@ export default {
           lastname: this.lastName,
           firstname: this.firstName,
           nickname: this.pseudo,
-          birth: this.birth,
           email: this.email,
           password: this.password,
           role: this.role,
-          meta: { allowEmail: true },
+          meta: { 
+            birth: this.birth,
+            allowEmail: true 
+            },
         });
         // En cas de réussite
         if (response.code === 200) {

@@ -15,6 +15,7 @@ export default {
     // permet de récupérer les chats favoris d'un utilisateur donné en utilisant son bearer token
     async findAll() {
         try {
+            apiClient.defaults.headers.common['Authorization'] = '';
             const response = await apiClient.get("/users/favorites");
             return response.data;
         } catch (error) {

@@ -51,11 +51,14 @@ export default {
 
   computed: {
     isFavorite() {
-      for (const el of this.userFavoriteCatsId) {
-        if (el === this.id) {
-          return true;
+      if (this.userFavoriteCatsId) {
+        for (const el of this.userFavoriteCatsId) {
+          if (el === this.id) {
+            return true;
+          }
         }
       }
+      
       return false;
     },
   },

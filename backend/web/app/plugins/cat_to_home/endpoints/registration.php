@@ -36,8 +36,7 @@ function cat_to_home_rest_user_register_handler($request)
     $firstname = sanitize_text_field($parameters['firstname']);
     $lastname = sanitize_text_field($parameters['lastname']);
     $nickname = sanitize_text_field($parameters['nickname']);
-    $birth = $parameters['birth'];
-
+    $birth = sanitize_text_field($parameters['meta']['birth']);
 
     // Préparation des erreurs en cas de non validation des données
     $error = new WP_Error();
@@ -90,7 +89,7 @@ function cat_to_home_rest_user_register_handler($request)
             'first_name' => $firstname,
             'last_name' => $lastname,
             'nickname' => $nickname,
-            'birth' => $birth
+            // 'birth' => $birth
         ]);
         // Si la création du nouvel utilisateur est bonne
         if (!is_wp_error($user_id)) {
