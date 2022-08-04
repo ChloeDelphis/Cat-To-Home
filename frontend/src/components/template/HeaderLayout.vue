@@ -38,13 +38,13 @@
           >Je donne un chat</router-link
         >
 
-        <router-link class="header__nav__menu" :to="{ name: 'about' }"
+        <router-link class="header__nav__menu header__nav__menu__hover" :to="{ name: 'about' }"
           >À propos</router-link
         >
-        <router-link class="header__nav__menu" :to="{ name: 'cats' }"
+        <router-link class="header__nav__menu header__nav__menu__hover" :to="{ name: 'cats' }"
           >Les chats</router-link
         >
-        <router-link class="header__nav__menu" :to="{ name: 'contact' }"
+        <router-link class="header__nav__menu header__nav__menu__hover" :to="{ name: 'contact' }"
           >Contact</router-link
         >
 
@@ -151,7 +151,10 @@ export default {
 }
 
 #mon_espace {
-
   color: #E16441;
+}
+
+#mon_espace:hover {
+  color: #586FCD;
 }
 </style>

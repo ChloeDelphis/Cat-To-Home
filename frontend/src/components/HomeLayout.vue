@@ -157,7 +157,7 @@ export default {
 
   methods: {
     async sendMessage(){
-      this.$store.commit('setMessage', 'Vous devez être connecté pour pouvoir ajouter un chat.');
+      this.$store.commit('setMessage', 'Vous devez être connecté pour pouvoir donner un chat.');
     },
 
     async sendLocation() {

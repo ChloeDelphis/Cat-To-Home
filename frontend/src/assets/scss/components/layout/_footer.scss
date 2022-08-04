@@ -72,7 +72,11 @@
             // margin-top: 2rem;
             text-align: center;
             font-size: 0.85rem;
-            padding-top: 3rem;            
+            padding-top: 3rem;  
+            
+            a {
+                color: colors.$color-blue;
+            }
            
         }
 }
