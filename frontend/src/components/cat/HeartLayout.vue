@@ -62,7 +62,7 @@ export default {
           // On fait apparaître le message sur l'interface utilisateur
           msgElmt.classList.toggle("hidden");
           console.log(msgElmt);
-          msgElmt.textContent = this.name + " a été retiré de vos favoris";
+          msgElmt.innerHTML = this.name + " a été retiré de vos favoris";
           // On le fait disparaître au bout de 2 secondes
           setTimeout(() => { msgElmt.classList.toggle("hidden") }, 2000);
         } else {
@@ -85,7 +85,7 @@ export default {
           this.$emit("update");
           // On fait apparaître le message sur l'interface utilisateur
           msgElmt.classList.toggle("hidden")
-          msgElmt.textContent = this.name + " a bien été ajouté à vos favoris";
+          msgElmt.innerHTML = this.name + " a bien été ajouté à vos favoris";
           // On le fait disparaître au bout de 2 secondes
           setTimeout(() => { msgElmt.classList.toggle("hidden") }, 2000);
         } else {
