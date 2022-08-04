@@ -272,6 +272,7 @@
             </button>
             <p class="inscription__form__fieldset__field__error">
               {{ errors_creation }}
+              {{ message }}
             </p>
           </div>
         </div>
@@ -312,6 +313,7 @@ export default {
       errors_content: null,
       errors_permissions: null,
       errors_creation: null,
+      message: null,
 
       // Recuperation des valeurs mise dans la fiche
 
@@ -488,6 +490,7 @@ export default {
                 if (updatePostLocation.id) {
                   // Permet de retirer le curseur du bouton en mode wait
                   boutonSend.classList.remove("wait");
+                   this.message = "Votre annonce à était ajouté avec succés.";
                 }
               }
             }
