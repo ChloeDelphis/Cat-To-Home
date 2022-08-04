@@ -193,7 +193,7 @@ export default {
     padding: 0 8vw;
   }
 .arrow{
-  width: 5vh;
+  display: none;
 }
  }
 
