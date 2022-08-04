@@ -50,6 +50,7 @@
 
         <router-link
           v-if="!this.$store.getters.getToken"
+          id="mon_espace"
           class="header__nav__menu"
           :to="{ name: 'login' }"
           >Mon Espace</router-link
@@ -147,5 +148,10 @@ export default {
 #cross {
   display: none;
   font-size: 4rem;
+}
+
+#mon_espace {
+
+  color: #E16441;
 }
 </style>
