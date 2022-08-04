@@ -32,13 +32,13 @@
             <p class="contact__form__errors">{{errors.email}}</p>
           </div>
           <div class="contact__form__fieldset__field">
-            <label for="message">Message</label><br />
+            <label for="content">Message</label><br />
 
             <textarea
               v-model="message"
               class="contact__form__fieldset__field__input input"
               name="message"
-              id="message"
+              id="content"
               rows="10"
             ></textarea>
             <p class="contact__form__errors">{{errors.message}}</p>

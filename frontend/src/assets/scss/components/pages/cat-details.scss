@@ -2,6 +2,10 @@
 
 .cat__details {
 
+    h2{
+        font-size: 2rem;
+    }
+
     width: 80vw;
     margin: auto;
 
@@ -14,18 +18,22 @@
         display: flex;
         flex-direction: column;
 
-        div {
+        .cat__details__photo, .cat__details__infos1, .cat__details__illustration, .cat__details__infos2  {
             width: 100%;
             color: colors.$color-blue;
         }
 
         .cat__details__photo {
 
-            img {
+            position: relative;
+
+            &__cat-photo {
                 width: 100%;
                 height: auto;
                 border-radius: 2rem;
             }
+
+
         }
 
         .cat__details__infos1 {
@@ -86,8 +94,10 @@
 
         .cat__details__illustration {
             
-            img {
-                width: 100%;
+            &-illu {
+                width: 80%;
+                margin-left: auto;
+                margin-right: auto;
             }
         }
 
@@ -125,7 +135,33 @@
         
     }
 
-    @media (min-width : 1200px ){ 
+    @media (min-width : 425px ){ 
+
+        h2{
+            font-size: 2rem;
+
+        }
+        font-size: 1.5rem;
+    }
+
+    @media (min-width : 768px ){ 
+        h2{
+            font-size: 2.5rem;
+        }
+        font-size: 2rem;
+        .cat__details__illustration{
+            &-illu{
+                width: 50%;
+            }
+        }
+    }
+
+    @media (min-width : 1024px ){ 
+        font-size: 2rem;
+
+        .cat__details__infos1__title{
+            font-size: 2.5rem;
+        }
 
         .cat__details__container {
 
@@ -133,7 +169,7 @@
             flex-direction: row;
             flex-wrap: wrap;
 
-            div {
+            .cat__details__photo, .cat__details__infos1, .cat__details__illustration, .cat__details__infos2 {
                 width: 50%;
             }
 
@@ -146,20 +182,20 @@
 
             .cat__details__photo {
                 order: 2;
-                padding: 2rem;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                position: relative;
 
-                img {
-                    width: 80%;
+                &__cat-photo {
+                    width: 100%;
                 }
             }
 
             .cat__details__illustration {
                 order: 3;
-                margin-top: 10rem;
-                margin-bottom: 10rem;
+                margin-top: 5rem;
+                margin-bottom: 0rem;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -172,14 +208,20 @@
 
             .cat__details__infos2 {
                 order: 4;
-                margin-top: 10rem;
-                padding-left: 10rem;
-                padding-right: 10rem;
+                margin-top: 5rem;
+                padding-left: 2rem;
+                padding-right: 2rem;
 
                 button {
                     align-self: flex-start;
                 }
             }
+        }
+    }
+
+    @media (min-width : 1440px ){ 
+        .cat__details__infos1__title{
+            font-size: 3rem;
         }
     }
 }

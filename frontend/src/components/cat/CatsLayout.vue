@@ -69,6 +69,8 @@
           v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url"
           v-for="cat in visibleCats"
           v-bind:key="cat.title"
+          v-on:update="reload"
+          v-bind:userFavoriteCatsId="userFavoriteCatsId"
         />
       </div>
 
@@ -88,6 +90,7 @@ import ItemListLocation from "@/components/home/ItemListLocation";
 import CatCardLayout from "@/components/cat/CatCardLayout";
 import CatService from "@/services/cat/CatService";
 import PaginationLayout from '@/components/PaginationLayout.vue';
+import FavoriteService from "@/services/favorite/FavoriteService";
 
 export default {
   name: "CatsLayout",
@@ -102,6 +105,7 @@ export default {
   async mounted() {
 
     this.searchCats();
+    this.favoriteCatsId();
   },
 
   data() {
@@ -117,13 +121,13 @@ export default {
       location_selected: this.$route.params.location || "",
       order: this.$route.params.order || "",
       age: this.$route.params.age || "",
+      userFavoriteCatsId: [],
     };
   },
 
   methods: {
 
     // PAGINATION
-  
 
     updatePage(pageNumber) {
       this.currentPage = pageNumber;
@@ -137,6 +141,30 @@ export default {
       if (this.visibleCats.length == 0 && this.currentPage > 0) {
         this.updatePage(this.currentPage -1);
       }
+    },
+
+    // FAVORITES
+    
+    // Le $emit est parti de HeartLayout
+    // Il est passé par CatCardLayout (grâce à v-bind="$attrs" )
+    // Il est remonté jusqu'à CatsLayout où on demande
+    // Une mise à jour de userFavoriteCatsId
+    // En appelant la fonction favoriteCatsId()
+    reload() {
+      this.favoriteCatsId()
+      console.log(this.userFavoriteCatsId);
+    },
+
+    // Récupère un tableau qui contient les id des chats préférés de l'utilisateur connecté
+    async favoriteCatsId() {
+      this.userFavoriteCatsId = [];
+      // On demande la liste des favoris de l'utilisteur
+      this.userFavoriteCats = await FavoriteService.findAll();
+      // Pour chaque entrée des favoris on extrait l'IDet on l'ajoute au tableau userFavoriteCatsId
+      this.userFavoriteCats.forEach((el) =>
+        this.userFavoriteCatsId.push(el["post_info"].ID)
+      );
+      console.log(this.userFavoriteCatsId);
     },
 
     // FILTERS
