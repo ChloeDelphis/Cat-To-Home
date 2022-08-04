@@ -1,6 +1,7 @@
 <template>
   <main>
-    <h2 class="adoption__title">Crée la fiche adoption de ton chat</h2>
+    <h2 class="adoption__title" id="adoption__title">Crée la fiche adoption de ton chat</h2>
+      <p class="validation__message">{{ message }}</p>
     <section class="adoption" id="adoption">
       <div class="adoption__left__part">
         <fieldset class="adoption__form">
@@ -271,7 +272,6 @@
             </button>
             <p class="inscription__form__fieldset__field__error">
               {{ errors_creation }}
-              {{ message }}
             </p>
           </div>
         </div>
@@ -509,6 +509,14 @@ export default {
                     this.picture_file= null,
                     this.preview_picture = "",
                     this.message = "Votre annonce a été ajoutée avec succés.";
+                    const el = document.querySelector("#adoption__title");
+                    el
+                      ? el.scrollIntoView({
+                          behavior: "smooth",
+                          block: "nearest",
+                          inline: "nearest",
+                        })
+                      : null;
                 }
               }
             }

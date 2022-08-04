@@ -159,7 +159,7 @@
         &__title {
             text-align: center;
             margin-bottom: 4rem;
-            font-size: 1.5rem;
+            font-size: 2.3rem;
         }
 
         &__paragraphe {
@@ -178,4 +178,10 @@
     .button__adoption__add {
         text-align: end;
     }
+}
+
+.validation__message{
+    text-align: center;
+    color: colors.$color-orange;
+    margin-top: 5rem;
 }
