@@ -12,7 +12,6 @@
               type="text"
               id="lastname"
               name="lastname"
-              placeholder="Doe"
             />
             <p class="inscription__form__fieldset__field__error">
               {{ errors_title }}
@@ -326,6 +325,9 @@ export default {
       checkedVaccins: [],
       disease_input: null,
       content: null,
+      permissions1: null,
+      permissions2: null,
+      permissions3: null,
 
       // Recuperation taxonomies
       environments: [],
@@ -488,9 +490,25 @@ export default {
                   location: locationId,
                 });
                 if (updatePostLocation.id) {
+                  const image = document.querySelector("#image");
+                  image.classList.add("none")
                   // Permet de retirer le curseur du bouton en mode wait
                   boutonSend.classList.remove("wait");
-                   this.message = "Votre annonce à était ajouté avec succés.";
+                    this.title= null,
+                    this.sex= null,
+                    this.city= null,
+                    this.location_input= null,
+                    this.environment= null,
+                    this.age= null,
+                    this.checkedVaccins= [],
+                    this.disease_input= null,
+                    this.content= null,
+                    this.permissions1= null,
+                    this.permissions2= null,
+                    this.permissions3= null,
+                    this.picture_file= null,
+                    this.preview_picture = "",
+                    this.message = "Votre annonce a été ajoutée avec succés.";
                 }
               }
             }
