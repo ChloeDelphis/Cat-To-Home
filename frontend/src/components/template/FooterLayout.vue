@@ -58,12 +58,8 @@
     </nav>
     <div class="footer__mention">
       <p>
-        Ce site a été réalisé grâce à Antoine et sa meuf. Nous avons utilisés
-        les images de
-        <a
-          style="text-decorations: none; color: inherit"
-          href="https://www.icones8.fr"
-          >icones8.</a
+        Le design du site a été réalisé par Antoine guillo et <a href="https://www.hesji.fr" target="_blank">hesji</a>. Ce site utilise des illustrations de
+        <a href="https://www.icones8.fr" target="_blank">icones8.</a
         >
       </p>
     </div>
@@ -74,5 +70,7 @@
 export default {};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
+
 </style>
