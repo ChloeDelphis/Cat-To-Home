@@ -4,12 +4,15 @@
 .footer {
     background-color: colors.$color-orange;
     display: flex;
+    flex-flow: row wrap;
     flex-direction: column;
     align-items: center;
-    padding: 5rem 1.5rem;
+    padding: 5rem 1.5rem 2rem 1.5rem;
+    color : white;
 
     a{
         &:hover{
+            
             color: colors.$color-blue;
         }
     }
@@ -44,6 +47,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        
 
         &__left {
             display: flex;
@@ -63,6 +67,14 @@
             padding: 0.5rem;
         }
     }
+        &__mention {
+            // margin-top: 5rem;
+            // margin-top: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            padding-top: 3rem;            
+           
+        }
 }
 
 @media (min-width : 425px) {
@@ -81,6 +93,7 @@
         padding: 3rem 4rem;
         flex-direction: row;
         justify-content: space-between;
+        position: relative;
 
         &__visuals {
 
@@ -102,6 +115,11 @@
                 align-items: flex-start;
                 padding-left: 2rem;
             }
+        }
+         &__mention {
+            position : absolute;
+            bottom : 2rem;
+            right : 4rem;         
         }
 
 
@@ -133,8 +151,24 @@
                 padding-right: 20%;
             }
         }
+        &__mention {
+            right : 8rem;
+            font-size: 1.25rem;         
+        }
 
     }
 
-
+    @media (min-width : 2500px) {
+        .footer{
+            &__mention {
+                right : 13rem;
+                font-size: 1.5rem;         
+            }
+        }
+        
+    }
 }
+
+
+        
+
