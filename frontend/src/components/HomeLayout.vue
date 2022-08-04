@@ -12,8 +12,22 @@
           des particuliers propriétaires d’animaux et des personnes souhaitant
           en adopter.
         </p>
-        <router-link class="button__orange--papate" v-bind:to="{ name: 'cat_add' }" v-if="this.$store.getters.getToken && this.$store.getters.getRole !== 'adopter'">Je donne un chat</router-link>
-        <router-link v-on:click="sendMessage" class="button__orange--papate" v-bind:to="{ name: 'login' }" v-if="!this.$store.getters.getToken">Je donne un chat</router-link>
+        <router-link
+          class="button__orange--papate"
+          v-bind:to="{ name: 'cat_add' }"
+          v-if="
+            this.$store.getters.getToken &&
+            this.$store.getters.getRole !== 'adopter'
+          "
+          >Je donne un chat</router-link
+        >
+        <router-link
+          v-on:click="sendMessage"
+          class="button__orange--papate"
+          v-bind:to="{ name: 'login' }"
+          v-if="!this.$store.getters.getToken"
+          >Je donne un chat</router-link
+        >
       </div>
       <div class="home__img">
         <img class="cat__one" src="../assets/img/IMG_CAT1.png" alt="" />
@@ -23,25 +37,36 @@
     <!-- Formulaire de recherche -->
     <section class="home home__response bg__orange">
       <div class="home__img">
-        <img src="../assets/img/IMG_CAT2.png" alt="Chat tenu par des bras sortant d'un vortex" />
+        <img
+          src="../assets/img/IMG_CAT2.png"
+          alt="Chat tenu par des bras sortant d'un vortex"
+        />
       </div>
       <div class="home__bloc__text">
         <h2 class="home__title">Trouve ton futur compagnon félin !</h2>
         <form class="home__form" action="/cats">
           <label class="home__form__label" for="department">Localisation</label>
           <div class="relative">
-          <input @keyup="sendLocation" v-model="location_input" type="text" class="input"
-            name="departement" id="department">
+            <input
+              @keyup="sendLocation"
+              v-model="location_input"
+              type="text"
+              class="input"
+              name="departement"
+              id="department"
+            />
             <div id="home__form__list">
-              <ItemListLocation v-for="location in locations" :key="location" :name="location"
-                @choiceLocation="selectedLocation" />
+              <ItemListLocation
+                v-for="location in locations"
+                :key="location"
+                :name="location"
+                @choiceLocation="selectedLocation"
+              />
             </div>
           </div>
           <label class="home__form__label" for="filter">Trier</label>
           <select v-model="order" class="input" name="filter" id="filter">
-            <option value="desc">
-              Du plus anciens au plus récent
-            </option>
+            <option value="desc">Du plus anciens au plus récent</option>
             <option value="asc">Du plus récent au plus anciens</option>
           </select>
           <label class="home__form__label" for="age">Filtre par age</label>
@@ -52,24 +77,43 @@
             <option value="adulte">Adulte</option>
             <option value="senior">Sénior</option>
           </select>
-          <router-link class="button__orange--papate"
-            v-bind:to="{ name: 'cats', params: { ordre: order, localisation: location_input, age: age } }">
-            Je trouve mon chat</router-link>
+          <router-link
+            class="button__orange--papate"
+            v-bind:to="{
+              name: 'cats',
+              params: { ordre: order, localisation: location_input, age: age },
+            }"
+          >
+            Je trouve mon chat</router-link
+          >
         </form>
       </div>
     </section>
 
     <!-- Carrousel -->
     <section class="product">
-      <h2 class="home__title home__title__carrousel">Il attendent un foyer depuis longtemps...!</h2>
-      <a class="pre-btn" ><img class="arrow" src="../assets/icones/fleche_gauche.png" alt="" /></a>
-      <a class="nxt-btn" ><img class="arrow" src="../assets/icones/fleche_droite.png" alt="" /></a>
-        <div class="product-container">
-          
-          <CatCardLayout v-bind:localisation="cat._embedded['wp:term'][2][0].name" v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url" 
-          v-bind:id="cat.id" v-bind:name="cat.title.rendered" v-bind:age="cat.meta.age" v-for="cat in cats" v-bind:key="cat.id" />
-          
-        </div>
+      <h2 class="home__title home__title__carrousel">
+        Il attendent un foyer depuis longtemps...!
+      </h2>
+      <a class="pre-btn"
+        ><img class="arrow" src="../assets/icones/fleche_gauche.png" alt=""
+      /></a>
+      <a class="nxt-btn"
+        ><img class="arrow" src="../assets/icones/fleche_droite.png" alt=""
+      /></a>
+      <div class="product-container">
+        <CatCardLayout
+          v-bind:localisation="cat._embedded['wp:term'][2][0].name"
+          v-bind:picture="cat._embedded['wp:featuredmedia'][0].source_url"
+          v-bind:id="cat.id"
+          v-bind:name="cat.title.rendered"
+          v-bind:age="cat.meta.age"
+          v-for="cat in cats"
+          v-bind:key="cat.id"
+          v-on:update="reload"
+          v-bind:userFavoriteCatsId="userFavoriteCatsId"
+        />
+      </div>
     </section>
 
     <section class="home home__response bg__blue">
@@ -115,62 +159,76 @@
 </template>
 
 <script>
-import LocationService from '@/services/taxonomies/LocationService';
-import CatService from '@/services/cat/CatService';
-import CatCardLayout from '@/components/cat/CatCardLayout';
-import ItemListLocation from '@/components/home/ItemListLocation';
+import LocationService from "@/services/taxonomies/LocationService";
+import CatService from "@/services/cat/CatService";
+import CatCardLayout from "@/components/cat/CatCardLayout";
+import ItemListLocation from "@/components/home/ItemListLocation";
+import FavoriteService from "@/services/favorite/FavoriteService";
+
 export default {
-  components: {
-    CatCardLayout, ItemListLocation
-  },
   name: "HomeLayout",
+
+  components: {
+    CatCardLayout,
+    ItemListLocation,
+  },
+
   data() {
     return {
       location_input: null,
       locations: [],
       order: null,
       age: null,
-      cats:[],
-
-    }
+      cats: [],
+      favoriteCats: [],
+      userFavoriteCatsId: [],
+    };
   },
   async mounted() {
-      this.cats = await CatService.findAllForHomepage();
+    this.cats = await CatService.findAllForHomepage();
+    this.favoriteCatsId();
 
+    // carousel
+    const productContainers = [
+      ...document.querySelectorAll(".product-container"),
+    ];
+    const nxtBtn = [...document.querySelectorAll(".nxt-btn")];
+    const preBtn = [...document.querySelectorAll(".pre-btn")];
 
-      // carousel
-      const productContainers = [...document.querySelectorAll('.product-container')];
-      const nxtBtn = [...document.querySelectorAll('.nxt-btn')];
-      const preBtn = [...document.querySelectorAll('.pre-btn')];
+    productContainers.forEach((item, i) => {
+      nxtBtn[i].addEventListener("click", () => {
+        item.scrollLeft += 350;
+      });
 
-      productContainers.forEach((item, i) => {
-
-          nxtBtn[i].addEventListener('click', () => {
-              item.scrollLeft += 350;
-          })
-
-          preBtn[i].addEventListener('click', () => {
-              item.scrollLeft -= 350;
-          })
-      })
-    },
+      preBtn[i].addEventListener("click", () => {
+        item.scrollLeft -= 350;
+      });
+    });
+  },
 
   methods: {
-    async sendMessage(){
-      this.$store.commit('setMessage', 'Vous devez être connecté pour pouvoir donner un chat.');
+    async sendMessage() {
+      this.$store.commit(
+        "setMessage",
+        "Vous devez être connecté pour pouvoir donner un chat."
+      );
     },
 
     async sendLocation() {
       this.locations = [];
-      document.querySelector('#home__form__list');
+      document.querySelector("#home__form__list");
 
-      if (this.location_input != '') {
+      if (this.location_input != "") {
         const response = await LocationService.findAll();
 
-        document.querySelector('#home__form__list');
-        response.forEach(location => {
-          if (location.name.toLowerCase().includes(this.location_input.toLowerCase())) {
-            this.locations.push(location.name)
+        document.querySelector("#home__form__list");
+        response.forEach((location) => {
+          if (
+            location.name
+              .toLowerCase()
+              .includes(this.location_input.toLowerCase())
+          ) {
+            this.locations.push(location.name);
           }
         });
         // this.locations = response.data
@@ -178,43 +236,63 @@ export default {
     },
     selectedLocation(event) {
       const choiceLocation = event.currentTarget.textContent;
-      this.location_input = choiceLocation
+      this.location_input = choiceLocation;
       this.locations = [];
-      document.querySelector('#home__form__list');
-    }
-  }
+      document.querySelector("#home__form__list");
+    },
+
+    // FAVORITES
+
+    // Le $emit est parti de HeartLayout
+    // Il est passé par CatCardLayout (grâce à v-bind="$attrs" )
+    // Il est remonté jusqu'à HomeLayout où on demande
+    // Une mise à jour de userFavoriteCatsId
+    // En appelant la fonction favoriteCatsId()
+    reload() {
+      this.favoriteCatsId();
+      console.log(this.userFavoriteCatsId);
+    },
+
+    // Récupère un tableau qui contient les id des chats préférés de l'utilisateur connecté
+    async favoriteCatsId() {
+      this.userFavoriteCatsId = [];
+      // On demande la liste des favoris de l'utilisteur
+      this.userFavoriteCats = await FavoriteService.findAll();
+      // Pour chaque entrée des favoris on extrait l'IDet on l'ajoute au tableau userFavoriteCatsId
+      this.userFavoriteCats.forEach((el) =>
+        this.userFavoriteCatsId.push(el["post_info"].ID)
+      );
+      console.log(this.userFavoriteCatsId);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-
- @media screen and (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .product-container {
     padding: 0 8vw;
   }
-.arrow{
-  display: none;
-}
- }
-
-   @media screen and (min-width: 480px) {
-.product-container {
-    padding: 0 10vw;
-    }
-    .arrow{
-        width: 8vh;
-      }
+  .arrow {
+    display: none;
   }
+}
 
-
+@media screen and (min-width: 480px) {
+  .product-container {
+    padding: 0 10vw;
+  }
+  .arrow {
+    width: 8vh;
+  }
+}
 
 .product {
   position: relative;
   overflow: hidden;
   margin-bottom: 15rem;
 
-
-  h2{
+  h2 {
     margin-bottom: 10rem;
   }
 }
@@ -243,12 +321,12 @@ export default {
 
 .pre-btn {
   left: 0rem;
-   background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, #F3F2E7 100%);
+  background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, #f3f2e7 100%);
 }
 
 .nxt-btn {
   right: 0;
-   background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #F3F2E7 100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #f3f2e7 100%);
 }
 
 .pre-btn img,
@@ -264,6 +342,4 @@ export default {
 .input {
   margin-bottom: 1rem;
 }
-
-
 </style>
