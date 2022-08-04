@@ -3,7 +3,7 @@
     <div class="footer__visuals">
       <img
         class="footer__visuals__logo"
-        src="../../assets/logo/Logo-white.png"
+        src="../../assets/logo/Logo.svg"
         alt="Logo Cat To Home blanc"
       />
 
