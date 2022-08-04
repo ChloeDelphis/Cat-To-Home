@@ -2,6 +2,7 @@
   <main class="cat__list">
     <section class="title">
       <img
+        class="title__illu"
         src="../../assets/img/purr-shopping.png"
         alt="Un chat dans un caddie"
       />
@@ -259,9 +260,12 @@ export default {
   //   display: none;
   // }
 
-  .search__cat__form div {
+    .search__cat__form div {
     margin-right: 1rem;
+    margin-left: 1rem;
   }
+
+
 }
 
 #home__form__list {
