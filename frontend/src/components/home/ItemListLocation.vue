@@ -28,6 +28,11 @@ export default {
     .input__departement__select {
         padding: 0.5rem;
         color: #586FCD;
+
+        &:hover{
+            opacity: 0.7;
+            cursor: pointer;
+        }
     }
 }
 
@@ -35,4 +40,5 @@ export default {
 #home__form__list .input:hover {
     opacity: 0.7;
 }
+
 </style>
