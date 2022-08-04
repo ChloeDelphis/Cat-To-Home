@@ -98,8 +98,9 @@
                 <!-- Boutons à ne faire apparaître que quand le composant est appelé par ProfilePublishedSheetsLayout  -->
                 <div class="profil__adoption__buttons">
                     <button @click="updateCat" class="button__orange">Valider les modification</button>
-                    <button @click="deleteCat" class="button__orange">Supprimer la fiche</button>
+                    <button @click="confirmDelete" class="button__orange">Supprimer la fiche</button>
                 </div>
+
             </div>
             <div>
                 <div class="adoption__add__picture" v-bind:style="{'backgroundImage': 'url(' + picture + ')',   'backgroundSize': 'cover', 'backgroundPosition': 'center'}"></div>
@@ -392,6 +393,13 @@ export default {
             } 
         },
 
+        confirmDelete() {
+            let answer = window.confirm("Êtes-vous sur de vouloir supprimer cette fiche ?")
+            if(answer) {
+                this.deleteCat();
+            }
+        },
+
         /**
          * Fontion pour supprimer une fiche adotpion
          */
@@ -493,6 +501,14 @@ export default {
   .input__departement__select{
         color: #586FCD;
     }
+}
+
+#confirmDelete {
+
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
 </style>
