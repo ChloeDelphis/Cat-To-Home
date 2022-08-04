@@ -75,7 +75,9 @@
             padding-top: 3rem;  
             
             a {
-                color: colors.$color-blue;
+                text-decoration: underline;
+                font-weight: bold;
+                color: white;
             }
            
         }

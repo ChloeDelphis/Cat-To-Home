@@ -4,11 +4,11 @@
         <section class="a__propos__intro" >
             <h2>A propos</h2>
             <p>
-                Cat To Home est un site web dédié à la sensibilisation au problème de l’abandon d’animaux et se veut être une solution complémentaire aux refuges pour permettre l’adoption d’un animal et mettant en relation des particuliers propriétaires d’animaux et des personnes souhaitant en adopter.
+                Cat To Home est un site web dédié à la sensibilisation au problème de l’abandon d’animaux et se veut être une solution complémentaire aux refuges pour permettre l’adoption d’un animal en mettant en relation des particuliers propriétaires d’animaux et des personnes souhaitant en adopter.
 
-                L'idée de ce projet nous viens de Damien, notre cher product owner. Pourquoi ? Parce qu'il aime beaucoup les chats ! Il paraît que c'est bon les chats, surtout cuisiné en civet ou à la moutarde, un peu comme du lapin mais avec un gout plus prononcé. 
+                L'idée de ce projet nous vient de Damien, notre cher product owner. Pourquoi ? Parce qu'il aime beaucoup les chats ! Il paraît que c'est bon les chats, surtout cuisinés en civet ou à la moutarde, un peu comme du lapin mais avec un goût plus prononcé. 
 
-                Ah.. On me dit dans l'oreillette que je ne suis pas sur un site de cuisine ! RAssurez-vous donc Damien ni aucun membre de l'équipe ne va manger vos chatons ! Les bébés dans le congélateur ok, mais manger des chats c'est pas ok ! OK ??
+                Ah.. On me dit dans l'oreillette que je ne suis pas sur un site de cuisine ! Rassurez-vous donc Damien ni aucun membre de l'équipe ne va manger vos chatons ! Les bébés dans le congélateur ok, mais manger des chats c'est pas ok ! OK ??
             </p>
             <img class="img__about" src="@/assets/img/purr-9.png" alt="illustration de 2 chats et un aquarium">
 

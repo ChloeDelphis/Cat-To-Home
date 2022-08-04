@@ -57,7 +57,7 @@
       </div>
     </nav>
     <div class="footer__mention">
-      <p>
+      <p>&#169; All included on this website is copyrighted. 2022 - 
         Le design du site a été réalisé par Antoine guillo et <a href="https://www.hesji.fr" target="_blank">hesji</a>. Ce site utilise des illustrations de
         <a href="https://www.icones8.fr" target="_blank">icones8.</a
         >
