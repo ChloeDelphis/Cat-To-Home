@@ -211,6 +211,7 @@ export default {
 .product {
   position: relative;
   overflow: hidden;
+  margin-bottom: 15rem;
 
 
   h2{
