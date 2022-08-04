@@ -159,15 +159,15 @@ export default {
       passwordFormatError: null,
 
       // Testing area enables inputs auto-filling for testing purposes
-      lastName: "titi",
-      firstName: "t",
-      pseudo: "titi",
-      birth: "2020-07-05",
-      email: "titi@y.com",
-      confEmail: "titi@y.com",
-      password: "titi",
-      confPassword: "",
-      role: "owner",
+      lastName: null,
+      firstName: null,
+      pseudo: null,
+      birth: null,
+      email: null,
+      confEmail: null,
+      password: null,
+      confPassword: null,
+      role: null,
     };
   },
 
@@ -191,13 +191,13 @@ export default {
       if (!this.lastName) {
         this.lastNameError = "Merci de renseigner votre nom";
       }
-      if (this.lastName.length < 2) {
+      if (this.lastName && this.lastName.length < 2) {
         this.lastNameLengthError = "Le nom ne fait qu'un seul caractère";
       }
       if (!this.firstName) {
         this.firstNameErrors.push("Merci de renseigner votre prénom");
       }
-      if (this.firstName.length < 2) {
+      if (this.firstName && this.firstName.length < 2) {
         this.firstNameErrors.push("Le prénom ne fait qu'un seul caractère");
       }
       if (this.lastName === this.firstName) {
@@ -218,7 +218,7 @@ export default {
         this.passwordError =
           "Merci de renseigner et confirmer votre mot de passe";
       }
-      if (!this.validatePassword(this.password)) {
+      if (this.password && !this.validatePassword(this.password)) {
         this.passwordFormatError =
           "Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une majuscule et un chiffre";
       }
@@ -228,10 +228,10 @@ export default {
       if (!this.role) {
         this.roleError = "Veuillez choisir votre rôle";
       }
-      if (!this.validateEmail(this.email)) {
+      if (this.email && !this.validateEmail(this.email)) {
         this.validEmailError = "Votre adresse email n'est pas valide";
       }
-      if (!this.validateAge(this.birth)) {
+      if (this.birth && !this.validateAge(this.birth)) {
         this.validAgeError = "Vous devez être majeur pour vous inscrire";
       }
 
