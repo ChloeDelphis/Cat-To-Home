@@ -56,7 +56,7 @@
           >Mon Espace</router-link
         >
         <router-link :to="{ name: 'login' }"
-          class="header__nav__menu"
+          class="header__nav__menu header__nav__menu__hover"
           v-if="this.$store.getters.getToken"
           v-on:click="disconnect"
           >Déconnexion</router-link
