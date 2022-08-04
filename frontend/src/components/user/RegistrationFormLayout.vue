@@ -250,19 +250,24 @@ export default {
         !this.validAgeError &&
         !this.passwordFormatError
       ) {
-        // On envoie la requête vers l'API
-        const response = await UserService.register({
+        let params = {
           lastname: this.lastName,
           firstname: this.firstName,
-          nickname: this.pseudo,
           email: this.email,
           password: this.password,
           role: this.role,
           meta: { 
             birth: this.birth,
             allowEmail: true 
-            },
-        });
+            }
+        };
+
+        if (this.pseudo) {          
+          params = {...params, nickname: this.pseudo,}
+        }
+        // On envoie la requête vers l'API
+        const response = await UserService.register(params);
+        console.log(response);
         // En cas de réussite
         if (response.code === 200) {
           const responseLogin = await UserService.login({
@@ -285,6 +290,7 @@ export default {
             // alert(responseLogin.message);
           }
         } else {
+          console.log(response);
           // alert(response.message);
         }
       } else {
