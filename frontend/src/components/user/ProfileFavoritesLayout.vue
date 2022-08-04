@@ -61,7 +61,6 @@ export default {
       this.favoriteCats.forEach((el) =>
         this.userFavoriteCatsId.push(el["post_info"].ID)
       );
-      console.log(this.userFavoriteCatsId);
     },
   },
 };

@@ -65,8 +65,8 @@
                         </div>
                         <div class="cat__input">
                             <div v-for="vaccinate in vaccinates" :key="vaccinate.id">
-                                <input type="checkbox" id="vaccin" name="vaccin" :value="vaccinate.id" :checked="(vaccins_id.includes(vaccinate.id))" v-model="vaccins_id" /> 
-                                <label for="vaccin"> {{vaccinate.name}} </label>
+                                <input type="checkbox" :id="vaccinate.name" name="vaccin" :value="vaccinate.id" :checked="(vaccins_id.includes(vaccinate.id))" v-model="vaccins_id" /> 
+                                <label :for="vaccinate.name"> {{vaccinate.name}} </label>
                             </div>
                         </div>
                     </div>
@@ -81,8 +81,8 @@
                         <div class="current__value" v-html="disease_name"></div>
                         <div class="cat__input">
                             <div v-for="disease in diseases" :key="disease.id">
-                                <input @change="getIdDisease" :value="disease.id" type="radio" :id="disease.id" name="sickness" :checked="(disease_name == disease.name) ? true : false" v-model="disease_name"/>
-                                <label :for="disease.id">{{disease.name}}</label>
+                                <input type="radio" @change="getIdDisease" :value="disease.id"  :id="disease.name" name="sickness" :checked="(disease_name == disease.name) ? true : false" v-model="disease_name"/>
+                                <label :for="disease.name">{{disease.name}}</label>
                             </div> 
                         </div>
                     </fieldset>
@@ -178,7 +178,6 @@ export default {
         // Récupération des données concernant le chat
         let id = this.id;
         const response = await CatService.find(id);
-        console.log(response);
         if(response.code) {
             alert(response.message)
         } else {

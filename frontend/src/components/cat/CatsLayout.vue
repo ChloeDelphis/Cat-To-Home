@@ -115,7 +115,7 @@ export default {
       cats: [],
       visibleCats: [],
       currentPage : 0,
-      pageSize : 3,
+      pageSize : 9,
 
       location_input: this.$route.params.location || "",
       locations: [],

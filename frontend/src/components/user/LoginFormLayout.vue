@@ -88,7 +88,6 @@ export default {
           password: this.password,
         });
         if (response.success === true) {
-          console.log("OK");
           // On execute une mutation pour stocker le token et l'id dans le sessionStorage
           // Et le synchroniser avec le store afin de rendre notre store.token & store.userId reactif
           this.$store.commit("setToken", response.data.token);
@@ -118,11 +117,8 @@ export default {
           message.textContent = 'Le mail a bien été envoyé';
         } else {
           message.textContent = 'Le mail n\'a pas pu être envoyé';
-
         }
-        console.log(response);
       }
-
     }
   },
 };
