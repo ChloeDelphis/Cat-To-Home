@@ -81,6 +81,15 @@ export default {
         } catch (error) {
             return error.response.data
         }
-    }
+    },
 
+    async delete(id, data) {
+        try {
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.delete('/wp/v2/users/' + id, {data});
+            return response.data
+        } catch (error) {
+            return error.response.data
+        }
+    }
 }

@@ -98,7 +98,7 @@
                 <!-- Boutons à ne faire apparaître que quand le composant est appelé par ProfilePublishedSheetsLayout  -->
                 <div class="profil__adoption__buttons">
                     <button @click="updateCat" class="button__orange">Valider les modification</button>
-                    <button @click="confirmDelete" class="button__orange">Supprimer la fiche</button>
+                    <button @click="confirmDeleteCat" class="button__orange">Supprimer la fiche</button>
                 </div>
 
             </div>
@@ -393,7 +393,7 @@ export default {
             } 
         },
 
-        confirmDelete() {
+        confirmDeleteCat() {
             let answer = window.confirm("Êtes-vous sur de vouloir supprimer cette fiche ?")
             if(answer) {
                 this.deleteCat();
@@ -401,7 +401,7 @@ export default {
         },
 
         /**
-         * Fontion pour supprimer une fiche adotpion
+         * Fontion pour supprimer la fiche adoption correspondant à l'ID passé en paramètre
          */
         async deleteCat() {
             const response = await CatService.delete(this.id);

@@ -21,7 +21,7 @@
               v-model="lastname"
             />
             <p class="inscription__form__fieldset__field__error">
-              {{ lastNameError }} {{ nameError }} {{lastNameLengthError}}
+              {{ lastNameError }} {{ nameError }} {{ lastNameLengthError }}
             </p>
             <br />
 
@@ -176,9 +176,12 @@
             <button v-on:click="submit" class="button__orange">
               Modifier mes informations
             </button>
+            <span id="deleteAccountBtn" @click="confirmDeleteUser"
+              >Supprimer mon compte</span
+            >
             <p class="inscription__form__fieldset__field__error">
-                {{ errorUpdatePass }}
-              </p>
+              {{ errorUpdatePass }}
+            </p>
           </fieldset>
         </div>
         <img
@@ -244,7 +247,7 @@ export default {
       validEmailError: null,
       lastNameLengthError: null,
       errorUpdatePass: null,
-      updateMessage: null
+      updateMessage: null,
     };
   },
   async mounted() {
@@ -303,12 +306,17 @@ export default {
       if (this.lastname === this.firstname) {
         this.nameError = "Le prénom et le nom ne peuvent pas être identiques";
       }
-      if (this.$store.getters.getRole === 'owner') {
-        if (!this.phone && this.allowPhone && !this.validatePhoneNumber(this.phone)) {
-          this.phoneError = "Merci de renseigner votre numéro de télèphone valide";
+      if (this.$store.getters.getRole === "owner") {
+        if (
+          !this.phone &&
+          this.allowPhone &&
+          !this.validatePhoneNumber(this.phone)
+        ) {
+          this.phoneError =
+            "Merci de renseigner votre numéro de télèphone valide";
         }
       }
-      
+
       if (!this.email || !this.confemail) {
         this.emailError = "Merci de renseigner et confirmer votre email";
       }
@@ -326,10 +334,19 @@ export default {
       const verifData = await UserService.find(this.id);
       if (verifData.id) {
         let params = {};
-        if (!this.lastNameError && !this.lastNameLengthError && !this.nameError && verifData.last_name !== this.lastname) {
+        if (
+          !this.lastNameError &&
+          !this.lastNameLengthError &&
+          !this.nameError &&
+          verifData.last_name !== this.lastname
+        ) {
           params["last_name"] = this.lastname;
         }
-        if (!this.firstError && !this.nameError && verifData.first_name !== this.firstname) {
+        if (
+          !this.firstError &&
+          !this.nameError &&
+          verifData.first_name !== this.firstname
+        ) {
           params["first_name"] = this.firstname;
         }
         if (!this.nickNameError && verifData.nickname !== this.pseudo) {
@@ -362,15 +379,22 @@ export default {
         if (Object.keys(params).length !== 0) {
           const response = await UserService.update(this.id, params);
           if (response.id) {
-            this.updateMessage = "Profil mis à jour"
+            this.updateMessage = "Profil mis à jour";
             this.$router.push({ name: "profile", params: { id: this.id } });
           } else {
-            this.errorUpdatePass = "Modification impossible, veuillez contacter l'administrateur par le biais de l'onglet contact";
+            this.errorUpdatePass =
+              "Modification impossible, veuillez contacter l'administrateur par le biais de l'onglet contact";
           }
         }
-        
 
-        if (this.new_password !== null && this.confPassword !== null && this.new_password.match(/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{8,}$/) && this.new_password === this.confPassword) {
+        if (
+          this.new_password !== null &&
+          this.confPassword !== null &&
+          this.new_password.match(
+            /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{8,}$/
+          ) &&
+          this.new_password === this.confPassword
+        ) {
           // si pas d'erreur pour le mot de passe on le modifie
           if (!this.confPasswordError && !this.passwordError) {
             // On prépare le tableau avec le remplacement du password
@@ -385,20 +409,26 @@ export default {
               this.$store.dispatch("deleteUser");
               this.$router.push({ name: "login" });
             } else {
-              this.errorUpdatePass = "Erreur dans la modification du mot de passe, veuillez contacter l'administrateur par le biais de l'onglet contact";
+              this.errorUpdatePass =
+                "Erreur dans la modification du mot de passe, veuillez contacter l'administrateur par le biais de l'onglet contact";
             }
           }
         } else {
           if (this.new_password !== this.confPassword) {
             this.new_password = null;
             this.confPassword = null;
-            this.confPasswordError = "Le mot de passe ne correspond pas"
+            this.confPasswordError = "Le mot de passe ne correspond pas";
           }
-          if (this.new_password && !this.new_password.match(/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{8,}$/)) {
-              this.confPasswordError = "Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une majuscule et un chiffre";
+          if (
+            this.new_password &&
+            !this.new_password.match(
+              /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{8,}$/
+            )
+          ) {
+            this.confPasswordError =
+              "Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une majuscule et un chiffre";
           }
         }
-        
       }
     },
     validateEmail: function (input) {
@@ -420,6 +450,30 @@ export default {
         return false;
       }
     },
+
+    confirmDeleteUser: function () {
+      const answer = window.confirm(
+        "Êtes-vous sur de vouloir supprimer votre compte utilisateur ? Cette action est irréversible."
+      );
+      if (answer) {
+        this.deleteUser();
+      }
+    },
+
+    async deleteUser() {
+      const response = await UserService.delete(this.id, {
+        reassign: "",
+        force: "true",
+      });
+
+      if (response.deleted) {
+        console.log(response.deleted);
+        this.$store.dispatch("deleteUser");
+        this.$router.push({ name: "home" });
+      } else {
+        alert(response.message);
+      }
+    },
   },
 };
 </script>
@@ -438,8 +492,13 @@ export default {
     margin-top: 0;
     margin-bottom: 2rem;
   }
+
+  #deleteAccountBtn {
+    color: red;
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 3rem;
+    cursor: pointer;
+  }
 }
 </style>
-
-
- 
