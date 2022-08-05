@@ -175,13 +175,10 @@
             <button v-on:click="submit" class="button__orange">
               Modifier mes informations
             </button>
-<<<<<<< HEAD
             <span id="deleteAccountBtn" @click="confirmDeleteUser">Supprimer mon compte</span>
-=======
             <p class="inscription__form__fieldset__field__error">
                 {{ errorUpdatePass }}
               </p>
->>>>>>> 6d70617f0c0c8599a6437dcd2a0ea43bf8ebaea3
           </fieldset>
         </div>
         <img
