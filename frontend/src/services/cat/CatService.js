@@ -14,8 +14,14 @@ const apiClient = axios.create({
 export default {
     // permet de récupérer toutes les fiches adotpions de chats
     async findAll() {
+        try {
+            apiClient.defaults.headers.common['Authorization'] = '';
         const response = await apiClient.get("/cat?_embed");
         return response.data;
+        } catch (error) {
+            return error.response;
+        }
+        
     },
     
     async findAllByOrder(params) {
