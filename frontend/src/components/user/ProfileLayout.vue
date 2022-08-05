@@ -7,6 +7,7 @@
         alt="illustration de chat gris et blanc"
       />
       <div class="profil__form__container">
+        <p class="validation__message">{{ updateMessage }}</p>
         <h2 class="bold">Profil utilisateur</h2>
         <div class="form">
           <fieldset class="left">
@@ -242,7 +243,8 @@ export default {
       phoneError: null,
       validEmailError: null,
       lastNameLengthError: null,
-      errorUpdatePass: null
+      errorUpdatePass: null,
+      updateMessage: null
     };
   },
   async mounted() {
@@ -280,6 +282,7 @@ export default {
       this.allowContactError = null;
       this.lastNameLengthError = null;
       this.errorUpdatePass = null;
+      this.updateMessage = null;
 
       // Validation du contenu du formulaire
       if (!this.lastname) {
@@ -300,9 +303,12 @@ export default {
       if (this.lastname === this.firstname) {
         this.nameError = "Le prénom et le nom ne peuvent pas être identiques";
       }
-      if (!this.phone && this.allowPhone && !this.validatePhoneNumber(this.phone)) {
-        this.phoneError = "Merci de renseigner votre numéro de télèphone valide";
+      if (this.$store.getters.getRole === 'owner') {
+        if (!this.phone && this.allowPhone && !this.validatePhoneNumber(this.phone)) {
+          this.phoneError = "Merci de renseigner votre numéro de télèphone valide";
+        }
       }
+      
       if (!this.email || !this.confemail) {
         this.emailError = "Merci de renseigner et confirmer votre email";
       }
@@ -315,9 +321,6 @@ export default {
       if (!this.allowEmail && !this.allowPhone) {
         this.allowContactError =
           "Vous devez communiquer votre mail ou votre téléphone";
-      }
-      if (!this.validatePhoneNumber(this.phone)) {
-        this.phoneError = "Merci de renseigner un numéro de télèphone valide ";
       }
 
       const verifData = await UserService.find(this.id);
@@ -359,7 +362,7 @@ export default {
         if (Object.keys(params).length !== 0) {
           const response = await UserService.update(this.id, params);
           if (response.id) {
-            // this.$route.redirectedFrom = this.$route.path;
+            this.updateMessage = "Profil mis à jour"
             this.$router.push({ name: "profile", params: { id: this.id } });
           } else {
             this.errorUpdatePass = "Modification impossible, veuillez contacter l'administrateur par le biais de l'onglet contact";
@@ -391,7 +394,7 @@ export default {
             this.confPassword = null;
             this.confPasswordError = "Le mot de passe ne correspond pas"
           }
-          if (!this.new_password.match(/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{8,}$/)) {
+          if (this.new_password && !this.new_password.match(/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{8,}$/)) {
               this.confPasswordError = "Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une majuscule et un chiffre";
           }
         }
@@ -429,6 +432,12 @@ export default {
 }
 .box_response {
   margin-left: 1rem;
+}
+.profil__form__container {
+  .validation__message {
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
 }
 </style>
 
