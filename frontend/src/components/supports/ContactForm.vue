@@ -88,7 +88,7 @@ import ContactService from '@/services/contact/ContactService';
             "email": this.email,
             "content": this.message
           });
-          if (response.sended) {
+          if (response.sent) {
             this.isSendMessage = "Votre message a été envoyé avec succès";
             this.full_name = null;
             this.email = null;

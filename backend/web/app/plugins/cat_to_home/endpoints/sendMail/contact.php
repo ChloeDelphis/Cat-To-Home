@@ -46,7 +46,7 @@ function cat_to_home_rest_send_mail_contact_handler($request)
 
     if ($send) {
         $response['code'] = 200;
-        $response['sended'] = true; 
+        $response['sent'] = true; 
     } else {
         $response['code'] = 400;
         $response['message'] = 'L\'envoi du mail à échoué';

@@ -108,6 +108,7 @@ export default {
           const message = document.querySelector('.reinit__pass');
           message.classList.remove('reinit__pass--hidden');
         if (response.code === 200) {
+          this.emailReinitPass = null;
           message.textContent = 'Le mail a bien été envoyé';
         } else {
           message.textContent = 'Le mail n\'a pas pu être envoyé';

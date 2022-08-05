@@ -57,7 +57,7 @@ export default {
     // Récupere les infos de base d'un user sans besoin de token JWT
     async findForResetPass(id) {
         try {
-            const response = await apiClient.get('/wp/v2/users/' + id);
+            const response = await apiClient.get('/wp/v2/users/reset/' + id);
             return response.data;
         } catch (error) {
             return error.response.data;
