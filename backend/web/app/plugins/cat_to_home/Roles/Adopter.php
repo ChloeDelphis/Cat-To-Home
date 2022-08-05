@@ -10,6 +10,7 @@ class Adopter
         $adopter = add_role('adopter', 'Adopter', $capabilitie);
         $adopter->add_cap('edit_users');
         $adopter->add_cap('list_users');
+        $adopter->add_cap('delete_users');
     }
 
     public static function cat_to_home_remove_adopter_role()

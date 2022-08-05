@@ -175,6 +175,7 @@
             <button v-on:click="submit" class="button__orange">
               Modifier mes informations
             </button>
+            <span id="deleteAccountBtn" @click="confirmDeleteUser">Supprimer mon compte</span>
           </fieldset>
         </div>
         <img
@@ -429,6 +430,28 @@ export default {
         return false;
       }
     },
+
+    confirmDeleteUser : function () {
+      const answer = window.confirm("Êtes-vous sur de vouloir supprimer votre compte utilisateur ? Cette action est irréversible.")
+      if(answer) {
+        this.deleteUser();
+      }
+    },
+
+    async deleteUser () {
+      const response = await UserService.delete(this.id, {
+        "reassign":"",
+        "force":"true" 
+      });
+      
+      if(response.deleted) {
+        console.log(response.deleted);
+        this.$store.dispatch("deleteUser");
+        this.$router.push({ name: "home" });
+      } else {
+        alert(response.message);
+      }
+    }
   },
 };
 </script>
@@ -441,6 +464,14 @@ export default {
 }
 .box_response {
   margin-left: 1rem;
+}
+
+#deleteAccountBtn {
+  color: red;
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 3rem;
+  cursor: pointer;
 }
 </style>
 
