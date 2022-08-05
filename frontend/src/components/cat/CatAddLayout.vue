@@ -242,7 +242,7 @@
                 value="permission2"
               />
               <label for="permission2">
-                J'atteste de la validité des informations renseigner.</label
+                J'atteste de la validité des informations renseignées.</label
               >
             </div>
             <div class="input__name__checkbox">

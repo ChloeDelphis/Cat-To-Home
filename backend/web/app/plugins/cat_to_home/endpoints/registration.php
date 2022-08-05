@@ -89,8 +89,11 @@ function cat_to_home_rest_user_register_handler($request)
         // Si la création du nouvel utilisateur est bonne
         if (!is_wp_error($user_id)) {
 
-            add_user_meta($user_id, 'birth', $birth);
             // Ajout de la meta Key birth dans la bdd
+            add_user_meta($user_id, 'birth', $birth);
+
+            // Ajout de la meta Key allowEmail dans la bdd
+            add_user_meta($user_id, 'allowEmail', $parameters['meta']['allowEmail']);
 
             // Recuperation de l'objet user
             $user = get_user_by('id', $user_id);

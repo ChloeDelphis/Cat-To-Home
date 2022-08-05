@@ -20,7 +20,7 @@
               v-model="lastname"
             />
             <p class="inscription__form__fieldset__field__error">
-              {{ lastNameError }} {{ nameError }}
+              {{ lastNameError }} {{ nameError }} {{lastNameLengthError}}
             </p>
             <br />
 
@@ -175,7 +175,13 @@
             <button v-on:click="submit" class="button__orange">
               Modifier mes informations
             </button>
+<<<<<<< HEAD
             <span id="deleteAccountBtn" @click="confirmDeleteUser">Supprimer mon compte</span>
+=======
+            <p class="inscription__form__fieldset__field__error">
+                {{ errorUpdatePass }}
+              </p>
+>>>>>>> 6d70617f0c0c8599a6437dcd2a0ea43bf8ebaea3
           </fieldset>
         </div>
         <img
@@ -239,6 +245,8 @@ export default {
       pseudo: null,
       phoneError: null,
       validEmailError: null,
+      lastNameLengthError: null,
+      errorUpdatePass: null
     };
   },
   async mounted() {
@@ -274,6 +282,8 @@ export default {
       this.confPasswordError = null;
       this.validEmailError = null;
       this.allowContactError = null;
+      this.lastNameLengthError = null;
+      this.errorUpdatePass = null;
 
       // Validation du contenu du formulaire
       if (!this.lastname) {
@@ -294,9 +304,9 @@ export default {
       if (this.lastname === this.firstname) {
         this.nameError = "Le prénom et le nom ne peuvent pas être identiques";
       }
-      // if (!this.phone) {
-      //   this.phoneError = "Merci de renseigner votre numéro de télèphone ";
-      // }
+      if (!this.phone && this.allowPhone && !this.validatePhoneNumber(this.phone)) {
+        this.phoneError = "Merci de renseigner votre numéro de télèphone valide";
+      }
       if (!this.email || !this.confemail) {
         this.emailError = "Merci de renseigner et confirmer votre email";
       }
@@ -306,38 +316,27 @@ export default {
       if (!this.validateEmail(this.email)) {
         this.validEmailError = "Votre adresse email n'est pas valide";
       }
-      if (!this.new_password) {
-        this.passwordError =
-          "Merci de renseigner et confirmer votre mot de passe";
-      }
-      if (this.new_password !== this.confPassword) {
-        this.confPasswordError = "Vos mots de passe ne sont pas identiques";
-      }
       if (!this.allowEmail && !this.allowPhone) {
         this.allowContactError =
           "Vous devez communiquer votre mail ou votre téléphone";
       }
-      if (this.allowPhone && !this.validatePhoneNumber(this.phone)) {
-        this.allowContactError =
-          "Merci de renseigner un numéro de téléphone valide";
+      if (!this.validatePhoneNumber(this.phone)) {
+        this.phoneError = "Merci de renseigner un numéro de télèphone valide ";
       }
-      // if (!this.validatePhoneNumber(this.phone)) {
-      //   this.phoneError = "Merci de renseigner un numéro de télèphone valide ";
-      // }
 
       const verifData = await UserService.find(this.id);
       if (verifData.id) {
         let params = {};
-        if (!this.lastNameError && verifData.last_name !== this.lastname) {
+        if (!this.lastNameError && !this.lastNameLengthError && !this.nameError && verifData.last_name !== this.lastname) {
           params["last_name"] = this.lastname;
         }
-        if (!this.firstError && verifData.first_name !== this.firstname) {
+        if (!this.firstError && !this.nameError && verifData.first_name !== this.firstname) {
           params["first_name"] = this.firstname;
         }
         if (!this.nickNameError && verifData.nickname !== this.pseudo) {
           params["nickname"] = this.pseudo;
         }
-        if (!this.allowContactError && verifData.meta.phone !== this.phone) {
+        if (!this.phoneError && verifData.meta.phone !== this.phone) {
           params["meta"] = { phone: this.phone };
         }
         if (
@@ -360,56 +359,48 @@ export default {
         ) {
           params["meta"] = { allowEmail: this.allowEmail };
         }
-        // console.log(params);
-
-        const response = await UserService.update(this.id, params);
-        console.log(response);
-        if (response.id) {
-          // this.$route.redirectedFrom = this.$route.path;
-          this.$router.push({ name: "profile", params: { id: this.id } });
-        } else {
-          alert(
-            "Modification impossible, veuillez contacter l'administrateur par le biais de l'onglet contact"
-          );
-        }
-
-        // si pas d'erreur pour le mot de passe on le modifie
-        if (!this.confPasswordError && !this.passwordError) {
-          // On prépare le tableau avec le remplacement du password
-          let params = {
-            password: this.new_password,
-          };
-          console.log(this.new_password);
-
-          // On envoie la requête à l'API
+        console.log(params);
+        if (Object.keys(params).length !== 0) {
           const response = await UserService.update(this.id, params);
-          console.log(response);
           if (response.id) {
-            // On supprime le token
-            this.$store.dispatch("deleteUser");
             // this.$route.redirectedFrom = this.$route.path;
-            this.$router.push({ name: "Connexion" });
+            this.$router.push({ name: "profile", params: { id: this.id } });
           } else {
-            alert(
-              "Erreuyr dans la modification du mot de passe, veuillez contacter l'administrateur par le biais de l'onglet contact"
-            );
+            this.errorUpdatePass = "Modification impossible, veuillez contacter l'administrateur par le biais de l'onglet contact";
           }
         }
-      }
+        
 
-      // On prépare le tableau avec les remplacements
-      // let params = {
-      //   last_name: this.lastname,
-      //   first_name: this.firstname,
-      //   nickname: this.pseudo,
-      //   email: this.email,
-      //   meta: {
-      //     allowPhone: this.allowPhone,
-      //     allowEmail: this.allowEmail,
-      //     phone: this.phone,
-      //   },
-      // };
-      // On envoie la requête à l'API
+        if (this.new_password !== null && this.confPassword !== null && this.new_password.match(/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{8,}$/) && this.new_password === this.confPassword) {
+          // si pas d'erreur pour le mot de passe on le modifie
+          if (!this.confPasswordError && !this.passwordError) {
+            // On prépare le tableau avec le remplacement du password
+            let params = {
+              password: this.new_password,
+            };
+
+            // On envoie la requête à l'API
+            const response = await UserService.update(this.id, params);
+            if (response.id) {
+              // On supprime le token
+              this.$store.dispatch("deleteUser");
+              this.$router.push({ name: "login" });
+            } else {
+              this.errorUpdatePass = "Erreur dans la modification du mot de passe, veuillez contacter l'administrateur par le biais de l'onglet contact";
+            }
+          }
+        } else {
+          if (this.new_password !== this.confPassword) {
+            this.new_password = null;
+            this.confPassword = null;
+            this.confPasswordError = "Le mot de passe ne correspond pas"
+          }
+          if (!this.new_password.match(/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{8,}$/)) {
+              this.confPasswordError = "Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une majuscule et un chiffre";
+          }
+        }
+        
+      }
     },
     validateEmail: function (input) {
       const validRegex =
