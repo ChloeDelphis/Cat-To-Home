@@ -439,9 +439,12 @@ export default {
 
         // Changement de la feature image
         uploadPicture(event) {
-            // Revisualisation de l'image
-            this.picture_file = event.target.files[0];
-            this.preview_picture = URL.createObjectURL(this.picture_file);
+            if(event.target.files[0].size > 2097152) {
+                alert("Le fichier est trop volumineux, il ne doit pas dépasser 2MB")
+            } else {
+                this.picture_file = event.target.files[0];
+                this.preview_picture = URL.createObjectURL(this.picture_file);
+            }
         },
     },
 }
