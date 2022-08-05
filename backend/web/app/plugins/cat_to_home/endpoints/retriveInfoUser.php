@@ -22,10 +22,11 @@ function cat_to_home_rest_info_user_handler($data)
     $user = get_user_by('ID', $userId);
 
     
-    $sql = "SELECT user_id, meta_value, meta_key
+    $sql = "SELECT *
             FROM $wpdb->usermeta
             WHERE user_id = $userId
-            AND meta_key IN ('reset_token', 'exp_date', 'reset_email')";
+            AND meta_key IN ('reset_token', 'exp_date', 'reset_email')
+            ORDER BY umeta_id";
 
     $result = $wpdb->get_results($sql);
 

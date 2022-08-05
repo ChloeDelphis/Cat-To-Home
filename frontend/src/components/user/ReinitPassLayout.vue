@@ -7,6 +7,7 @@
             <input type="password" v-model="passConfirm" class="input form__items" placeholder="confirmer mot de passe">
             <p class="rest__form__fieldset__field__error">{{ errors.confpassword }}</p>
             <button @click="setNewPassword" class="button__orange form__items">Valider</button>
+            <p class="rest__form__fieldset__field__error">{{ errors.invalid_reset }}</p>
         </div>
         <div v-if="errors == 'linkExpired' || errors == 'wrongToken'">
             <p class="link__expired">Ce lien a expiré et/ou est faux, merci de recommencer la réinitialisation de votre
@@ -53,22 +54,23 @@ export default {
                 const response = await UserService.findForResetPass(this.$route.query.key);
                 if (response.code === 200) {
 
-                    if (Date.parse(response.data[0].meta_value) >= this.currentDate) { // Date.parse() transforme un string en milliseconde depuis le 01/01/1970
-                        if (response.data[2].meta_value === this.token_url) {
+                    if (Date.parse(response.data[1].meta_value) >= this.currentDate) { // Date.parse() transforme un string en milliseconde depuis le 01/01/1970
+                        if (response.data[0].meta_value === this.token_url) {
                             const reset_pass = await UserService.resetPass({
-                                "email": response.data[1].meta_value,
+                                "email": response.data[2].meta_value,
                                 "password": this.password
                             });
                             if (reset_pass.code === 200) {
                                 this.$router.push({ name: 'login' });
                             } else {
-                                this.errors.push('failChangePass');
+                                this.errors = {...this.errors, invalid_reset: 'Le mot de passe n\'a pas pu être réinitialisé'};
                             }
                         } else {
-                            this.errors.push('wrongToken');
+                                this.errors = {...this.errors, invalid_reset: 'Le lien n\'est plus valide'};
                         }
                     } else {
-                        this.errors.push('linkExpired');
+                        this.errors = {...this.errors, invalid_reset: 'Le lien n\'est plus valide'};
+
                     }
                 }
 
