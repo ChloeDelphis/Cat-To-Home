@@ -98,11 +98,14 @@ export default {
   },
 
   async mounted() {
+
     this.favoriteCatsId();
-    this.getInfo();    
+    this.getInfo();   
+
   },
 
   computed: {
+
     isFavorite() {
       for (const el of this.userFavoriteCatsId) {
         if (el === this.id) {
@@ -114,46 +117,57 @@ export default {
   },
 
   methods: {
-    // Récupération of the cat's informations
+    
+    /**
+     *  Récupération of the cat's informations
+     */
     async getInfo(){
-    let id = this.$route.params.id;
-    const catResponse = await CatService.find(id);
-    if (catResponse.code) {
-      alert(catResponse.message);
-    } else {
-      this.name = catResponse.title.rendered;
-      this.picture = catResponse._embedded["wp:featuredmedia"][0].source_url;
-      this.localisation = catResponse.meta.city;
-      // department bloque la suite des info récupéré.
-      this.department = catResponse._embedded["wp:term"][2][0].name;
-      this.sexe = catResponse._embedded["wp:term"][3][0].name;
-      this.age = catResponse.meta.age;
-      this.vaccinated = catResponse._embedded["wp:term"][4];
-      this.diseases = catResponse._embedded["wp:term"][0];
-      this.environments = catResponse._embedded["wp:term"][1];
-      this.infos = catResponse.content.rendered;
-      //   Ici on récupère l'id de l'auteur affilié à la fiche du chat
-      this.authorId = catResponse.author;
 
-      //   Il est maintenant nécessaire de reprendre cette info en effectuant une requête de users:Role qui va permettre d'accéder à email et à meta.phone
+      let id = this.$route.params.id;
+      const catResponse = await CatService.find(id);
 
-    }
+      if (catResponse.code) {
 
-    // Récupération of the owner's informations
-    if (this.$store.getters.getToken !== null) {
-      const userResponse = await UserService.find(this.authorId);
-      // console.log(userResponse);
-      if (userResponse.code) {
-        alert(userResponse.message);
+        alert(catResponse.message);
+
       } else {
-        this.phoneNumber = userResponse.meta.phone;
-        this.email = userResponse.email;
-        this.allowPhone = userResponse.meta.allowPhone;
-        this.allowEmail = userResponse.meta.allowEmail;
+        this.name = catResponse.title.rendered;
+        this.picture = catResponse._embedded["wp:featuredmedia"][0].source_url;
+        this.localisation = catResponse.meta.city;
+        this.department = catResponse._embedded["wp:term"][2][0].name;
+        this.sexe = catResponse._embedded["wp:term"][3][0].name;
+        this.age = catResponse.meta.age;
+        this.vaccinated = catResponse._embedded["wp:term"][4];
+        this.diseases = catResponse._embedded["wp:term"][0];
+        this.environments = catResponse._embedded["wp:term"][1];
+        this.infos = catResponse.content.rendered;
+        //  Getting the author_id of the current post (cat)
+        this.authorId = catResponse.author;
       }
-    }
+
+      // Récupération of the owner's informations
+      if (this.$store.getters.getToken !== null) {
+
+        const userResponse = await UserService.find(this.authorId);
+        
+        if (userResponse.code) {
+
+          alert(userResponse.message);
+
+        } else {
+
+          this.phoneNumber = userResponse.meta.phone;
+          this.email = userResponse.email;
+          this.allowPhone = userResponse.meta.allowPhone;
+          this.allowEmail = userResponse.meta.allowEmail;
+
+        }
+      }
     },
 
+    /**
+     * Method to display contact infos of the cat's owner
+     */
     async displayContactInfos() {
       const contactInfosElmnt = document.querySelector(".contact__information");
       contactInfosElmnt.style.display = "block";

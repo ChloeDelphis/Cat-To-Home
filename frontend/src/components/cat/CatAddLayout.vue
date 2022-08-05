@@ -351,11 +351,17 @@ export default {
     },
     previewPictureAdd(event) {
       // Previsualisation de l'image
-      this.picture_file = event.target.files[0];
-      this.preview_picture = URL.createObjectURL(this.picture_file);
-      // fait apparaitre la balise image en supprimant la class none
-      const image = document.querySelector("#image");
-      image.classList.remove("none");
+      if(event.target.files[0].size > 2097152) {
+        alert("Le fichier à trop mangé à la cantoch, fait un régime")
+              
+      }else{
+        this.picture_file = event.target.files[0];
+        this.preview_picture = URL.createObjectURL(this.picture_file);
+        // fait apparaitre la balise image en supprimant la class none
+        const image = document.querySelector("#image");
+        image.classList.remove("none");
+      }
+
     },
 
     async sendNewCat() {
@@ -364,25 +370,25 @@ export default {
 
       // Validation du contenu du formulaire
       if (!this.title) {
-        this.errors = {...this.errors, title: "Le nom n'est pas renseigner."};
+        this.errors = {...this.errors, title: "Le nom n'est pas renseigné."};
       }
       if (!this.sex) {
-        this.errors = {...this.errors, sex: "Le sex n'est pas renseigner."};
+        this.errors = {...this.errors, sex: "Le sex n'est pas renseigné."};
       }
       if (!this.city) {
-        this.errors = {...this.errors, city: "La ville n'est pas renseigner."};
+        this.errors = {...this.errors, city: "La ville n'est pas renseignée."};
       }
       if (!this.location_input) {
-        this.errors = {...this.errors, location_input: "Le département n'est pas renseigner."};
+        this.errors = {...this.errors, location_input: "Le département n'est pas renseigné."};
       }
       if (!this.age) {
-        this.errors = {...this.errors, age: "L'âge n'est pas renseigner."};
+        this.errors = {...this.errors, age: "L'âge n'est pas renseigné."};
       }
       if (!this.environment) {
-        this.errors = {...this.errors, environment: "L'environement n'est pas renseigner."};
+        this.errors = {...this.errors, environment: "L'environement n'est pas renseigné."};
       }
       if (!this.disease_input) {
-        this.errors = {...this.errors, disease_input: "La maladie n'est pas renseigner."};
+        this.errors = {...this.errors, disease_input: "La maladie n'est pas renseignée."};
       }
       if (!this.content) {
         this.errors = {...this.errors, content: "La descritpion est vide."};
