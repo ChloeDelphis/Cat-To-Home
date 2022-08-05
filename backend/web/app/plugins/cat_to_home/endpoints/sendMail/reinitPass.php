@@ -43,19 +43,19 @@ function cat_to_home_rest_send_mail_handler($request)
         update_user_meta($user->ID, 'exp_date', $expDate);
         update_user_meta($user->ID, 'reset_email', $email);
 
-        $link = "<a href='http://localhost:8081/reinitialisation-mot-de-passe?key=".$user->ID."&token=".$token.">Reset password</a>";
+        $link = "<a href=\"http://localhost:8080/reinitialisation-mot-de-passe?key=$user->ID&token=$token\">Reset password</a>";
         
         $subject = 'reset mot de passe';
 
-        $message = 'Clique sur le lien pour réinisialiser ton mot de passe ' . $link;
+        $message = 'Clique sur le lien pour réinisialiser ton mot de passe ' . $link . '<br>' . 'Si le lien ne fonctionne pas, copiez l\'url suivante : <br>' . 'http://localhost:8080/reinitialisation-mot-de-passe?key='.$user->ID.'&token='.$token.'';
 
         $headers = array(
             'Content-Type: text/html; charset=UTF-8',
-            "Reply-To: damien laitani d.laitani@gmail.com",
-            'From: Damien <d.laitani@gmail.com>'
+            "Reply-To: Cat to home cattohome.contact@gmail.com",
+            'From: Cat to home <cattohome.contact@gmail.com>'
         );
         $response['code'] = 200;
-        $response['sended'] = wp_mail('Damien <d.laitani@gmail.com>', $subject, $message, $headers);
+        $response['sent'] = wp_mail(''. $user->first_name . ' <'. $email .'>', $subject, $message, $headers);
     } else {
         $response['code'] = 400;
         $response = 'Aucun utilisateur ne correspond à cette adresse mail.';

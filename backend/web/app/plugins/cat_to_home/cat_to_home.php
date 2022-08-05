@@ -31,6 +31,7 @@ require_once plugin_dir_path(__FILE__) . './endpoints/catByAge.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/sendMail/reinitPass.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/sendMail/contact.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/resetPassword.php';
+require_once plugin_dir_path(__FILE__) . './endpoints/retriveInfoUser.php';
 
 // Customs users meta keys
 require_once plugin_dir_path(__FILE__) . './users/birth.php';
