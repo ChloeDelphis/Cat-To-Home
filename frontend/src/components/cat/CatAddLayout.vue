@@ -351,11 +351,17 @@ export default {
     },
     previewPictureAdd(event) {
       // Previsualisation de l'image
-      this.picture_file = event.target.files[0];
-      this.preview_picture = URL.createObjectURL(this.picture_file);
-      // fait apparaitre la balise image en supprimant la class none
-      const image = document.querySelector("#image");
-      image.classList.remove("none");
+      if(event.target.files[0].size > 2097152) {
+        alert("Le fichier à trop mangé à la cantoch, fait un régime")
+              
+      }else{
+        this.picture_file = event.target.files[0];
+        this.preview_picture = URL.createObjectURL(this.picture_file);
+        // fait apparaitre la balise image en supprimant la class none
+        const image = document.querySelector("#image");
+        image.classList.remove("none");
+      }
+
     },
 
     async sendNewCat() {
