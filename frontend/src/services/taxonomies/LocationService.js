@@ -11,7 +11,7 @@ const instance = axios.create({
 export default {
     // permet de récupérer toutes les locations
     async findAll() {
-        const response = await instance.get("/location");
+        const response = await instance.get("/location?per_page=100");
         return response.data;
     },
 
