@@ -16,7 +16,7 @@
                 />
             </div>
             <div class="cat__details__infos1">
-                <h2 class="cat__details__infos1__title">Coucou ! Mon nom est {{name}} ! Tu veux m’adopter ?</h2>
+                <h2 class="cat__details__infos1__title">Coucou ! Mon nom est <span v-html="name"></span> ! Tu veux m’adopter ?</h2>
                 <ul>
                     <li class="icon" id="localisation"><span class="bold">Localisation</span> : {{localisation}}</li>
                     <li class="icon" id="department"><span class="bold">Département</span> : {{department}}</li>
