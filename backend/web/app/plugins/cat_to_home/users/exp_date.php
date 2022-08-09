@@ -1,8 +1,6 @@
 <?php
 
 // Ajout du postmeta 'exp_date'
-
-
 function user_exp_date()
 {
 

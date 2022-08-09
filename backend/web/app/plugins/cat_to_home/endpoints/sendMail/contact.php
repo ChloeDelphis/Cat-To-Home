@@ -4,7 +4,7 @@ add_action('rest_api_init', 'cat_to_home_rest_send_mail_contact');
 
 function cat_to_home_rest_send_mail_contact()
 {
-    // Nouvelle route pour inscription user
+    // Route pour le formulaire de contact
     register_rest_route('wp/v2', 'users/send/contact', array(
         'methods' => 'POST',
         'callback' => 'cat_to_home_rest_send_mail_contact_handler',
@@ -28,6 +28,7 @@ function cat_to_home_rest_send_mail_contact_handler($request)
         $error->add(400, 'Merci d\'indiquer vos nom et prénom');
         return $error;
     }
+    // TODO On pourrait tester le mail avec une regex
     if (empty($email)) {
         $error->add(400, 'Merci d\'indiquer votre adresse email');
         return $error;
@@ -42,7 +43,8 @@ function cat_to_home_rest_send_mail_contact_handler($request)
         'From: Cat to home <cattohome.contact@gmail.com>'
     ];
 
-    $send = wp_mail(get_option('admin_email'), 'contact - '.$name.' ', $content, $headers);
+    // S'il n'y a pas eu d'erreurs, on envoie le mail à l'admin
+    $send = wp_mail(get_option('admin_email'), 'contact - '.$name.'', $content, $headers);
 
     if ($send) {
         $response['code'] = 200;

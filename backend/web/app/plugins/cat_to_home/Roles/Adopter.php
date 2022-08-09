@@ -17,6 +17,4 @@ class Adopter
     {
         remove_role('adopter');
     }
-
-    // ajouter une capabilities de lecture du mail et meta=>phone (par ID) 
 }

@@ -4,7 +4,7 @@ add_action('rest_api_init', 'cat_to_home_rest_info_user');
 
 function cat_to_home_rest_info_user()
 {
-    // Nouvelle route pour réinitialiser le password
+    // Route pour récupérer les infos d'un l'utilisateur en vue de la réinitialisation de son mot de passe
     register_rest_route('wp/v2', 'users/reset/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'cat_to_home_rest_info_user_handler',
@@ -18,7 +18,7 @@ function cat_to_home_rest_info_user_handler($data)
 {
     global $wpdb;
     
-    $userId = ($data['id']);
+    $userId = $data['id'];
     $user = get_user_by('ID', $userId);
 
     

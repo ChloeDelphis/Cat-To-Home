@@ -9,8 +9,6 @@ Version: 1.0
 require __DIR__ . '/vendor/autoload.php';
 
 use Migration\User_PostMigration;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use Roles\Adopter;
 use Roles\Owner;
 
@@ -24,7 +22,7 @@ require_once plugin_dir_path(__FILE__) . './taxonomies/location.php';
 require_once plugin_dir_path(__FILE__) . './taxonomies/sex.php';
 require_once plugin_dir_path(__FILE__) . './taxonomies/vaccinate.php';
 
-// Custom endpoint
+// Customs endpoints
 require_once plugin_dir_path(__FILE__) . './endpoints/registration.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/favorite.php';
 require_once plugin_dir_path(__FILE__) . './endpoints/catByAge.php';
@@ -39,12 +37,11 @@ require_once plugin_dir_path(__FILE__) . './users/phone.php';
 require_once plugin_dir_path(__FILE__) . './users/reset_token.php';
 require_once plugin_dir_path(__FILE__) . './users/exp_date.php';
 require_once plugin_dir_path(__FILE__) . './users/reset_email.php';
-
 require_once plugin_dir_path(__FILE__) . './users/allowPhone.php';
 require_once plugin_dir_path(__FILE__) . './users/allowEmail.php';
 
 
-
+// A l'activation du plugin, on crée la table et les roles
 register_activation_hook(__FILE__, 'cat_to_home_create_custom_roles');
 function cat_to_home_create_custom_roles()
 {
@@ -53,6 +50,7 @@ function cat_to_home_create_custom_roles()
     User_PostMigration::cat_to_home_createTable();
 }
 
+// A l'activation du plugin, on supprime la table et les roles
 register_deactivation_hook(__FILE__, 'cat_to_home_remove_custom_roles');
 function cat_to_home_remove_custom_roles()
 {
@@ -61,6 +59,7 @@ function cat_to_home_remove_custom_roles()
     User_PostMigration::cat_to_home_deleteTable();
 }
 
+// Paramétrage de phpmailer pour envoyer des mail
 add_action( 'phpmailer_init', 'send_smtp_email' );
 function send_smtp_email( $phpmailer ) {
     $phpmailer->isSMTP();
@@ -70,7 +69,6 @@ function send_smtp_email( $phpmailer ) {
     $phpmailer->SMTPAuth   = true;
     $phpmailer->Username   = 'cattohome.contact@gmail.com';
     $phpmailer->Password   = 'mxflhkiqwpupmibv';
-
 }
 
 //? show wp_mail() errors

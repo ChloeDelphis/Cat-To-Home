@@ -1,8 +1,6 @@
 <?php
 
 // Ajout du postmeta 'allowEmail'
-
-
 function user_allowEmail()
 {
 

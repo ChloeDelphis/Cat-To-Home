@@ -4,7 +4,7 @@ add_action('rest_api_init', 'cat_to_home_rest_password');
 
 function cat_to_home_rest_password()
 {
-    // Nouvelle route pour réinitialiser le password
+    // Route pour réinitialiser le password
     register_rest_route('wp/v2', 'users/reset-password', array(
         'methods' => 'POST',
         'callback' => 'cat_to_home_rest_password_handler',
@@ -28,7 +28,7 @@ function cat_to_home_rest_password_handler($request)
     $email = sanitize_text_field($parameters['email']);
     $user = get_user_by('email', $email);
 
-    if ($user) {
+    if ($user && $user->roles[0] !== 'administrator') {
         $result = wp_update_user([
             'ID' => $user->ID,
             'user_pass' => $parameters['password']

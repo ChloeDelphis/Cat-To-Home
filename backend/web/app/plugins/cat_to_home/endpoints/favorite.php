@@ -4,7 +4,7 @@ add_action('rest_api_init', 'cat_to_home_rest_get_favorite');
 add_action('rest_api_init', 'cat_to_home_rest_add_favorite');
 add_action('rest_api_init', 'cat_to_home_rest_remove_favorite');
 
-
+// Route qui récupère les favoris d'un adoptant
 function cat_to_home_rest_get_favorite()
 {
   register_rest_route('wp/v2', '/users/favorites', array(
@@ -29,16 +29,16 @@ function cat_to_home_rest_get_favorite_handler($request)
 
   $results = $wpdb->get_results($sql);
 
-
   foreach ($results as $object) {
     $response = [];
 
-    //  recup le post en fonction d'un id de la fiche adoption
+    //  récupère le post en fonction d'un id de la fiche adoption
     $response['post_info'] =  get_post($object->id_adoption);
 
-    // on recup url featured image
+    // on récupère url featured image
     $response['source_url'] = get_the_post_thumbnail_url(get_post($object->id_adoption));
 
+    // On récupère la 'location' à part pour l'avoir toujours au même endroit dans la réponse de l'API
     $response['location'] = wp_get_object_terms($object->id_adoption, 'location');
 
     // On récupère les taxonomies associées au post
@@ -47,12 +47,10 @@ function cat_to_home_rest_get_favorite_handler($request)
     // On "concatène" les réponses à l'intérieur d'un tableau de réponses
     $responses[] = $response;
   }
-  // $response = json_encode($response);
   return new WP_REST_Response($responses, 200);
 };
 
-
-
+// Route qui permet d'ajouter une fiches en favoris
 function cat_to_home_rest_add_favorite()
 {
   register_rest_route('wp/v2', '/users/favorites/add', array(
@@ -100,7 +98,7 @@ function cat_to_home_rest_add_favorite_handler($request)
   return new WP_REST_Response($response, 200);
 };
 
-
+// Route qui permet de supprimer une fiche des favoris
 function cat_to_home_rest_remove_favorite()
 {
   register_rest_route('wp/v2', '/users/favorites/delete', array(

@@ -1,8 +1,6 @@
 <?php
 
 // Ajout du postmeta 'reset_email'
-
-
 function user_reset_email()
 {
 

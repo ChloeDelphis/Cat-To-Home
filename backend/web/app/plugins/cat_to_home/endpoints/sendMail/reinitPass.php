@@ -1,16 +1,10 @@
 <?php
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-
-// require __DIR__ . '/../vendor/autoload.php';
-
-
 add_action('rest_api_init', 'cat_to_home_rest_send_mail');
 
 function cat_to_home_rest_send_mail()
 {
-    // Nouvelle route pour inscription user
+    // Route pour l'envoie de mail pour la réinitialisation de mot de passe
     register_rest_route('wp/v2', 'users/send', array(
         'methods' => 'POST',
         'callback' => 'cat_to_home_rest_send_mail_handler',
@@ -28,9 +22,13 @@ function cat_to_home_rest_send_mail_handler($request)
 
     $user = get_user_by('email', $email);
 
-    if ($user) {
+    // Si un utilisateur existe et qu'il n'est pas administrateur, on procède à l'envoie du mail.
+    // Pour des raisons de sécuritées, on ne permet pas de modifier le mot de passe d'un administrateur 
+    // car le BackOffice de wp est la pour le faire
+    if ($user && $user->roles[0] !== 'administrator') {
         $token = md5($email).rand(10,9999);
 
+        // On crée une date d'expiration au format Européen pour le token
         date_default_timezone_set('Europe/Paris');
 
         $expFormat = mktime(

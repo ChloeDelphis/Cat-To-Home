@@ -4,7 +4,7 @@ add_action('rest_api_init', 'cat_to_home_rest_user_register');
 
 function cat_to_home_rest_user_register()
 {
-    // Nouvelle route pour inscription user
+    // Route pour inscription user
     register_rest_route('wp/v2', 'users/register', array(
         'methods' => 'POST',
         'callback' => 'cat_to_home_rest_user_register_handler',
@@ -24,8 +24,7 @@ function cat_to_home_rest_user_register_handler($request)
 
     $authorized_roles = [
         'adopter',
-        'owner',
-        'administrator'
+        'owner'
     ];
 
     // Recup formulaire
