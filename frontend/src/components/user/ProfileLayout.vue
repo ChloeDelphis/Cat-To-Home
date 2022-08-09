@@ -59,7 +59,7 @@
                 this.$store.getters.getRole !== 'adopter'
               "
               for="phone"
-              >Numéro de télèphone</label
+              >Numéro de téléphone</label
             >
 
             <br
@@ -313,7 +313,7 @@ export default {
           !this.validatePhoneNumber(this.phone)
         ) {
           this.phoneError =
-            "Merci de renseigner votre numéro de télèphone valide";
+            "Merci de renseigner votre numéro de téléphone valide";
         }
       }
 
