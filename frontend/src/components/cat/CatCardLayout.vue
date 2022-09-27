@@ -42,7 +42,7 @@ export default {
   // Definit des propriétés qui sont fournies par le parent
   props: {
     name: String,
-    age: String,
+    // age: String,
     picture: String,
     id: Number,
     localisation: String,

@@ -77,7 +77,7 @@
             <div class="inscription__form__fieldset__field">
               <label for="confemail">Confirmer adresse e-mail *</label><br />
               <input
-              id="confemail"
+                id="confemail"
                 class="inscription__form__fieldset__field__input input"
                 type="text"
                 v-model="confEmail"
@@ -112,20 +112,39 @@
             </div>
             <div class="inscription__form__fieldset__field">
               <div>
-                <input id="owner" type="radio" name="role" value="owner" v-model="role" />
-                <label for="owner">Je souhaite <span>donner</span> un chat</label>
+                <input
+                  id="owner"
+                  type="radio"
+                  name="role"
+                  value="owner"
+                  v-model="role"
+                />
+                <label for="owner"
+                  >Je souhaite <span>donner</span> un chat</label
+                >
               </div>
 
               <div>
-                <input id="adopter" type="radio" name="role" value="adopter" v-model="role" />
-                <label for="adopter">Je souhaite <span class="bold">adopter</span> un chat</label>
+                <input
+                  id="adopter"
+                  type="radio"
+                  name="role"
+                  value="adopter"
+                  v-model="role"
+                />
+                <label for="adopter"
+                  >Je souhaite <span class="bold">adopter</span> un chat</label
+                >
               </div>
               <p class="inscription__form__fieldset__field__error">
                 {{ roleError }}
               </p>
             </div>
 
-            <button v-on:click="sendForm" class="inscription__form__button button__orange">
+            <button
+              v-on:click="sendForm"
+              class="inscription__form__button button__orange"
+            >
               Je valide mon inscription
             </button>
             <div class="inscription__form__fieldset__mention">
@@ -256,14 +275,14 @@ export default {
           email: this.email,
           password: this.password,
           role: this.role,
-          meta: { 
+          meta: {
             birth: this.birth,
-            allowEmail: true 
-            }
+            allowEmail: true,
+          },
         };
 
-        if (this.pseudo) {          
-          params = {...params, nickname: this.pseudo,}
+        if (this.pseudo) {
+          params = { ...params, nickname: this.pseudo };
         }
         // On envoie la requête vers l'API
         const response = await UserService.register(params);
@@ -276,6 +295,8 @@ export default {
           });
 
           if (responseLogin.success === true) {
+            // On execute une mutation pour stocker le token dans le sessionStorage
+            // Et le synchroniser avec le store afin de rendre notre store.token reactif
             this.$store.commit("setToken", responseLogin.data.token);
             this.$store.commit("setUserId", responseLogin.data.id);
 

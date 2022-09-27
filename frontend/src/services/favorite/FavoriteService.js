@@ -5,8 +5,6 @@ const apiClient = axios.create({
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        // Cette syntaxe permet d'effectuer une requete qui necessite d'être connecté
-        Authorization: 'Bearer ' + sessionStorage.getItem('token') + ''
     },
     timeout: 10000
 });
@@ -15,7 +13,8 @@ export default {
     // permet de récupérer les chats favoris d'un utilisateur donné en utilisant son bearer token
     async findAll() {
         try {
-            apiClient.defaults.headers.common['Authorization'] = '';
+            // On passe le token de connexion
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';            
             const response = await apiClient.get("/users/favorites");
             return response.data;
         } catch (error) {
@@ -26,7 +25,7 @@ export default {
     // Permet d'ajouter un chat aux favoris
     async addToFavorites(params) {
         try {
-            apiClient.defaults.headers.common['Authorization'] = '';
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
             const response = await apiClient.post('/users/favorites/add', params);
             return response.data
         } catch (error) {
@@ -38,7 +37,7 @@ export default {
     // Permet de retirer un chat des favoris
     async removeFromFavorites(data) {
         try {
-            apiClient.defaults.headers.common['Authorization'] = '';
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
             // delete requests with a body need it to be set under a data key (and not params)
             const response = await apiClient.delete('/users/favorites/delete', {data});
             return response.data

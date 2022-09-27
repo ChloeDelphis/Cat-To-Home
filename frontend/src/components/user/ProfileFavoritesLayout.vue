@@ -3,7 +3,7 @@
     <h2>Mes coups de coeur</h2>
     <div class="post__list__container">
       <!-- On fait apparaître le message ci-dessous si l'utilisateur n'a pas de chats favoris -->
-      <p v-if="!this.favoriteCats.length" class="post__list__container__info">
+      <p v-if="!this.userFavoriteCatsId.length" class="post__list__container__info">
         Ajoutez des chats à vos favoris pour les voir apparaître ici
       </p>
       <cat-card-layout
@@ -11,6 +11,7 @@
         v-bind:key="cat['post_info'].post_title"
         v-bind:id="cat['post_info'].ID"
         v-bind:name="cat['post_info'].post_title"
+        v-bind:age="cat['post_info'].age"
         v-bind:localisation="cat['location'][0].name"
         v-bind:picture="cat['source_url']"
         v-on:update="reload"
@@ -47,6 +48,11 @@ export default {
     this.favoriteCatsId();
   },
 
+    // Le $emit est parti de HeartLayout
+    // Il est passé par CatCardLayout (grâce à v-bind="$attrs" )
+    // Il est remonté jusqu'à CatsLayout où on demande
+    // Une mise à jour de userFavoriteCatsId
+    // En appelant la fonction favoriteCatsId()
   methods: {
     async reload() {
       this.favoriteCats = await FavoriteService.findAll();
@@ -54,10 +60,10 @@ export default {
       console.log(this.userFavoriteCatsId);
     },
 
-    // Récupère un tableau qui contient les id des chats préférés de l'utilisateur connecté
+    // Renvoie un tableau qui contient les id des chats préférés de l'utilisateur connecté
     async favoriteCatsId() {
       this.userFavoriteCatsId = [];
-      // Pour chaque entrée des favoris on extrait l'IDet on l'ajoute au tableau userFavoriteCatsId
+      // Pour chaque entrée des favoris on extrait l'ID et on l'ajoute au tableau userFavoriteCatsId
       this.favoriteCats.forEach((el) =>
         this.userFavoriteCatsId.push(el["post_info"].ID)
       );
