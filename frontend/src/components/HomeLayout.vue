@@ -231,7 +231,6 @@ export default {
             this.locations.push(location.name);
           }
         });
-        // this.locations = response.data
       }
     },
     selectedLocation(event) {

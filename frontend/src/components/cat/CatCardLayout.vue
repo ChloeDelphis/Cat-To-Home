@@ -50,6 +50,10 @@ export default {
   },
 
   computed: {
+
+    /**
+     * Method to check if the current cat is in the favorite list of the user
+     */
     isFavorite() {
       if (this.userFavoriteCatsId) {
         for (const el of this.userFavoriteCatsId) {

@@ -1,8 +1,6 @@
 <?php
 
 // Ajout du postmeta 'reset_token'
-
-
 function user_reset_token()
 {
 

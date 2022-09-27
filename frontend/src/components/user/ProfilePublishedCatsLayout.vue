@@ -15,7 +15,7 @@
     <section class="section__profil__adoption">
       <h2>Mes fiches adoption</h2>
 
-      <cat-modify-layout
+      <catModifyLayout
         v-for="cat in cats"
         v-bind:key="cat.id"
         v-bind:initialId="cat.id"

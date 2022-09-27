@@ -4,7 +4,7 @@ add_action('rest_api_init', 'cat_to_home_rest_user_register');
 
 function cat_to_home_rest_user_register()
 {
-    // Nouvelle route pour inscription user
+    // Route pour inscription user
     register_rest_route('wp/v2', 'users/register', array(
         'methods' => 'POST',
         'callback' => 'cat_to_home_rest_user_register_handler',
@@ -24,8 +24,7 @@ function cat_to_home_rest_user_register_handler($request)
 
     $authorized_roles = [
         'adopter',
-        'owner',
-        'administrator'
+        'owner'
     ];
 
     // Recup formulaire
@@ -89,8 +88,11 @@ function cat_to_home_rest_user_register_handler($request)
         // Si la création du nouvel utilisateur est bonne
         if (!is_wp_error($user_id)) {
 
-            add_user_meta($user_id, 'birth', $birth);
             // Ajout de la meta Key birth dans la bdd
+            add_user_meta($user_id, 'birth', $birth);
+
+            // Ajout de la meta Key allowEmail dans la bdd
+            add_user_meta($user_id, 'allowEmail', $parameters['meta']['allowEmail']);
 
             // Recuperation de l'objet user
             $user = get_user_by('id', $user_id);

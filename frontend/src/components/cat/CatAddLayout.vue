@@ -15,7 +15,7 @@
               name="lastname"
             />
             <p class="inscription__form__fieldset__field__error">
-              {{ errors_title }}
+              {{ errors.title }}
             </p>
           </div>
           <div class="adoption__form__pair">
@@ -26,7 +26,7 @@
               </option>
             </select>
             <p class="inscription__form__fieldset__field__error">
-              {{ errors_sex }}
+              {{ errors.sex }}
             </p>
           </div>
 
@@ -40,7 +40,7 @@
               name="city"
             />
             <p class="inscription__form__fieldset__field__error">
-              {{ errors_city }}
+              {{ errors.city }}
             </p>
           </div>
 
@@ -66,7 +66,7 @@
               </div>
             </div>
             <p class="inscription__form__fieldset__field__error">
-              {{ errors_location_input }}
+              {{ errors.location_input }}
             </p>
           </div>
 
@@ -87,7 +87,7 @@
               </option>
             </select>
             <p class="inscription__form__fieldset__field__error">
-              {{ errors_environment }}
+              {{ errors.environment }}
             </p>
           </div>
 
@@ -100,7 +100,7 @@
               <option value="senior">Sénior</option>
             </select>
             <p class="inscription__form__fieldset__field__error">
-              {{ errors_age }}
+              {{ errors.age }}
             </p>
           </div>
 
@@ -122,7 +122,7 @@
               <label :for="disease.id">{{ disease.name }}</label>
             </div>
             <p class="inscription__form__fieldset__field__error">
-              {{ errors_disease_input }}
+              {{ errors.disease_input }}
             </p>
           </fieldset>
 
@@ -151,7 +151,7 @@
           >
           </textarea>
           <p class="inscription__form__fieldset__field__error">
-            {{ errors_content }}
+            {{ errors.content }}
           </p>
         </div>
 
@@ -179,7 +179,7 @@
             accept=".png, .jpg, .jpeg"
           />
           <p class="inscription__form__fieldset__field__error">
-            {{ errors_picture_file }}
+            {{ errors.picture_file }}
           </p>
         </div>
         <img
@@ -242,7 +242,7 @@
                 value="permission2"
               />
               <label for="permission2">
-                J'atteste de la validité des informations renseigner.</label
+                J'atteste de la validité des informations renseignées.</label
               >
             </div>
             <div class="input__name__checkbox">
@@ -258,7 +258,7 @@
               >
             </div>
             <p class="inscription__form__fieldset__field__error">
-              {{ errors_permissions }}
+              {{ errors.permissions }}
             </p>
           </div>
           <div class="button__adoption__add">
@@ -271,7 +271,7 @@
               Valider la création de la fiche
             </button>
             <p class="inscription__form__fieldset__field__error">
-              {{ errors_creation }}
+              {{ errors.creation }}
             </p>
           </div>
         </div>
@@ -300,18 +300,7 @@ export default {
 
   data() {
     return {
-      errors: 0,
-      errors_title: null,
-      errors_sex: null,
-      errors_city: null,
-      errors_location_input: null,
-      errors_environment: null,
-      errors_age: null,
-      errors_disease_input: null,
-      errors_picture_file: null,
-      errors_content: null,
-      errors_permissions: null,
-      errors_creation: null,
+      errors: {},
       message: null,
 
       // Recuperation des valeurs mise dans la fiche
@@ -362,69 +351,55 @@ export default {
     },
     previewPictureAdd(event) {
       // Previsualisation de l'image
-      this.picture_file = event.target.files[0];
-      this.preview_picture = URL.createObjectURL(this.picture_file);
-      // fait apparaitre la balise image en supprimant la class none
-      const image = document.querySelector("#image");
-      image.classList.remove("none");
+      if(event.target.files[0].size > 2097152) {
+        alert("Le fichier à trop mangé à la cantoch, fait un régime")
+              
+      }else{
+        this.picture_file = event.target.files[0];
+        this.preview_picture = URL.createObjectURL(this.picture_file);
+        // fait apparaitre la balise image en supprimant la class none
+        const image = document.querySelector("#image");
+        image.classList.remove("none");
+      }
+
     },
 
     async sendNewCat() {
       // On vide les messages d'erreurs
-      this.errors_title = null;
-      this.errors_sex = null;
-      this.errors_city = null;
-      this.errors_location_input = null;
-      this.errors_environment = null;
-      this.errors_age = null;
-      this.errors_disease_input = null;
-      this.errors_picture_file = null;
-      this.errors_content = null;
-      this.errors_permissions = null;
-      this.errors_creation = null;
+      this.errors = {};
 
       // Validation du contenu du formulaire
       if (!this.title) {
-        this.errors++;
-        this.errors_title = "Le nom n'est pas renseigner.";
+        this.errors = {...this.errors, title: "Le nom n'est pas renseigné."};
       }
       if (!this.sex) {
-        this.errors++;
-        this.errors_sex = "Le sex n'est pas renseigner.";
+        this.errors = {...this.errors, sex: "Le sex n'est pas renseigné."};
       }
       if (!this.city) {
-        this.errors++;
-        this.errors_city = "La ville n'est pas renseigner.";
+        this.errors = {...this.errors, city: "La ville n'est pas renseignée."};
       }
       if (!this.location_input) {
-        this.errors++;
-        this.errors_location_input = "Le département n'est pas renseigner.";
+        this.errors = {...this.errors, location_input: "Le département n'est pas renseigné."};
       }
       if (!this.age) {
-        this.errors++;
-        this.errors_age = "L'âge n'est pas renseigner.";
+        this.errors = {...this.errors, age: "L'âge n'est pas renseigné."};
       }
       if (!this.environment) {
-        this.errors++;
-        this.errors_environment = "L'environement n'est pas renseigner.";
+        this.errors = {...this.errors, environment: "L'environement n'est pas renseigné."};
       }
       if (!this.disease_input) {
-        this.errors++;
-        this.errors_disease_input = "La maladie n'est pas renseigner.";
+        this.errors = {...this.errors, disease_input: "La maladie n'est pas renseignée."};
       }
       if (!this.content) {
-        this.errors++;
-        this.errors_content = "La descritpion est vide.";
+        this.errors = {...this.errors, content: "La descritpion est vide."};
       }
       if (!this.picture_file) {
-        this.errors++;
-        this.errors_picture_file = "L'image est vide.";
+        this.errors = {...this.errors, picture_file: "L'image est vide."};
       }
       if (!this.permissions1 || !this.permissions2 || !this.permissions3) {
-        this.errors++;
-        this.errors_permissions = "Vous n'avez pas accepté les termes.";
+        this.errors = {...this.errors, permissions: "Vous n'avez pas accepté les termes."};
       }
-      if (this.errors === 0) {
+      if (Object.keys(this.errors).length === 0) {
         let params = {
           title: this.title,
           sex: this.sex,
@@ -433,7 +408,7 @@ export default {
           vaccinate: this.checkedVaccins,
           disease: this.disease_input,
           content: this.content,
-          "status": "publish"
+          status: "publish"
         };
 
         // Permet de changer le curseur du bouton en mode wait
@@ -522,8 +497,7 @@ export default {
             }
           }
         } else {
-          this.errors_creation =
-            "Une erreur s'est produite, merci de recommencer ultérieurement.";
+          this.errors = {creation: "Une erreur s'est produite, merci de recommencer ultérieurement."};
         }
       } else {
         const el = document.querySelector("#adoption");

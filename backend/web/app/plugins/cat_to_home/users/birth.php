@@ -1,8 +1,6 @@
 <?php
 
 // Ajout du postmeta 'birth'
-
-
 function user_birth()
 {
 

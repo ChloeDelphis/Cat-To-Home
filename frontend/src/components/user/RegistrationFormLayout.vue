@@ -286,7 +286,6 @@ export default {
         }
         // On envoie la requête vers l'API
         const response = await UserService.register(params);
-        console.log(response);
         // En cas de réussite
         if (response.code === 200) {
           const responseLogin = await UserService.login({
@@ -311,7 +310,6 @@ export default {
             // alert(responseLogin.message);
           }
         } else {
-          console.log(response);
           // alert(response.message);
         }
       } else {
@@ -326,7 +324,6 @@ export default {
       // On fait la différence
       // Et on traduit le résultat en jours de vie
       const daysLived = Math.floor((today - birth) / (1000 * 60 * 60 * 24));
-      console.log(daysLived);
       // Quand on a 18 ans on a vécu 365 jours X 18 ans
       // Soit 6570 jours
       // On compare les deux nombres de jours

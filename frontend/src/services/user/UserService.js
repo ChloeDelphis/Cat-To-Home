@@ -56,8 +56,7 @@ export default {
     // Récupere les infos de base d'un user sans besoin de token JWT
     async findForResetPass(id) {
         try {
-            apiClient.defaults.headers.common['Authorization'] = '';
-            const response = await apiClient.get('/wp/v2/users/' + id);
+            const response = await apiClient.get('/wp/v2/users/reset/' + id);
             return response.data;
         } catch (error) {
             return error.response.data;
@@ -82,6 +81,15 @@ export default {
         } catch (error) {
             return error.response.data
         }
-    }
+    },
 
+    async delete(id, data) {
+        try {
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.delete('/wp/v2/users/' + id, {data});
+            return response.data
+        } catch (error) {
+            return error.response.data
+        }
+    }
 }

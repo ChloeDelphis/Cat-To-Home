@@ -90,7 +90,7 @@ import LocationService from "@/services/taxonomies/LocationService";
 import ItemListLocation from "@/components/home/ItemListLocation";
 import CatCardLayout from "@/components/cat/CatCardLayout";
 import CatService from "@/services/cat/CatService";
-import PaginationLayout from '@/components/PaginationLayout.vue';
+import PaginationLayout from '@/components/PaginationLayout';
 import FavoriteService from "@/services/favorite/FavoriteService";
 
 export default {
@@ -115,7 +115,7 @@ export default {
       cats: [],
       visibleCats: [],
       currentPage : 0,
-      pageSize : 3,
+      pageSize : 9,
 
       location_input: this.$route.params.location || "",
       locations: [],

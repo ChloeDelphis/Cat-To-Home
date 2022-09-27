@@ -25,7 +25,7 @@
     <nav class="footer__nav">
       <div class="footer__nav__left">
         <router-link class="footer__nav__item" :to="{ name: 'home' }"
-          >Homepage</router-link
+          >Accueil</router-link
         >
         <router-link class="footer__nav__item" :to="{ name: 'about' }"
           >À propos</router-link

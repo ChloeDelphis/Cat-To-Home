@@ -1,8 +1,6 @@
 <?php
 
 // Ajout du postmeta 'phone'
-
-
 function user_phone()
 {
 

@@ -12,10 +12,12 @@
           <div class="connexion__form__fieldset__field">
             <label for="email">Adresse e-mail</label><br />
             <input v-model="email" class="connexion__form__fieldset__field__input input" type="text" />
+            <p class="inscription__form__fieldset__field__error">{{ loginError.email }}</p>
           </div>
           <div class="connexion__form__fieldset__field">
             <label for="password">Mot de passe</label><br />
             <input v-model="password" class="connexion__form__fieldset__field__input input" type="password" />
+            <p class="inscription__form__fieldset__field__error">{{ loginError.password }}</p>
           </div>
           <div class="center__text">
             <router-link :to="{ name: 'registration' }" class="btn--reinit__pass">Inscription</router-link> 
@@ -30,17 +32,12 @@
           <div class="send__fail">
             <p class="reinit__pass reinit__pass--hidden"></p>
           </div>
-          <ul class="field__error-list">
-            <li>
-              {{ passwordError }}
-              {{ emailError }}
-            </li>
-          </ul>
         </fieldset>
 
         <button v-on:click="login" class="connexion__form__button button__orange--papate">
           Je me connecte
         </button>
+        <p class="inscription__form__fieldset__field__error">{{ loginError.login }}</p>
       </div>
     </section>
   </main>
@@ -53,8 +50,7 @@ export default {
   name: "LoginFormLayout",
   data() {
     return {
-      passwordError: null,
-      emailError: null,
+      loginError: {},
       email: null,
       password: null,
       emailReinitPass: null,
@@ -70,25 +66,22 @@ export default {
   },
   methods: {
     async login() {
-      this.passwordError = '';
-      this.emailError = '';
+      this.loginError = {};
       if (!this.email) {
-        this.emailError = "Email cannot be empty";
+        this.loginError = {...this.loginError, email: "L'email ne doit pas être vide"};
       }
 
       if (!this.password) {
-        this.passwordError = "Password cannot be empty";
+        this.loginError = {...this.loginError, password: "Le mot de passe ne doit pas être vide"};
       }
 
-      if (!this.passwordError && !this.emailError) {
-        console.log("LOGIN");
+      if (Object.keys(this.loginError).length === 0) {
         // Requete Ajax pour connexion utilisateur
         const response = await UserService.login({
           username: this.email,
           password: this.password,
         });
         if (response.success === true) {
-          console.log("OK");
           // On execute une mutation pour stocker le token et l'id dans le sessionStorage
           // Et le synchroniser avec le store afin de rendre notre store.token & store.userId reactif
           this.$store.commit("setToken", response.data.token);
@@ -98,7 +91,7 @@ export default {
           // On fait une redirection
           this.$router.push({ name: "home" });
         } else {
-          alert(response.message);
+          this.loginError = {...this.loginError, login: "L'email ou le mot de passe ne correspond pas"}
         }
       }
     },
@@ -115,14 +108,12 @@ export default {
           const message = document.querySelector('.reinit__pass');
           message.classList.remove('reinit__pass--hidden');
         if (response.code === 200) {
+          this.emailReinitPass = null;
           message.textContent = 'Le mail a bien été envoyé';
         } else {
           message.textContent = 'Le mail n\'a pas pu être envoyé';
-
         }
-        console.log(response);
       }
-
     }
   },
 };

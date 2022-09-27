@@ -2,6 +2,9 @@
         <div class="adoption">
             <div class="adoption__left__part">
                 <fieldset class="adoption__form">
+
+                    <!-- Name input -->
+
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="lastname">Nom</label>
                         <div class="current__value" v-html="title"></div>
@@ -13,6 +16,9 @@
                             placeholder="Doe"
                         />
                     </div>
+
+                    <!-- Sex input -->
+
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="sexe">Sexe</label>
                         <div class="current__value" v-html="sex_name"></div>
@@ -20,11 +26,16 @@
                             <option  v-for="sex in sexes" :key="sex.id" :value="sex.id" :selected="(sex_name == sex.name) ? true : false">{{sex.name}}</option>
                         </select>
                     </div>
+
+                    <!-- City input -->
+
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="localisation">Localisation</label>
                         <div class="current__value" v-html="localisation"></div>
                         <input  v-model="localisation" class="input cat__input" type="text" id="localisation" name="localisation" placeholder="Paris"/>
                     </div>
+
+                    <!-- Department input -->
 
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="department">Département</label>
@@ -34,8 +45,9 @@
                             <ItemListLocation v-for="location in locations" :key="location.id" :name="location" :value="location.id"
                             @choiceLocation="selectedLocation" />
                         </div>
-                        
                     </div>
+
+                    <!-- Environement input -->
 
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="environment">Environnement</label>
@@ -44,6 +56,8 @@
                             <option v-for="environment in environments" :key="environment.id" :value="environment.id" :selected="(environment_name == environment.name) ? true : false">{{environment.name}}</option> 
                         </select>
                     </div>
+
+                    <!-- Age input -->
 
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="filter">Age</label>
@@ -56,6 +70,8 @@
                         </select>
                     </div>
 
+                    <!-- Vaccin input -->
+
                     <div class="adoption__form__pair">
                         <label class="input__name cat__label pen" for="vaccine">Vacciné contre</label>
                         <div class="current__value">
@@ -65,11 +81,13 @@
                         </div>
                         <div class="cat__input">
                             <div v-for="vaccinate in vaccinates" :key="vaccinate.id">
-                                <input type="checkbox" id="vaccin" name="vaccin" :value="vaccinate.id" :checked="(vaccins_id.includes(vaccinate.id))" v-model="vaccins_id" /> 
-                                <label for="vaccin"> {{vaccinate.name}} </label>
+                                <input type="checkbox" :id="vaccinate.name" name="vaccin" :value="vaccinate.id" :checked="(vaccins_id.includes(vaccinate.id))" v-model="vaccins_id" /> 
+                                <label :for="vaccinate.name"> {{vaccinate.name}} </label>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Disease input -->
 
                     <fieldset class="adoption__form__pair">
                         <div class="input__name cat__label">
@@ -81,12 +99,14 @@
                         <div class="current__value" v-html="disease_name"></div>
                         <div class="cat__input">
                             <div v-for="disease in diseases" :key="disease.id">
-                                <input @change="getIdDisease" :value="disease.id" type="radio" :id="disease.id" name="sickness" :checked="(disease_name == disease.name) ? true : false" v-model="disease_name"/>
-                                <label :for="disease.id">{{disease.name}}</label>
+                                <input type="radio" @change="getIdDisease" :value="disease.id"  :id="disease.name" name="sickness" :checked="(disease_name == disease.name) ? true : false" v-model="disease_name"/>
+                                <label :for="disease.name">{{disease.name}}</label>
                             </div> 
                         </div>
                     </fieldset>
                 </fieldset>
+
+                <!-- Description input -->
 
                 <div class="adoption__description">
                     <label class="input__name cat__label pen" for="description">Description</label>
@@ -95,12 +115,15 @@
                     </textarea>
                 </div>
 
-                <!-- Boutons à ne faire apparaître que quand le composant est appelé par ProfilePublishedSheetsLayout  -->
                 <div class="profil__adoption__buttons">
                     <button @click="updateCat" class="button__orange">Valider les modification</button>
-                    <button @click="deleteCat" class="button__orange">Supprimer la fiche</button>
+                    <button @click="confirmDeleteCat" class="button__orange">Supprimer la fiche</button>
                 </div>
+
             </div>
+
+            <!-- Update picture input -->
+
             <div>
                 <div class="adoption__add__picture" v-bind:style="{'backgroundImage': 'url(' + picture + ')',   'backgroundSize': 'cover', 'backgroundPosition': 'center'}"></div>
                 <br>
@@ -119,7 +142,6 @@ import FindAllService from '@/services/taxonomies/FindAllService';
 import ItemListLocation from '@/components/home/ItemListLocation';
 import LocationGouvService from '@/services/cat/LocationGouvService';
 import LocationService from '@/services/taxonomies/LocationService';
-
 import NewCat from '@/services/cat/NewCat';
 
 export default {
@@ -173,12 +195,12 @@ export default {
         }
     },
 
+
     async created() {
 
-        // Récupération des données concernant le chat
+        // Getting cat's data using the AJAX request in CatService.js taking the cat ID as a parameter
         let id = this.id;
         const response = await CatService.find(id);
-        console.log(response);
         if(response.code) {
             alert(response.message)
         } else {
@@ -201,16 +223,20 @@ export default {
             });
         }
 
-        // Récupération des taxonomies
+        // Getting taxonomies using the findAll AJAX requests in FindAllService.js
+        // Getting the list of the french departments from an public government API using AJAX request in LocationService.js
         this.environments = await FindAllService.findAllEnvironment();
         this.sexes = await FindAllService.findAllSex();
         this.vaccinates = await FindAllService.findAllVaccinate();
         this.diseases = await FindAllService.findAllDisease();
         this.departments = await LocationService.findAll();
         
-        // Objet Javascript pour dynamiser le formulaire 
+        // JavaScript object which dynamize the modification form of the cat data allowing to display the inputs when we click ont the labels
         const catForm = {
 
+            /**
+             * Setting eventListeners on the form's labels
+             */
             init: function() {
 
                 const inputLabelArray = document.querySelectorAll(".cat__label");
@@ -238,6 +264,9 @@ export default {
                     
             },
 
+            /**
+             * Method to display the inputs
+             */
             displayInput: function(event) {
 
                 event.preventDefault();
@@ -252,7 +281,10 @@ export default {
                 input.focus();
         
             },
-
+            
+            /**
+             * Method to hide the input when we press Enter key 
+             */
             hideInputOnKeyDown: function(event) {
 
                 if(event.code === 'Enter') {
@@ -260,6 +292,9 @@ export default {
                 }
             },
 
+            /**
+             * Method to hide the input when we click outside the inputs
+             */
             hideInput: function(event) {
 
                 event.preventDefault();
@@ -277,28 +312,41 @@ export default {
     },
     
     methods: {
+
+        /**
+         * method to separate the value and the text of the sex input to store them in 2 separate variables
+         */
         getIdSex(event) {
             const element = event.currentTarget;
             this.sex_name = element.options[element.selectedIndex].text;
             this.sex_id = element.value;
         },
 
+        /**
+         * method to separate the value and the text of the environment input to store them in 2 separate variables
+         */
         getIdEnvironment(event) {
             const element = event.currentTarget;
             this.environment_name = element.options[element.selectedIndex].text;
             this.environment_id = element.value;
         },
 
+        /**
+         * method to separate the value and the text of the disease input to store them in 2 separate variables
+         */
         getIdDisease(event) {
             const element = event.currentTarget;
             const label = element.nextSibling;
             this.disease_name = label.textContent;
             this.disease_id = element.value;
         },
-    
+
+        /**
+         * Method to update the cat's data with the values entered in the form's inputs
+         */
         async updateCat() {
              this.errors = [];
-             // Validation du contenu du formulaire
+             // Checking if the inputs are empty
              if(!this.title) {
                  this.errors.push("Title cannot be empty");
              }
@@ -325,6 +373,9 @@ export default {
              }
              if(this.errors.length === 0) {
 
+                 /**
+                  * Checking if the value of department input exists ine the BDD
+                  */
                 if (this.department_name !== "") {
                     let verifLocation = false;
                     let departmentId = "";
@@ -334,10 +385,12 @@ export default {
                             departmentId = department.id;
                         }
                     });
-                    // Si la localisation n'est pas dans le backend, on la crée
+                    /**
+                    * If it doesn't, we create it in the BDD 
+                    */
                     if (!verifLocation) {
 
-                        // upload departement dans le backend avec l'id du post
+                        // upload of the new department with the post_id
                         const createLocation = await NewCat.createLocation(this.id, {
                             name: this.department_name,
                         });
@@ -345,7 +398,7 @@ export default {
                             departmentId = createLocation.id;
                         }
                     }
-                    // Et ensuite, on lie l'id à la fiche 
+                    // Then we connect the department_id to the post
                     if (departmentId) {  
                         this.department_id = departmentId;
                     }
@@ -356,6 +409,7 @@ export default {
                     idVaccin.push(vaccin);
                 });
 
+                // initialization of parameters fot the cat update request
                 let params = {
                      "title": this.title,
                      "sex": this.sex_id,
@@ -368,11 +422,11 @@ export default {
                  }
 
                 const updateCat = await CatService.update(this.id, params);
-                console.log(updateCat);
+                
                 if(this.picture_file !== null) {
-                    // upload image dans le backend avec l'id du post
+                    // upload image in the backend with the post_id
                     const updatePicture = await NewCat.uploadPicture(this.id, this.picture_file.name,   {headers: {"Content-Type": "image/jpeg"}}, this.picture_file)
-                    // ajout de l'id de l'image dans le post créer
+                    // adding picture_id in the post
                     if (updatePicture.id) {
                         const addPicturedMedia = await NewCat.addFeaturedMedia(this.id, {
                             "featured_media": updatePicture.id
@@ -394,7 +448,17 @@ export default {
         },
 
         /**
-         * Fontion pour supprimer une fiche adotpion
+         * Method to display à validation popup before to delete a cat
+         */
+        confirmDeleteCat() {
+            let answer = window.confirm("Êtes-vous sur de vouloir supprimer cette fiche ?")
+            if(answer) {
+                this.deleteCat();
+            }
+        },
+
+        /**
+         * Method to delete a cat using his id as a parameter
          */
         async deleteCat() {
             const response = await CatService.delete(this.id);
@@ -405,7 +469,9 @@ export default {
             }
         },
 
-        // input departement
+        /**
+         * Method to display the list of the french department when the user fills the inpu
+         */
         async sendLocation() {
             this.locations = [];
             document.querySelector('#home__form__list').style.height = '0';
@@ -423,6 +489,9 @@ export default {
         
         },
 
+        /**
+         * Method to store the name of the selected department 
+         */
         selectedLocation(event) {
             const choiceLocation = event.currentTarget.textContent;
             this.department_name = choiceLocation;
@@ -430,11 +499,16 @@ export default {
             document.querySelector('#home__form__list').style.height = '0';
         },
 
-        // Changement de la feature image
+        /**
+         * Method to upload à new picture of the cat, checking the size of it before to store in a variable
+         */
         uploadPicture(event) {
-            // Revisualisation de l'image
-            this.picture_file = event.target.files[0];
-            this.preview_picture = URL.createObjectURL(this.picture_file);
+            if(event.target.files[0].size > 2097152) {
+                alert("Le fichier est trop volumineux, il ne doit pas dépasser 2MB")
+            } else {
+                this.picture_file = event.target.files[0];
+                this.preview_picture = URL.createObjectURL(this.picture_file);
+            }
         },
     },
 }
@@ -494,6 +568,14 @@ export default {
   .input__departement__select{
         color: #586FCD;
     }
+}
+
+#confirmDelete {
+
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
 </style>
