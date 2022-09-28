@@ -12,7 +12,6 @@
         v-bind:id="cat['post_info'].ID"
         v-bind:name="cat['post_info'].post_title"
         v-bind:age="cat['post_info'].age"
-        v-bind:localisation="cat['location'][0].name"
         v-bind:picture="cat['source_url']"
         v-on:update="reload"
         v-bind:userFavoriteCatsId="userFavoriteCatsId"
