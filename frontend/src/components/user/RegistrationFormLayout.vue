@@ -21,7 +21,7 @@
                 v-model="lastName"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ lastNameError }} {{ lastNameLengthError }}
+                {{ errors.lastName }} {{ errors.lastNameLength }}
               </p>
             </div>
             <div class="inscription__form__fieldset__field">
@@ -33,8 +33,8 @@
                 v-model="firstName"
               />
               <ul class="inscription__form__fieldset__field__error">
-                <li v-for="error in firstNameErrors" :key="error">
-                  {{ error }}
+                <li v-for="error in errors.firstName" :key="error">
+                  {{ errors.firstName }}
                 </li>
               </ul>
             </div>
@@ -56,7 +56,7 @@
                 v-model="birth"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ birthError }} {{ validAgeError }}
+                {{ error.birth }} {{ error.validAge }}
               </p>
             </div>
             <div class="inscription__form__fieldset__field">
@@ -68,7 +68,7 @@
                 v-model="email"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ emailError }}{{ validEmailError }}
+                {{ errors.email }}{{ errors.validEmail }}
               </p>
             </div>
           </div>
@@ -83,7 +83,7 @@
                 v-model="confEmail"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ confEmailError }}
+                {{ errors.confEmail }}
               </p>
             </div>
             <div class="inscription__form__fieldset__field">
@@ -95,7 +95,7 @@
                 v-model="password"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ passwordError }} {{ passwordFormatError }}
+                {{ errors.password }} {{ errors.passwordFormat }}
               </p>
             </div>
             <div class="inscription__form__fieldset__field">
@@ -107,7 +107,7 @@
                 v-model="confPassword"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ confPasswordError }}
+                {{ errors.confPassword }}
               </p>
             </div>
             <div class="inscription__form__fieldset__field">
@@ -137,7 +137,7 @@
                 >
               </div>
               <p class="inscription__form__fieldset__field__error">
-                {{ roleError }}
+                {{ errors.role }}
               </p>
             </div>
 
@@ -165,18 +165,7 @@ export default {
   name: "RegistrationFormLayout",
   data() {
     return {
-      lastNameError: null,
-      firstNameErrors: [],
-      birthError: null,
-      validAgeError: null,
-      emailError: null,
-      validEmailError: null,
-      confEmailError: null,
-      passwordError: null,
-      confPasswordError: null,
-      roleError: null,
-      lastNameLengthError: null,
-      passwordFormatError: null,
+      errors: {},
 
       // Testing area enables inputs auto-filling for testing purposes
       lastName: null,
@@ -193,83 +182,103 @@ export default {
 
   methods: {
     async sendForm() {
-      // On vide les erreurs
-      this.lastNameError = null;
-      this.firstNameErrors = [];
-      this.birthError = null;
-      this.validAgeError = null;
-      this.emailError = null;
-      this.validEmailError = null;
-      this.confEmailError = null;
-      this.passwordError = null;
-      this.confPasswordError = null;
-      this.roleError = null;
-      this.lastNameLengthError = null;
-      this.passwordFormatError = null;
+      // On vide l'objet des erreurs
+      this.errors = {};
 
       // Validation du contenu du formulaire
       if (!this.lastName) {
-        this.lastNameError = "Merci de renseigner votre nom";
+        this.errors = {
+          ...this.errors,
+          lastName: "Merci de renseigner votre nom",
+        };
       }
       if (this.lastName && this.lastName.length < 2) {
-        this.lastNameLengthError = "Le nom ne fait qu'un seul caractère";
+        this.errors = {
+          ...this.errors,
+          lastNameLength: "Le nom ne fait qu'un seul caractère",
+        };
       }
       if (!this.firstName) {
-        this.firstNameErrors.push("Merci de renseigner votre prénom");
+        this.errors = {
+          ...this.errors,
+          //? Remplir des erreurs différentes liées au prénom (initialement tableau d'erreurs)
+          firstName: "Merci de renseigner votre prénom",
+        };
       }
-      if (this.firstName && this.firstName.length < 2) {
-        this.firstNameErrors.push("Le prénom ne fait qu'un seul caractère");
-      }
-      if (this.lastName === this.firstName) {
-        this.firstNameErrors.push(
-          "Le prénom et le nom ne peuvent pas être identiques"
-        );
-      }
+      // //? Erreurs prénom multi
+      // if (this.firstName && this.firstName.length < 2) {
+      //   this.errors = {
+      //     ...this.errors,
+      //     firstName: "Le prénom ne fait qu'un seul caractère",
+      //   };
+      // }
+      // //? Erreurs prénom multi
+      // if (this.lastName === this.firstName) {
+      //   this.errors = {
+      //     ...this.errors,
+      //     firstName: "Le prénom et le nom ne peuvent pas être identiques",
+      //   };
+      // }
       if (!this.birth) {
-        this.birthError = "Merci de renseigner votre date de naissance";
+        this.errors = {
+          ...this.errors,
+          birth: "Merci de renseigner votre date de naissance",
+        };
       }
       if (!this.email || !this.confEmail) {
-        this.emailError = "Merci de renseigner et confirmer votre email";
+        this.errors = {
+          ...this.errors,
+          email: "Merci de renseigner et confirmer votre email",
+        };
       }
       if (this.email !== this.confEmail) {
-        this.confEmailError = "Vos adresses email ne sont pas identiques";
-      }
-      if (!this.password) {
-        this.passwordError =
-          "Merci de renseigner et confirmer votre mot de passe";
-      }
-      if (this.password && !shared.validatePassword(this.password)) {
-        this.passwordFormatError =
-          "Votre mot de passe doit contenir au moins 12 caractères dont une minuscule, une majuscule et un chiffre";
-      }
-      if (this.password !== this.confPassword) {
-        this.confPasswordError = "Vos mots de passe ne sont pas identiques";
-      }
-      if (!this.role) {
-        this.roleError = "Veuillez choisir votre rôle";
+        this.errors = {
+          ...this.errors,
+          conf: "Vos adresses email ne sont pas identiques",
+        };
       }
       if (this.email && !shared.validateEmail(this.email)) {
-        this.validEmailError = "Votre adresse email n'est pas valide";
+        this.errors = {
+          ...this.errors,
+          validEmail: "Votre adresse email n'est pas valide",
+        };
+      }
+      if (!this.password) {
+        this.errors = {
+          ...this.errors,
+          password: "Merci de renseigner et confirmer votre mot de passe",
+        };
+      }
+      if (this.password && !shared.validatePassword(this.password)) {
+        this.errors = {
+          ...this.errors,
+          passwordFormat:
+            "Votre mot de passe doit contenir au moins 12 caractères dont une minuscule, une majuscule et un chiffre",
+        };
+      }
+      if (this.password !== this.confPassword) {
+        this.errors = {
+          ...this.errors,
+          confPassword: "Vos mots de passe ne sont pas identiques",
+        };
+      }
+      if (!this.role) {
+        this.errors = {
+          ...this.errors,
+          role: "Veuillez choisir votre rôle",
+        };
       }
       if (this.birth && !this.validateAge(this.birth)) {
-        this.validAgeError = "Vous devez être majeur pour vous inscrire";
+        this.errors = {
+          ...this.errors,
+          validAge: "Vous devez être majeur pour vous inscrire",
+        };
       }
 
       // Si on n'a aucune erreur
-      if (
-        !this.lastNameError &&
-        !this.lastNameLengthError &&
-        this.firstNameErrors.length === 0 &&
-        !this.birthError &&
-        !this.emailError &&
-        !this.confEmailError &&
-        !this.passwordError &&
-        !this.confPasswordError &&
-        !this.roleError &&
-        !this.validEmailError &&
-        !this.validAgeError &&
-        !this.passwordFormatError
-      ) {
+      if (Object.keys(this.errors).length === 0) {
+
+        // On prépare les paramètres obligatoires pour la requête
         let params = {
           lastname: this.lastName,
           firstname: this.firstName,
@@ -282,13 +291,16 @@ export default {
           },
         };
 
+        // On prépare le paramètre optionnel pseudo
         if (this.pseudo) {
           params = { ...params, nickname: this.pseudo };
         }
+
         // On envoie la requête vers l'API
         const response = await UserService.register(params);
         // En cas de réussite
         if (response.code === 200) {
+          // On connecte l'utilisateur
           const responseLogin = await UserService.login({
             username: this.email,
             password: this.password,
