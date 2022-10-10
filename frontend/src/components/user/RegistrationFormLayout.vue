@@ -159,6 +159,7 @@
 
 <script>
 import UserService from "@/services/user/UserService";
+import shared from "@/shared/shared";
 
 export default {
   name: "RegistrationFormLayout",
@@ -237,9 +238,9 @@ export default {
         this.passwordError =
           "Merci de renseigner et confirmer votre mot de passe";
       }
-      if (this.password && !this.validatePassword(this.password)) {
+      if (this.password && !shared.validatePassword(this.password)) {
         this.passwordFormatError =
-          "Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une majuscule et un chiffre";
+          "Votre mot de passe doit contenir au moins 12 caractères dont une minuscule, une majuscule et un chiffre";
       }
       if (this.password !== this.confPassword) {
         this.confPasswordError = "Vos mots de passe ne sont pas identiques";
@@ -247,7 +248,7 @@ export default {
       if (!this.role) {
         this.roleError = "Veuillez choisir votre rôle";
       }
-      if (this.email && !this.validateEmail(this.email)) {
+      if (this.email && !shared.validateEmail(this.email)) {
         this.validEmailError = "Votre adresse email n'est pas valide";
       }
       if (this.birth && !this.validateAge(this.birth)) {
@@ -328,36 +329,6 @@ export default {
       // Soit 6570 jours
       // On compare les deux nombres de jours
       if (daysLived >= 6570) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-
-    validatePassword: function (input) {
-      // On veut que la chaîne de caractères contienne :
-      // Au moins un chiffre (digit)
-      // Au moins une lettre en minuscule et une en majuscule
-      // On veut que sa taille complète soit de 12 caractères minimum et on autorise les caractères spéciaux
-      // TODO rendre les caractères spéciaux obligatoires
-      // Caractères max 20 ou 251
-      const validRegex =
-        /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{12,}$/;
-
-      if (input.match(validRegex)) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-
-    validateEmail: function (input) {
-      const validRegex =
-        // On veut que la chaîne de caractères ait un format
-        // avec un @ entouré par des chaînes de caractères
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-      if (input.match(validRegex)) {
         return true;
       } else {
         return false;
