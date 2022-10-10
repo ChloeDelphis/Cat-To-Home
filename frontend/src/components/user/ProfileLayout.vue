@@ -213,6 +213,7 @@
 import UserService from "@/services/user/UserService";
 import ProfileFavoritesLayout from "./ProfileFavoritesLayout";
 import ProfilePublishedCatsLayout from "./ProfilePublishedCatsLayout.vue";
+import shared from "@/shared/shared";
 
 export default {
   name: "ProfileLayout",
@@ -323,7 +324,7 @@ export default {
       if (this.email !== this.confemail) {
         this.confEmailError = "Vos adresses email ne sont pas identiques";
       }
-      if (!this.validateEmail(this.email)) {
+      if (!shared.validateEmail(this.email)) {
         this.validEmailError = "Votre adresse email n'est pas valide";
       }
       if (!this.allowEmail && !this.allowPhone) {
@@ -390,9 +391,7 @@ export default {
         if (
           this.new_password !== null &&
           this.confPassword !== null &&
-          this.new_password.match(
-            /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{8,}$/
-          ) &&
+          shared.validatePassword(this.new_password)&&
           this.new_password === this.confPassword
         ) {
           // si pas d'erreur pour le mot de passe on le modifie
@@ -426,21 +425,12 @@ export default {
             )
           ) {
             this.confPasswordError =
-              "Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une majuscule et un chiffre";
+              "Votre mot de passe doit contenir au moins 12 caractères dont une minuscule, une majuscule et un chiffre";
           }
         }
       }
     },
-    validateEmail: function (input) {
-      const validRegex =
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-      if (input.match(validRegex)) {
-        return true;
-      } else {
-        return false;
-      }
-    },
     validatePhoneNumber: function (input) {
       const validRegex = /^([0-9]{2}[- ]?){5}$/;
 
