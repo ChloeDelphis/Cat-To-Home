@@ -2,12 +2,9 @@
 
 ## Présentation
 
-C'est un site qui facilite la mise en relation de propriétaires de chats ou chatons avec des personnes qui souhaitent en adopter.
-
-Il permet ainsi de participer à désengorger les refuges, SPA, ... et éviter la surpopulation et l'euthanasie des animaux dans ces derniers.
-
+Ce site vise à faciliter la mise en relation de propriétaires de chats ou chatons avec des personnes qui souhaitent en adopter.
+Il permet ainsi de participer à désengorger les refuges, SPA, etc. et éviter la surpopulation et l'euthanasie des animaux dans ces derniers.
 Il se veut également une source de sensibilisation sur le thème de l'abandon.
-
 Totalement gratuit, il se pose comme alternative aux services habituels surchargés
 
 ## Initialisation du Backend
@@ -27,9 +24,9 @@ sudo find . -type f -exec chmod 664 {} +
 sudo find . -type d -exec chmod 775 {} +
 ```
 
-## Initialisation de l'intégration
-Se placer dans le dossier integration
-`npm install`
-Pour ouvrir une page : 
-se placer dans le dossier html et taper
-`npx parcel nomdelapage.html`
+## Initialisation du frontend
+
+Se placer dans le dossier frontend
+`npm install`  
+Pour ouvrir le site
+`npm run serve`
