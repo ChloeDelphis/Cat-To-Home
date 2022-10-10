@@ -32,11 +32,9 @@
                 type="text"
                 v-model="firstName"
               />
-              <ul class="inscription__form__fieldset__field__error">
-                <li v-for="error in errors.firstName" :key="error">
-                  {{ errors.firstName }}
-                </li>
-              </ul>
+              <p class="inscription__form__fieldset__field__error">
+                {{ errors.firstName }}
+              </p>
             </div>
             <div class="inscription__form__fieldset__field">
               <label for="pseudo">Pseudo</label><br />
@@ -56,7 +54,7 @@
                 v-model="birth"
               />
               <p class="inscription__form__fieldset__field__error">
-                {{ error.birth }} {{ error.validAge }}
+                {{ errors.birth }} {{ errors.validAge }}
               </p>
             </div>
             <div class="inscription__form__fieldset__field">
@@ -205,20 +203,20 @@ export default {
           firstName: "Merci de renseigner votre prénom",
         };
       }
-      // //? Erreurs prénom multi
-      // if (this.firstName && this.firstName.length < 2) {
-      //   this.errors = {
-      //     ...this.errors,
-      //     firstName: "Le prénom ne fait qu'un seul caractère",
-      //   };
-      // }
-      // //? Erreurs prénom multi
-      // if (this.lastName === this.firstName) {
-      //   this.errors = {
-      //     ...this.errors,
-      //     firstName: "Le prénom et le nom ne peuvent pas être identiques",
-      //   };
-      // }
+      //? Erreurs prénom multi
+      if (this.firstName && this.firstName.length < 2) {
+        this.errors = {
+          ...this.errors,
+          firstName: "Le prénom ne fait qu'un seul caractère",
+        };
+      }
+      //? Erreurs prénom multi
+      if (this.lastName === this.firstName) {
+        this.errors = {
+          ...this.errors,
+          firstName: "Le prénom et le nom ne peuvent pas être identiques",
+        };
+      }
       if (!this.birth) {
         this.errors = {
           ...this.errors,
@@ -277,7 +275,6 @@ export default {
 
       // Si on n'a aucune erreur
       if (Object.keys(this.errors).length === 0) {
-
         // On prépare les paramètres obligatoires pour la requête
         let params = {
           lastname: this.lastName,
