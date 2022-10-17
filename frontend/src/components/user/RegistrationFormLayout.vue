@@ -165,16 +165,16 @@ export default {
     return {
       errors: {},
 
-      // Testing area enables inputs auto-filling for testing purposes
-      lastName: null,
-      firstName: null,
-      pseudo: null,
-      birth: null,
-      email: null,
-      confEmail: null,
-      password: null,
-      confPassword: null,
-      role: null,
+      //! Testing area enables inputs auto-filling for testing purposes
+      // lastName: null,
+      // firstName: null,
+      // pseudo: null,
+      // birth: null,
+      // email: null,
+      // confEmail: null,
+      // password: null,
+      // confPassword: null,
+      // role: null,
     };
   },
 
@@ -199,18 +199,15 @@ export default {
       if (!this.firstName) {
         this.errors = {
           ...this.errors,
-          //? Remplir des erreurs différentes liées au prénom (initialement tableau d'erreurs)
           firstName: "Merci de renseigner votre prénom",
         };
       }
-      //? Erreurs prénom multi
       if (this.firstName && this.firstName.length < 2) {
         this.errors = {
           ...this.errors,
           firstName: "Le prénom ne fait qu'un seul caractère",
         };
       }
-      //? Erreurs prénom multi
       if (this.lastName === this.firstName) {
         this.errors = {
           ...this.errors,

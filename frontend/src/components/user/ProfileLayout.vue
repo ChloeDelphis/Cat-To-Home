@@ -11,31 +11,31 @@
         <h2 class="bold">Profil utilisateur</h2>
         <div class="form">
           <fieldset class="left">
-            <label for="lastname">Nom</label><br />
+            <label for="lastName">Nom</label><br />
             <input
               class="input"
               type="text"
-              id="lastname"
-              name="lastname"
+              id="lastName"
+              name="lastName"
               placeholder="Doe"
-              v-model="lastname"
+              v-model="lastName"
             />
             <p class="inscription__form__fieldset__field__error">
-              {{ lastNameError }} {{ nameError }} {{ lastNameLengthError }}
+              {{ errors.lastName }} {{ errors.lastNameLength }}
             </p>
             <br />
 
-            <label for="firstname">Prénom</label><br />
+            <label for="firstName">Prénom</label><br />
             <input
               class="input"
               type="text"
-              id="firstname"
-              name="firstname"
+              id="firstName"
+              name="firstName"
               placeholder="John"
-              v-model="firstname"
+              v-model="firstName"
             />
             <p class="inscription__form__fieldset__field__error">
-              {{ firstNameError }}
+              {{ errors.firstName }}
             </p>
             <br />
 
@@ -49,7 +49,7 @@
               v-model="pseudo"
             />
             <p class="inscription__form__fieldset__field__error">
-              {{ nickNameError }}
+            
             </p>
             <br />
 
@@ -81,7 +81,7 @@
               v-model="phone"
             />
             <p class="inscription__form__fieldset__field__error">
-              {{ phoneError }}
+              {{ errors.phoneFormat }}
             </p>
             <br
               v-if="
@@ -100,7 +100,7 @@
               v-model="email"
             />
             <p class="inscription__form__fieldset__field__error">
-              {{ emailError }}{{ validEmailError }}
+              {{ errors.email }}{{ errors.validEmail }}
             </p>
             <br />
           </fieldset>
@@ -115,7 +115,7 @@
               v-model="confemail"
             />
             <p class="inscription__form__fieldset__field__error">
-              {{ confEmailError }}
+              {{ errors.confEmail }}
             </p>
             <br />
 
@@ -128,7 +128,7 @@
               v-model="new_password"
             />
             <p class="inscription__form__fieldset__field__error">
-              {{ passwordError }}
+              {{ errors.password }} {{ errors.passwordFormat }}
             </p>
             <br />
 
@@ -141,7 +141,7 @@
               v-model="confPassword"
             />
             <p class="inscription__form__fieldset__field__error">
-              {{ confPasswordError }}
+              {{ errors.confPassword }}
             </p>
             <br />
 
@@ -224,29 +224,32 @@ export default {
 
   data() {
     return {
-      allowContactError: null,
+      id: null,
+      firstName: null,
+      lastName: null,
+      pseudo: null,
+      phone: null,
+      email: null,
+      confEmail: null,
+      newPassword: null,
+      confPassword: null,
       allowEmail: null,
       allowPhone: null,
-      confEmailError: null,
-      confPassword: null,
-      confPasswordError: null,
-      confemail: null,
-      email: null,
-      emailError: null,
-      firstNameError: null,
-      firstname: null,
-      id: null,
-      lastNameError: null,
-      lastname: null,
-      nameError: null,
-      new_password: null,
-      nickNameError: null,
-      passwordError: null,
-      phone: null,
-      pseudo: null,
-      phoneError: null,
-      validEmailError: null,
-      lastNameLengthError: null,
+
+      errors: {},
+
+      // lastNameError: null,
+      // allowContactError: null,
+      // nameError: null,
+      // nickNameError: null,
+      // passwordError: null,
+      // firstNameError: null,
+      // confEmailError: null,
+      // phoneError: null,
+      // confPasswordError: null,
+      // validEmailError: null,
+      // lastNameLengthError: null,
+      // emailError: null,
       errorUpdatePass: null,
       updateMessage: null,
     };
@@ -273,63 +276,120 @@ export default {
   methods: {
     async submit() {
       // On vide les erreurs
-      this.nameError = null;
-      this.lastNameError = null;
-      this.firstNameError = null;
-      this.nickNameError = null;
-      this.phoneError = null;
-      this.emailError = null;
-      this.confEmailError = null;
-      this.passwordError = null;
-      this.confPasswordError = null;
-      this.validEmailError = null;
-      this.allowContactError = null;
-      this.lastNameLengthError = null;
-      this.errorUpdatePass = null;
-      this.updateMessage = null;
+      // this.nameError = null;
+      // this.lastNameError = null;
+      // this.firstNameError = null;
+      // this.nickNameError = null;
+      // this.phoneError = null;
+      // this.emailError = null;
+      // this.confEmailError = null;
+      // this.passwordError = null;
+      // this.confPasswordError = null;
+      // this.validEmailError = null;
+      // this.allowContactError = null;
+      // this.lastNameLengthError = null;
+      // this.errorUpdatePass = null;
+      // this.updateMessage = null;
+
+      // On vide l'objet des erreurs
+      this.errors = {};
 
       // Validation du contenu du formulaire
-      if (!this.lastname) {
-        this.lastNameError = "Merci de renseigner votre nom";
+      if (!this.lastName) {
+        this.errors = {
+          ...this.errors,
+          lastName: "Merci de renseigner votre nom",
+        };
       }
-      if (this.lastname.length < 2) {
-        this.lastNameLengthError = "Le nom ne fait qu'un seul caractère";
+      if (this.lastName && this.lastName.length < 2) {
+        this.errors = {
+          ...this.errors,
+          lastNameLength: "Le nom ne fait qu'un seul caractère",
+        };
       }
-      if (!this.firstname) {
-        this.firstNameError = "Merci de renseigner votre prénom";
+      if (!this.firstName) {
+        this.errors = {
+          ...this.errors,
+          firstName: "Merci de renseigner votre prénom",
+        };
       }
-      if (!this.pseudo) {
-        this.nickNameError = "Merci de renseigner votre pseudo";
+      if (this.firstName && this.firstName.length < 2) {
+        this.errors = {
+          ...this.errors,
+          firstName: "Le prénom ne fait qu'un seul caractère",
+        };
       }
-      if (this.firstname.length < 2) {
-        this.firstNameError = "Le prénom ne fait qu'un seul caractère";
+      if (this.lastName === this.firstName) {
+        this.errors = {
+          ...this.errors,
+          firstName: "Le prénom et le nom ne peuvent pas être identiques",
+        };
       }
-      if (this.lastname === this.firstname) {
-        this.nameError = "Le prénom et le nom ne peuvent pas être identiques";
+            if (!this.email || !this.confEmail) {
+        this.errors = {
+          ...this.errors,
+          email: "Merci de renseigner et confirmer votre email",
+        };
       }
+      if (this.email !== this.confEmail) {
+        this.errors = {
+          ...this.errors,
+          conf: "Vos adresses email ne sont pas identiques",
+        };
+      }
+      if (this.email && !shared.validateEmail(this.email)) {
+        this.errors = {
+          ...this.errors,
+          validEmail: "Votre adresse email n'est pas valide",
+        };
+      }
+      if (!this.password) {
+        this.errors = {
+          ...this.errors,
+          password: "Merci de renseigner et confirmer votre mot de passe",
+        };
+      }
+      if (this.password && !shared.validatePassword(this.password)) {
+        this.errors = {
+          ...this.errors,
+          passwordFormat:
+            "Votre mot de passe doit contenir au moins 12 caractères dont une minuscule, une majuscule et un chiffre",
+        };
+      }
+      if (this.password !== this.confPassword) {
+        this.errors = {
+          ...this.errors,
+          confPassword: "Vos mots de passe ne sont pas identiques",
+        };
+      }
+
       if (this.$store.getters.getRole === "owner") {
         if (
           !this.phone &&
           this.allowPhone &&
           !this.validatePhoneNumber(this.phone)
         ) {
-          this.phoneError =
-            "Merci de renseigner votre numéro de téléphone valide";
+          this.errors = {
+          ...this.errors,
+          contactChoiceConsistency: "Vous avez indiqué préférer être contacté par téléphone mais vous n'avez pas indiqué votre numéro",
+        };
         }
       }
 
-      if (!this.email || !this.confemail) {
-        this.emailError = "Merci de renseigner et confirmer votre email";
-      }
-      if (this.email !== this.confemail) {
-        this.confEmailError = "Vos adresses email ne sont pas identiques";
-      }
-      if (!shared.validateEmail(this.email)) {
-        this.validEmailError = "Votre adresse email n'est pas valide";
-      }
       if (!this.allowEmail && !this.allowPhone) {
-        this.allowContactError =
-          "Vous devez communiquer votre mail ou votre téléphone";
+        this.errors = {
+          ...this.errors,
+          contact: "Merci d'indiquer si vous préférez être contacté par e-mail ou pas téléphone",
+        };
+      }
+
+      // Si on n'a aucune erreur
+      if (Object.keys(this.errors).length === 0){
+
+        // On prépare les paramètres de la requête si et seulement si les résultats sont différents
+
+
+
       }
 
       const verifData = await UserService.find(this.id);
@@ -391,7 +451,7 @@ export default {
         if (
           this.new_password !== null &&
           this.confPassword !== null &&
-          shared.validatePassword(this.new_password)&&
+          shared.validatePassword(this.new_password) &&
           this.new_password === this.confPassword
         ) {
           // si pas d'erreur pour le mot de passe on le modifie
